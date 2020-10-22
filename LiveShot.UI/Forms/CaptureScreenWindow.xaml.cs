@@ -6,7 +6,7 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace LiveShot.UI
+namespace LiveShot.UI.Forms
 {
     /// <summary>
     ///     Interaction logic for MainWindow.xaml

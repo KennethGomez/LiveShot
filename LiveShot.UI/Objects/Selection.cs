@@ -9,7 +9,7 @@ namespace LiveShot.UI.Objects
         private int _top;
         private int _width;
 
-        public Selection(int left, int top, int width, int height)
+        private Selection(int left, int top, int width, int height)
         {
             Left = left;
             Top = top;
