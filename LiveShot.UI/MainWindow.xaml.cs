@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -10,7 +9,7 @@ using System.Windows.Media.Imaging;
 namespace LiveShot.UI
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    ///     Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow
     {
@@ -54,10 +53,7 @@ namespace LiveShot.UI
 
         protected override void OnKeyDown(KeyEventArgs e)
         {
-            if (e.Key == Key.Escape)
-            {
-                Close();
-            }
+            if (e.Key == Key.Escape) Close();
 
             SelectCanvas.ParentKeyDown(e);
         }
