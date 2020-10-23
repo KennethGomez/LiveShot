@@ -1,4 +1,5 @@
-﻿using System.Windows.Media;
+﻿using System.Windows;
+using System.Windows.Media;
 using System.Windows.Shapes;
 
 namespace LiveShot.UI.Objects
@@ -62,5 +63,13 @@ namespace LiveShot.UI.Objects
         public Rectangle Rectangle => _rectangle;
 
         public static Selection Empty => new Selection(0, 0, 0, 0);
+
+        public bool Contains(Point point)
+        {
+            return point.X >= _left &&
+                   point.X <= _left + _rectangle.Width &&
+                   point.Y >= _top &&
+                   point.Y <= _top + _rectangle.Height;
+        }
     }
 }

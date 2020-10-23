@@ -10,9 +10,11 @@ namespace LiveShot.UI.Controls
     public class SelectCanvas : Canvas
     {
         private bool _dragging = true;
+        private bool _moving;
 
         private Selection _selection;
         private Point? _startPosition;
+        private Point? _tmpCursorPosition;
 
         public SelectCanvas()
         {
@@ -37,6 +39,8 @@ namespace LiveShot.UI.Controls
 
         private void UpdateSelection()
         {
+            if (_selection is null) return;  
+            
             SetLeft(_selection.Rectangle, _selection.Left);
             SetTop(_selection.Rectangle, _selection.Top);
         }
@@ -52,37 +56,64 @@ namespace LiveShot.UI.Controls
                 Children.Add(_selection.Rectangle);
             }
 
-            _dragging = true;
-            _startPosition = e.GetPosition(this);
+            var position = e.GetPosition(this);
+
+            _moving = _selection.Contains(position);
+            _dragging = !_moving;
+            _startPosition = position;
+            _tmpCursorPosition = _startPosition;
         }
 
         protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
         {
             _dragging = false;
+            _moving = false;
             _startPosition = null;
+            _tmpCursorPosition = null;
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
-            if (!_dragging || _startPosition is not { } startPosition) return;
-
             var newPosition = e.GetPosition(this);
 
-            double xDiff = newPosition.X - startPosition.X;
-            double yDiff = newPosition.Y - startPosition.Y;
+            if (_moving)
+                MoveSelection(newPosition);
+            else if (_dragging) ResizeSelection(newPosition);
+
+            UpdateSelection();
+        }
+
+        private void ResizeSelection(Point cursorPosition)
+        {
+            if (_startPosition is not {} startPosition) return;
+
+            double xDiff = cursorPosition.X - startPosition.X;
+            double yDiff = cursorPosition.Y - startPosition.Y;
 
             bool growingX = xDiff > 0;
             bool growingY = yDiff > 0;
 
-            double rectTop = growingY ? startPosition.Y : newPosition.Y;
-            double rectLeft = growingX ? startPosition.X : newPosition.X;
+            double rectTop = growingY ? startPosition.Y : cursorPosition.Y;
+            double rectLeft = growingX ? startPosition.X : cursorPosition.X;
 
             _selection.Left = (int) rectLeft;
             _selection.Top = (int) rectTop;
             _selection.Width = (int) Math.Abs(xDiff);
             _selection.Height = (int) Math.Abs(yDiff);
+        }
 
-            UpdateSelection();
+        private void MoveSelection(Point cursorPosition)
+        {
+            if (_tmpCursorPosition is {} tmpPosition)
+            {
+                double xDiff = cursorPosition.X - tmpPosition.X;
+                double yDiff = cursorPosition.Y - tmpPosition.Y;
+
+                _selection.Left += xDiff;
+                _selection.Top += yDiff;
+            }
+
+            _tmpCursorPosition = cursorPosition;
         }
 
         public void ParentKeyDown(KeyEventArgs e)
