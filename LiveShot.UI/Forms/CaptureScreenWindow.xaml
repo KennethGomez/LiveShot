@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:LiveShot.UI.Controls"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
+        Title="CaptureScreenWindow" Height="450" Width="800"
         WindowStyle="None"
         ResizeMode="NoResize"
         WindowState="Maximized"
