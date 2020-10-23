@@ -1,23 +1,29 @@
-﻿using System.Drawing;
+﻿using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace LiveShot.UI.Objects
 {
     public record Selection
     {
-        private int _height;
-        private int _left;
-        private int _top;
-        private int _width;
+        private readonly Rectangle _rectangle;
+        private double _left;
+        private double _top;
 
-        private Selection(int left, int top, int width, int height)
+        private Selection(double left, double top, double width, double height)
         {
-            Left = left;
-            Top = top;
-            Width = width;
-            Height = height;
+            _rectangle = new Rectangle
+            {
+                Fill = Brushes.White,
+                Opacity = 0.2,
+                Width = width,
+                Height = height
+            };
+
+            _left = left;
+            _top = top;
         }
 
-        public int Left
+        public double Left
         {
             get => _left;
             set
@@ -26,7 +32,7 @@ namespace LiveShot.UI.Objects
             }
         }
 
-        public int Top
+        public double Top
         {
             get => _top;
             set
@@ -35,25 +41,25 @@ namespace LiveShot.UI.Objects
             }
         }
 
-        public int Width
+        public double Width
         {
-            get => _width;
+            get => _rectangle.Width;
             set
             {
-                if (value > 0) _width = value;
+                if (value > 0) _rectangle.Width = value;
             }
         }
 
-        public int Height
+        public double Height
         {
-            get => _height;
+            get => _rectangle.Height;
             set
             {
-                if (value > 0) _height = value;
+                if (value > 0) _rectangle.Height = value;
             }
         }
 
-        public Rectangle Rectangle => new Rectangle(Left, Top, Width, Height);
+        public Rectangle Rectangle => _rectangle;
 
         public static Selection Empty => new Selection(0, 0, 0, 0);
     }

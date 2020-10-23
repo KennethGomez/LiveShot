@@ -1,16 +1,9 @@
 ﻿using System;
-using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Interop;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using LiveShot.UI.Objects;
-using Brushes = System.Windows.Media.Brushes;
-using Color = System.Drawing.Color;
-using Point = System.Windows.Point;
 
 namespace LiveShot.UI.Controls
 {
@@ -42,37 +35,22 @@ namespace LiveShot.UI.Controls
                 normal(step);
         }
 
-        private void UpdateOpacityMask()
+        private void UpdateSelection()
         {
-            (int screenWidth, int screenHeight) = ((int, int)) (Width, Height);
-
-            using var bitmap = new Bitmap((int) Width, (int) Height);
-            using var graphics = Graphics.FromImage(bitmap);
-
-            graphics.Clear(Color.Black);
-
-            var path = new GraphicsPath();
-            path.AddRectangle(_selection.Rectangle);
-
-            graphics.SetClip(path);
-            graphics.Clear(Color.Transparent);
-            graphics.ResetClip();
-
-            var source = Imaging.CreateBitmapSourceFromHBitmap(
-                bitmap.GetHbitmap(),
-                IntPtr.Zero,
-                Int32Rect.Empty,
-                BitmapSizeOptions.FromWidthAndHeight(screenWidth, screenHeight)
-            );
-
-            OpacityMask = new ImageBrush(source);
+            SetLeft(_selection.Rectangle, _selection.Left);
+            SetTop(_selection.Rectangle, _selection.Top);
         }
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
             bool exists = _selection != null;
 
-            if (!exists) _selection = Selection.Empty;
+            if (!exists)
+            {
+                _selection = Selection.Empty;
+
+                Children.Add(_selection.Rectangle);
+            }
 
             _dragging = true;
             _startPosition = e.GetPosition(this);
@@ -104,7 +82,7 @@ namespace LiveShot.UI.Controls
             _selection.Width = (int) Math.Abs(xDiff);
             _selection.Height = (int) Math.Abs(yDiff);
 
-            UpdateOpacityMask();
+            UpdateSelection();
         }
 
         public void ParentKeyDown(KeyEventArgs e)
@@ -116,7 +94,7 @@ namespace LiveShot.UI.Controls
             OnSelectionKeyDown(e, Key.Down, n => _selection.Height += n, n => _selection.Top += n);
             OnSelectionKeyDown(e, Key.Left, n => _selection.Width -= n, n => _selection.Left -= n);
 
-            UpdateOpacityMask();
+            UpdateSelection();
         }
     }
 }
