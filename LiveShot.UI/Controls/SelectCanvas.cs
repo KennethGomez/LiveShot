@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using LiveShot.UI.Objects;
+using LiveShot.Objects;
 
 namespace LiveShot.UI.Controls
 {
@@ -22,16 +22,16 @@ namespace LiveShot.UI.Controls
             Opacity = .4;
         }
 
-        private static void OnSelectionKeyDown(KeyEventArgs e, Key key, Action<int> shiftPressed, Action<int> normal)
+        private static bool CtrlPressed => Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl);
+        private static bool ShiftPressed => Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift);
+
+        public Selection Selection => _selection;
+
+        private static void OnSelectionKeyDown(Action<int> shiftPressed, Action<int> normal)
         {
-            if (e.Key != key) return;
+            int step = CtrlPressed ? 10 : 1;
 
-            bool controlDown = Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl);
-            int step = controlDown ? 10 : 1;
-
-            bool shiftDown = Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift);
-
-            if (shiftDown)
+            if (ShiftPressed)
                 shiftPressed(step);
             else
                 normal(step);
@@ -39,8 +39,8 @@ namespace LiveShot.UI.Controls
 
         private void UpdateSelection()
         {
-            if (_selection is null) return;  
-            
+            if (_selection is null) return;
+
             SetLeft(_selection.Rectangle, _selection.Left);
             SetTop(_selection.Rectangle, _selection.Top);
         }
@@ -63,10 +63,7 @@ namespace LiveShot.UI.Controls
             _startPosition = position;
             _tmpCursorPosition = _startPosition;
 
-            if (!_moving)
-            {
-                _selection.Cursor = Cursors.Arrow;
-            }
+            if (!_moving) _selection.Cursor = Cursors.Arrow;
         }
 
         protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
@@ -75,7 +72,7 @@ namespace LiveShot.UI.Controls
             _moving = false;
             _startPosition = null;
             _tmpCursorPosition = null;
-            
+
             _selection.Cursor = Cursors.SizeAll;
         }
 
@@ -127,10 +124,21 @@ namespace LiveShot.UI.Controls
         {
             if (_selection == null) return;
 
-            OnSelectionKeyDown(e, Key.Up, n => _selection.Height -= n, n => _selection.Top -= n);
-            OnSelectionKeyDown(e, Key.Right, n => _selection.Width += n, n => _selection.Left += n);
-            OnSelectionKeyDown(e, Key.Down, n => _selection.Height += n, n => _selection.Top += n);
-            OnSelectionKeyDown(e, Key.Left, n => _selection.Width -= n, n => _selection.Left -= n);
+            switch (e.Key)
+            {
+                case Key.Up:
+                    OnSelectionKeyDown(n => _selection.Height -= n, n => _selection.Top -= n);
+                    break;
+                case Key.Right:
+                    OnSelectionKeyDown(n => _selection.Width += n, n => _selection.Left += n);
+                    break;
+                case Key.Down:
+                    OnSelectionKeyDown(n => _selection.Height += n, n => _selection.Top += n);
+                    break;
+                case Key.Left:
+                    OnSelectionKeyDown(n => _selection.Width -= n, n => _selection.Left -= n);
+                    break;
+            }
 
             UpdateSelection();
         }

@@ -2,6 +2,10 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveShot.UI", "LiveShot.UI\LiveShot.UI.csproj", "{DE44EE39-C288-40E3-86E2-9B61AD2B0C8E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveShot.Utils", "LiveShot.Utils\LiveShot.Utils.csproj", "{19E2D88F-8961-4103-9DF7-441545409F7E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveShot.Objects", "LiveShot.Objects\LiveShot.Objects.csproj", "{88BFB664-766D-4F8F-972D-50672D264517}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +16,13 @@ Global
 		{DE44EE39-C288-40E3-86E2-9B61AD2B0C8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE44EE39-C288-40E3-86E2-9B61AD2B0C8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE44EE39-C288-40E3-86E2-9B61AD2B0C8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19E2D88F-8961-4103-9DF7-441545409F7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19E2D88F-8961-4103-9DF7-441545409F7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19E2D88F-8961-4103-9DF7-441545409F7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19E2D88F-8961-4103-9DF7-441545409F7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88BFB664-766D-4F8F-972D-50672D264517}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88BFB664-766D-4F8F-972D-50672D264517}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88BFB664-766D-4F8F-972D-50672D264517}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88BFB664-766D-4F8F-972D-50672D264517}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -3,7 +3,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
-namespace LiveShot.UI.Objects
+namespace LiveShot.Objects
 {
     public record Selection
     {
@@ -20,7 +20,7 @@ namespace LiveShot.UI.Objects
                 Width = width,
                 Height = height
             };
-            
+
             _left = left;
             _top = top;
         }

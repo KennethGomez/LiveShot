@@ -5,6 +5,7 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using LiveShot.Utils.Image;
 
 namespace LiveShot.UI.Forms
 {
@@ -13,6 +14,8 @@ namespace LiveShot.UI.Forms
     /// </summary>
     public partial class MainWindow
     {
+        private Bitmap _screenShot;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -33,29 +36,42 @@ namespace LiveShot.UI.Forms
             (int screenTop, int screenLeft, int screenWidth, int screenHeight) =
                 ((int, int, int, int)) (Top, Left, Width, Height);
 
-            using var bmp = new Bitmap(screenWidth, screenHeight);
-            using var graphics = Graphics.FromImage(bmp);
-
             Opacity = .0;
-            graphics.CopyFromScreen(screenLeft, screenTop, 0, 0, bmp.Size);
 
-            var source = Imaging.CreateBitmapSourceFromHBitmap(
-                bmp.GetHbitmap(),
-                IntPtr.Zero,
-                Int32Rect.Empty,
-                BitmapSizeOptions.FromWidthAndHeight(screenWidth, screenHeight)
-            );
+            var bitmap = ImageUtils.CaptureScreen(screenWidth, screenHeight, screenLeft, screenTop);
+            var bitmapSource = ImageUtils.GetBitmapSource(bitmap);
 
-            Background = new ImageBrush(source);
+            _screenShot = bitmap;
+
+            Background = new ImageBrush(bitmapSource);
 
             Opacity = 1;
         }
 
         protected override void OnKeyDown(KeyEventArgs e)
         {
-            if (e.Key == Key.Escape) Close();
+            switch (e.Key)
+            {
+                case Key.Escape:
+                    Close();
+                    break;
+                case Key.C:
+                    CopyImage();
+                    break;
+            }
 
             SelectCanvas.ParentKeyDown(e);
+        }
+
+        private void CopyImage()
+        {
+            if (!Keyboard.IsKeyDown(Key.LeftCtrl) && !Keyboard.IsKeyDown(Key.RightCtrl)) return;
+
+            var selection = SelectCanvas.Selection;
+
+            ImageUtils.CopyImage(selection, _screenShot);
+            
+            Close();
         }
     }
 }
