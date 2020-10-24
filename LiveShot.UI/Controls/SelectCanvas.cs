@@ -62,6 +62,11 @@ namespace LiveShot.UI.Controls
             _dragging = !_moving;
             _startPosition = position;
             _tmpCursorPosition = _startPosition;
+
+            if (!_moving)
+            {
+                _selection.Cursor = Cursors.Arrow;
+            }
         }
 
         protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
@@ -70,6 +75,8 @@ namespace LiveShot.UI.Controls
             _moving = false;
             _startPosition = null;
             _tmpCursorPosition = null;
+            
+            _selection.Cursor = Cursors.SizeAll;
         }
 
         protected override void OnMouseMove(MouseEventArgs e)

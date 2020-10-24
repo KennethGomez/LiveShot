@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
@@ -19,9 +20,15 @@ namespace LiveShot.UI.Objects
                 Width = width,
                 Height = height
             };
-
+            
             _left = left;
             _top = top;
+        }
+
+        public Cursor Cursor
+        {
+            get => _rectangle.Cursor;
+            set => _rectangle.Cursor = value;
         }
 
         public double Left
