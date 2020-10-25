@@ -9,6 +9,9 @@ namespace LiveShot.UI.Controls
 {
     public class SelectCanvas : Canvas
     {
+        public static readonly DependencyProperty SizeLabelProperty = DependencyProperty.Register("SizeLabel",
+            typeof(Label), typeof(SelectCanvas));
+
         private bool _dragging = true;
         private bool _moving;
 
@@ -20,6 +23,12 @@ namespace LiveShot.UI.Controls
         {
             Background = Brushes.Black;
             Opacity = .4;
+        }
+
+        public Label SizeLabel
+        {
+            get => (Label) GetValue(SizeLabelProperty);
+            set => SetValue(SizeLabelProperty, value);
         }
 
         private static bool CtrlPressed => Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl);
@@ -43,6 +52,8 @@ namespace LiveShot.UI.Controls
 
             SetLeft(_selection.Rectangle, _selection.Left);
             SetTop(_selection.Rectangle, _selection.Top);
+
+            SizeLabel.Content = _selection.IsClear ? "Empty selection" : $"{_selection.Width} × {_selection.Height}";
         }
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
@@ -54,6 +65,15 @@ namespace LiveShot.UI.Controls
                 _selection = Selection.Empty;
 
                 Children.Add(_selection.Rectangle);
+            }
+
+            if (e.ClickCount >= 2)
+            {
+                _selection.Clear();
+
+                UpdateSelection();
+
+                return;
             }
 
             var position = e.GetPosition(this);

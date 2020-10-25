@@ -22,10 +22,10 @@ namespace LiveShot.Utils.Image
             );
 
             var bitmapSource = GetBitmapSource(target);
-            
+
             Clipboard.SetImage(bitmapSource);
         }
-        
+
         public static Bitmap CaptureScreen(int width, int height, int left, int top)
         {
             var bmp = new Bitmap(width, height);

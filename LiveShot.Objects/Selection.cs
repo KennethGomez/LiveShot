@@ -16,7 +16,7 @@ namespace LiveShot.Objects
             _rectangle = new Rectangle
             {
                 Fill = Brushes.White,
-                Opacity = 0.2,
+                Opacity = 0.3,
                 Width = width,
                 Height = height
             };
@@ -36,7 +36,7 @@ namespace LiveShot.Objects
             get => _left;
             set
             {
-                if (value > 0) _left = value;
+                if (value >= 0) _left = value;
             }
         }
 
@@ -45,7 +45,7 @@ namespace LiveShot.Objects
             get => _top;
             set
             {
-                if (value > 0) _top = value;
+                if (value >= 0) _top = value;
             }
         }
 
@@ -54,7 +54,7 @@ namespace LiveShot.Objects
             get => _rectangle.Width;
             set
             {
-                if (value > 0) _rectangle.Width = value;
+                if (value >= 0) _rectangle.Width = value;
             }
         }
 
@@ -63,7 +63,7 @@ namespace LiveShot.Objects
             get => _rectangle.Height;
             set
             {
-                if (value > 0) _rectangle.Height = value;
+                if (value >= 0) _rectangle.Height = value;
             }
         }
 
@@ -71,12 +71,22 @@ namespace LiveShot.Objects
 
         public static Selection Empty => new Selection(0, 0, 0, 0);
 
+        public bool IsClear => Width == 0 && Height == 0 && Top == 0 && Height == 0;
+
         public bool Contains(Point point)
         {
             return point.X >= _left &&
                    point.X <= _left + _rectangle.Width &&
                    point.Y >= _top &&
                    point.Y <= _top + _rectangle.Height;
+        }
+
+        public void Clear()
+        {
+            _top = 0;
+            _left = 0;
+            Width = 0;
+            Height = 0;
         }
     }
 }

@@ -11,7 +11,13 @@
         WindowState="Maximized"
         ShowInTaskbar="False"
         WindowStartupLocation="CenterScreen">
-    <Viewbox Stretch="Fill">
-        <controls:SelectCanvas x:Name="SelectCanvas" />
-    </Viewbox>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <controls:SelectCanvas Grid.Row="0" x:Name="SelectCanvas" SizeLabel="{Binding ElementName=SizeLabel}" />
+        <Label Name="SizeLabel" Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Center" FontSize="16"
+               Background="#1EFFFFFF" Foreground="White" Content="Empty selection" Padding="25,10" />
+    </Grid>
 </Window>

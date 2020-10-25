@@ -1,10 +1,7 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Interop;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using LiveShot.Utils.Image;
 
 namespace LiveShot.UI.Forms
@@ -69,9 +66,12 @@ namespace LiveShot.UI.Forms
 
             var selection = SelectCanvas.Selection;
 
-            ImageUtils.CopyImage(selection, _screenShot);
-            
-            Close();
+            if (!selection.IsClear)
+            {
+                ImageUtils.CopyImage(selection, _screenShot);
+
+                Close();
+            }
         }
     }
 }
