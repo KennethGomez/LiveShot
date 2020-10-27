@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveShot.Utils", "LiveShot.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveShot.Objects", "LiveShot.Objects\LiveShot.Objects.csproj", "{88BFB664-766D-4F8F-972D-50672D264517}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveShot.UI.Avalonia", "LiveShot.UI.Avalonia\LiveShot.UI.Avalonia.csproj", "{27350284-A9AB-480C-BF60-599FB9D68064}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{88BFB664-766D-4F8F-972D-50672D264517}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88BFB664-766D-4F8F-972D-50672D264517}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88BFB664-766D-4F8F-972D-50672D264517}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27350284-A9AB-480C-BF60-599FB9D68064}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27350284-A9AB-480C-BF60-599FB9D68064}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27350284-A9AB-480C-BF60-599FB9D68064}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27350284-A9AB-480C-BF60-599FB9D68064}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

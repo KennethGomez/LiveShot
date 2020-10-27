@@ -2,18 +2,23 @@
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using Avalonia;
+using LiveShot.UI.Avalonia.Forms;
 using LiveShot.Utils.Image;
 
 namespace LiveShot.UI.Forms
 {
     /// <summary>
-    ///     Interaction logic for MainWindow.xaml
+    ///     Interaction logic for CaptureScreenWindow.xaml
     /// </summary>
-    public partial class MainWindow
+    public partial class CaptureScreenWindow
     {
         private Bitmap _screenShot;
+        private ExportWindow _exportWindow;
 
-        public MainWindow()
+        private bool IsCtrlPressed => Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl);
+
+        public CaptureScreenWindow()
         {
             InitializeComponent();
 
@@ -55,14 +60,34 @@ namespace LiveShot.UI.Forms
                 case Key.C:
                     CopyImage();
                     break;
+                case Key.D:
+                    OpenExportWindow();
+                    break;
             }
 
             SelectCanvas.ParentKeyDown(e);
         }
 
+        private void OpenExportWindow()
+        {
+            if (!IsCtrlPressed || _exportWindow != null) return;
+
+            var selection = SelectCanvas.Selection;
+
+            if (selection == null || selection.IsClear) return;
+
+            _exportWindow = new ExportWindow();
+            _exportWindow.Show();
+            
+            double x = Width - _exportWindow.Width - 100;
+            double y = Height - _exportWindow.Height - 100;
+            
+            _exportWindow.Position = new PixelPoint((int) x, (int) y);
+        }
+
         private void CopyImage()
         {
-            if (!Keyboard.IsKeyDown(Key.LeftCtrl) && !Keyboard.IsKeyDown(Key.RightCtrl)) return;
+            if (!IsCtrlPressed) return;
 
             var selection = SelectCanvas.Selection;
 
