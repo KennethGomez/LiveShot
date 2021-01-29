@@ -1,0 +1,29 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:LiveShot.UserInterface.ViewModels;assembly=LiveShot.UserInterface"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:LiveShot.UserInterface.Controls"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="LiveShot.UserInterface.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="CaptureScreenWindow"
+        HasSystemDecorations="False"
+        CanResize="False"
+        WindowState="Maximized"
+        ShowInTaskbar="False"
+        WindowStartupLocation="CenterScreen">
+
+    <Design.DataContext>
+        <vm:CaptureScreenWindowViewModel/>
+    </Design.DataContext>
+
+    <Grid RowDefinitions="*,*">
+        <controls:SelectCanvas Grid.Row="0" x:Name="SelectCanvas" Selection="{Binding Model.Selection}" />
+        <Border Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Center" 
+                Background="#1EFFFFFF" BorderThickness="0" Padding="25,10">
+            <TextBlock Name="SizeLabel" FontSize="16" Foreground="White" Text="Empty selection" />
+        </Border>
+    </Grid>
+
+</Window>
