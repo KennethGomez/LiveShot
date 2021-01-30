@@ -7,7 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\LiveShot.Objects\LiveShot.Objects.csproj" />
       <ProjectReference Include="..\LiveShot.UI.Avalonia\LiveShot.UI.Avalonia.csproj" />
       <ProjectReference Include="..\LiveShot.Utils\LiveShot.Utils.csproj" />
     </ItemGroup>

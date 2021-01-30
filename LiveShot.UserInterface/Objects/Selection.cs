@@ -1,9 +1,9 @@
-﻿using System.Windows;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Shapes;
+﻿using Avalonia;
+using Avalonia.Controls.Shapes;
+using Avalonia.Input;
+using Avalonia.Media;
 
-namespace LiveShot.Objects
+namespace LiveShot.UserInterface.Objects
 {
     public record Selection
     {
