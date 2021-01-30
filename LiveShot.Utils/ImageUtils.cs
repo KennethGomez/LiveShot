@@ -5,7 +5,7 @@ using System.Windows.Interop;
 using System.Windows.Media.Imaging;
 using LiveShot.Objects;
 
-namespace LiveShot.Utils.Image
+namespace LiveShot.Utils
 {
     public static class ImageUtils
     {

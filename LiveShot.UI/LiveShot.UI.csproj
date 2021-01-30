@@ -4,11 +4,12 @@
         <OutputType>WinExe</OutputType>
         <TargetFramework>net5.0-windows</TargetFramework>
         <UseWPF>true</UseWPF>
+        <Nullable>enable</Nullable>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\LiveShot.UI.Avalonia\LiveShot.UI.Avalonia.csproj" />
+      <ProjectReference Include="..\LiveShot.Objects\LiveShot.Objects.csproj" />
+      <ProjectReference Include="..\LiveShot.UI.Controls\LiveShot.UI.Controls.csproj" />
       <ProjectReference Include="..\LiveShot.Utils\LiveShot.Utils.csproj" />
     </ItemGroup>
-
 </Project>

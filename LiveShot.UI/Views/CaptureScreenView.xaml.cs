@@ -2,23 +2,19 @@
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-using Avalonia;
-using LiveShot.UI.Avalonia.Forms;
-using LiveShot.Utils.Image;
+using LiveShot.UI.Controls;
+using LiveShot.Utils;
 
-namespace LiveShot.UI.Forms
+namespace LiveShot.UI.Views
 {
-    /// <summary>
-    ///     Interaction logic for CaptureScreenWindow.xaml
-    /// </summary>
-    public partial class CaptureScreenWindow
+    public partial class CaptureScreenView : Window
     {
-        private Bitmap _screenShot;
-        private ExportWindow _exportWindow;
+        private Bitmap? _screenShot;
+        //private ExportWindow _exportWindow;
 
         private bool IsCtrlPressed => Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl);
 
-        public CaptureScreenWindow()
+        public CaptureScreenView()
         {
             InitializeComponent();
 
@@ -70,19 +66,19 @@ namespace LiveShot.UI.Forms
 
         private void OpenExportWindow()
         {
-            if (!IsCtrlPressed || _exportWindow != null) return;
-
-            var selection = SelectCanvas.Selection;
-
-            if (selection == null || selection.IsClear) return;
-
-            _exportWindow = new ExportWindow();
-            _exportWindow.Show();
-            
-            double x = Width - _exportWindow.Width - 100;
-            double y = Height - _exportWindow.Height - 100;
-            
-            _exportWindow.Position = new PixelPoint((int) x, (int) y);
+            // if (!IsCtrlPressed || _exportWindow != null) return;
+            //
+            // var selection = SelectCanvas.Selection;
+            //
+            // if (selection == null || selection.IsClear) return;
+            //
+            // _exportWindow = new ExportWindow();
+            // _exportWindow.Show();
+            //
+            // double x = Width - _exportWindow.Width - 100;
+            // double y = Height - _exportWindow.Height - 100;
+            //
+            // _exportWindow.Position = new PixelPoint((int) x, (int) y);
         }
 
         private void CopyImage()
@@ -90,13 +86,11 @@ namespace LiveShot.UI.Forms
             if (!IsCtrlPressed) return;
 
             var selection = SelectCanvas.Selection;
+            if (selection is null || selection.IsClear) return;
 
-            if (!selection.IsClear)
-            {
-                ImageUtils.CopyImage(selection, _screenShot);
+            ImageUtils.CopyImage(selection, _screenShot);
 
-                Close();
-            }
+            Close();
         }
     }
 }

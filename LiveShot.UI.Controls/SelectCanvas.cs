@@ -15,7 +15,7 @@ namespace LiveShot.UI.Controls
         private bool _dragging = true;
         private bool _moving;
 
-        private Selection _selection;
+        private Selection? _selection;
         private Point? _startPosition;
         private Point? _tmpCursorPosition;
 
@@ -34,7 +34,7 @@ namespace LiveShot.UI.Controls
         private static bool CtrlPressed => Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl);
         private static bool ShiftPressed => Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift);
 
-        public Selection Selection => _selection;
+        public Selection? Selection => _selection;
 
         private static void OnSelectionKeyDown(Action<int> shiftPressed, Action<int> normal)
         {
@@ -58,9 +58,7 @@ namespace LiveShot.UI.Controls
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
-            bool exists = _selection != null;
-
-            if (!exists)
+            if (_selection is null)
             {
                 _selection = Selection.Empty;
 
@@ -93,6 +91,8 @@ namespace LiveShot.UI.Controls
             _startPosition = null;
             _tmpCursorPosition = null;
 
+            if (_selection is null) return;
+
             _selection.Cursor = Cursors.SizeAll;
         }
 
@@ -109,7 +109,7 @@ namespace LiveShot.UI.Controls
 
         private void ResizeSelection(Point cursorPosition)
         {
-            if (_startPosition is not {} startPosition) return;
+            if (_startPosition is not {} startPosition || _selection is null) return;
 
             double xDiff = cursorPosition.X - startPosition.X;
             double yDiff = cursorPosition.Y - startPosition.Y;
@@ -128,6 +128,7 @@ namespace LiveShot.UI.Controls
 
         private void MoveSelection(Point cursorPosition)
         {
+            if (_selection is null) return;
             if (_tmpCursorPosition is {} tmpPosition)
             {
                 double xDiff = cursorPosition.X - tmpPosition.X;
