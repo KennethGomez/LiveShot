@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using LiveShot.Objects;
+using LiveShot.Objects.Events;
 
 namespace LiveShot.UI.Controls
 {
@@ -15,7 +16,6 @@ namespace LiveShot.UI.Controls
         private bool _dragging = true;
         private bool _moving;
 
-        private Selection? _selection;
         private Point? _startPosition;
         private Point? _tmpCursorPosition;
 
@@ -23,6 +23,8 @@ namespace LiveShot.UI.Controls
         {
             Background = Brushes.Black;
             Opacity = .4;
+
+            EventPipeline.Subscribe<OnKeyDown>(OnKeyDown);
         }
 
         public Label SizeLabel
@@ -34,7 +36,7 @@ namespace LiveShot.UI.Controls
         private static bool CtrlPressed => Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl);
         private static bool ShiftPressed => Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift);
 
-        public Selection? Selection => _selection;
+        public Selection? Selection { get; private set; }
 
         private static void OnSelectionKeyDown(Action<int> shiftPressed, Action<int> normal)
         {
@@ -48,26 +50,26 @@ namespace LiveShot.UI.Controls
 
         private void UpdateSelection()
         {
-            if (_selection is null) return;
+            if (Selection is null) return;
 
-            SetLeft(_selection.Rectangle, _selection.Left);
-            SetTop(_selection.Rectangle, _selection.Top);
+            SetLeft(Selection.Rectangle, Selection.Left);
+            SetTop(Selection.Rectangle, Selection.Top);
 
-            SizeLabel.Content = _selection.IsClear ? "Empty selection" : $"{_selection.Width} × {_selection.Height}";
+            SizeLabel.Content = Selection.IsClear ? "Empty selection" : $"{Selection.Width} × {Selection.Height}";
         }
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
-            if (_selection is null)
+            if (Selection is null)
             {
-                _selection = Selection.Empty;
+                Selection = Selection.Empty;
 
-                Children.Add(_selection.Rectangle);
+                Children.Add(Selection.Rectangle);
             }
 
             if (e.ClickCount >= 2)
             {
-                _selection.Clear();
+                Selection.Clear();
 
                 UpdateSelection();
 
@@ -76,12 +78,12 @@ namespace LiveShot.UI.Controls
 
             var position = e.GetPosition(this);
 
-            _moving = _selection.Contains(position);
+            _moving = Selection.Contains(position);
             _dragging = !_moving;
             _startPosition = position;
             _tmpCursorPosition = _startPosition;
 
-            if (!_moving) _selection.Cursor = Cursors.Arrow;
+            if (!_moving) Selection.Cursor = Cursors.Arrow;
         }
 
         protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
@@ -91,9 +93,9 @@ namespace LiveShot.UI.Controls
             _startPosition = null;
             _tmpCursorPosition = null;
 
-            if (_selection is null) return;
+            if (Selection is null) return;
 
-            _selection.Cursor = Cursors.SizeAll;
+            Selection.Cursor = Cursors.SizeAll;
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
@@ -109,7 +111,7 @@ namespace LiveShot.UI.Controls
 
         private void ResizeSelection(Point cursorPosition)
         {
-            if (_startPosition is not {} startPosition || _selection is null) return;
+            if (_startPosition is not { } startPosition || Selection is null) return;
 
             double xDiff = cursorPosition.X - startPosition.X;
             double yDiff = cursorPosition.Y - startPosition.Y;
@@ -120,44 +122,44 @@ namespace LiveShot.UI.Controls
             double rectTop = growingY ? startPosition.Y : cursorPosition.Y;
             double rectLeft = growingX ? startPosition.X : cursorPosition.X;
 
-            _selection.Left = (int) rectLeft;
-            _selection.Top = (int) rectTop;
-            _selection.Width = (int) Math.Abs(xDiff);
-            _selection.Height = (int) Math.Abs(yDiff);
+            Selection.Left = (int) rectLeft;
+            Selection.Top = (int) rectTop;
+            Selection.Width = (int) Math.Abs(xDiff);
+            Selection.Height = (int) Math.Abs(yDiff);
         }
 
         private void MoveSelection(Point cursorPosition)
         {
-            if (_selection is null) return;
-            if (_tmpCursorPosition is {} tmpPosition)
+            if (Selection is null) return;
+            if (_tmpCursorPosition is { } tmpPosition)
             {
                 double xDiff = cursorPosition.X - tmpPosition.X;
                 double yDiff = cursorPosition.Y - tmpPosition.Y;
 
-                _selection.Left += xDiff;
-                _selection.Top += yDiff;
+                Selection.Left += xDiff;
+                Selection.Top += yDiff;
             }
 
             _tmpCursorPosition = cursorPosition;
         }
 
-        public void ParentKeyDown(KeyEventArgs e)
+        private void OnKeyDown(Event e)
         {
-            if (_selection == null) return;
+            if (Selection == null) return;
 
-            switch (e.Key)
+            switch (((KeyEventArgs) e.Args).Key)
             {
                 case Key.Up:
-                    OnSelectionKeyDown(n => _selection.Height -= n, n => _selection.Top -= n);
+                    OnSelectionKeyDown(n => Selection.Height -= n, n => Selection.Top -= n);
                     break;
                 case Key.Right:
-                    OnSelectionKeyDown(n => _selection.Width += n, n => _selection.Left += n);
+                    OnSelectionKeyDown(n => Selection.Width += n, n => Selection.Left += n);
                     break;
                 case Key.Down:
-                    OnSelectionKeyDown(n => _selection.Height += n, n => _selection.Top += n);
+                    OnSelectionKeyDown(n => Selection.Height += n, n => Selection.Top += n);
                     break;
                 case Key.Left:
-                    OnSelectionKeyDown(n => _selection.Width -= n, n => _selection.Left -= n);
+                    OnSelectionKeyDown(n => Selection.Width -= n, n => Selection.Left -= n);
                     break;
             }
 

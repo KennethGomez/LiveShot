@@ -2,17 +2,16 @@
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-using LiveShot.UI.Controls;
+using LiveShot.Objects;
+using LiveShot.Objects.Events;
 using LiveShot.Utils;
 
 namespace LiveShot.UI.Views
 {
-    public partial class CaptureScreenView : Window
+    public partial class CaptureScreenView
     {
+        private ExportWindowView? _exportWindow;
         private Bitmap? _screenShot;
-        //private ExportWindow _exportWindow;
-
-        private bool IsCtrlPressed => Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl);
 
         public CaptureScreenView()
         {
@@ -28,6 +27,8 @@ namespace LiveShot.UI.Views
 
             CaptureScreen();
         }
+
+        private static bool IsCtrlPressed => Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl);
 
         private void CaptureScreen()
         {
@@ -61,24 +62,25 @@ namespace LiveShot.UI.Views
                     break;
             }
 
-            SelectCanvas.ParentKeyDown(e);
+            EventPipeline.Dispatch(new OnKeyDown(e));
         }
 
         private void OpenExportWindow()
         {
-            // if (!IsCtrlPressed || _exportWindow != null) return;
-            //
-            // var selection = SelectCanvas.Selection;
-            //
-            // if (selection == null || selection.IsClear) return;
-            //
-            // _exportWindow = new ExportWindow();
-            // _exportWindow.Show();
-            //
-            // double x = Width - _exportWindow.Width - 100;
-            // double y = Height - _exportWindow.Height - 100;
-            //
-            // _exportWindow.Position = new PixelPoint((int) x, (int) y);
+            if (!IsCtrlPressed || _exportWindow is not null) return;
+
+            var selection = SelectCanvas.Selection;
+
+            if (selection == null || selection.IsClear) return;
+
+            _exportWindow = new ExportWindowView();
+            _exportWindow.Show();
+
+            double x = Width - _exportWindow.Width - 100;
+            double y = Height - _exportWindow.Height - 100;
+
+            _exportWindow.Left = x;
+            _exportWindow.Top = y;
         }
 
         private void CopyImage()

@@ -4,7 +4,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveShot.UI", "LiveShot.UI\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveShot.UI.Controls", "LiveShot.UI.Controls\LiveShot.UI.Controls.csproj", "{614D45ED-910F-4785-A65C-2C6FEED363B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveShot.Objects", "LiveShot.Objects\LiveShot.Objects.csproj", "{90390EB4-F8D3-4698-A20F-71B9CD0E851E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveShot.API", "LiveShot.API\LiveShot.API.csproj", "{90390EB4-F8D3-4698-A20F-71B9CD0E851E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveShot.Utils", "LiveShot.Utils\LiveShot.Utils.csproj", "{20B4A5E9-5E84-4ED6-986A-71EFF9AEC61F}"
 EndProject
