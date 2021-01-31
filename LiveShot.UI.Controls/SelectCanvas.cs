@@ -147,7 +147,7 @@ namespace LiveShot.UI.Controls
         {
             if (Selection == null) return;
 
-            switch (((KeyEventArgs) e.Args).Key)
+            switch (e.GetArgs<KeyEventArgs>().Key)
             {
                 case Key.Up:
                     OnSelectionKeyDown(n => Selection.Height -= n, n => Selection.Top -= n);

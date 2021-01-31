@@ -62,7 +62,7 @@ namespace LiveShot.UI.Views
                     break;
             }
 
-            EventPipeline.Dispatch(new OnKeyDown(e));
+            EventPipeline.Dispatch<OnKeyDown>(e);
         }
 
         private void OpenExportWindow()

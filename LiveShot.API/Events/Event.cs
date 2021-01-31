@@ -4,11 +4,11 @@
     {
         private readonly object _args;
 
-        protected Event(object args)
+        public Event(object args)
         {
             _args = args;
         }
 
-        public object Args => _args;
+        public T GetArgs<T>() => (T) _args;
     }
 }
