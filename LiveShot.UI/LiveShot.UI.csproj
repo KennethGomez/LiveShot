@@ -12,8 +12,4 @@
       <ProjectReference Include="..\LiveShot.UI.Controls\LiveShot.UI.Controls.csproj" />
       <ProjectReference Include="..\LiveShot.Utils\LiveShot.Utils.csproj" />
     </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Events" />
-    </ItemGroup>
 </Project>

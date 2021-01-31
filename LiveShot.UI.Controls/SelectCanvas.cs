@@ -5,6 +5,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using LiveShot.Objects;
 using LiveShot.Objects.Events;
+using LiveShot.Objects.Events.Input;
 
 namespace LiveShot.UI.Controls
 {

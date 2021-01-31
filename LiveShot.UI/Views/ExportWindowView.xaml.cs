@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Windows;
+using LiveShot.Objects;
+using LiveShot.Objects.Events.Window;
 
 namespace LiveShot.UI.Views
 {
@@ -13,6 +15,12 @@ namespace LiveShot.UI.Views
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
+            
+            EventPipeline.Dispatch<OnClosed>(new OnClosedArgs
+            {
+                Root = e,
+                Window = this
+            });
         }
     }
 }

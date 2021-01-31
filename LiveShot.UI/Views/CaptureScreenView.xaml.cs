@@ -4,6 +4,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using LiveShot.Objects;
 using LiveShot.Objects.Events;
+using LiveShot.Objects.Events.Input;
+using LiveShot.Objects.Events.Window;
 using LiveShot.Utils;
 
 namespace LiveShot.UI.Views
@@ -26,6 +28,8 @@ namespace LiveShot.UI.Views
             SelectCanvas.Height = Height;
 
             CaptureScreen();
+
+            EventPipeline.Subscribe<OnClosed>(OnWindowClosed);
         }
 
         private static bool IsCtrlPressed => Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl);
@@ -93,6 +97,16 @@ namespace LiveShot.UI.Views
             ImageUtils.CopyImage(selection, _screenShot);
 
             Close();
+        }
+
+        private void OnWindowClosed(Event e)
+        {
+            if (e.GetArgs<OnClosedArgs>().Window == _exportWindow)
+            {
+                _exportWindow = null;
+
+                Close();
+            }
         }
     }
 }

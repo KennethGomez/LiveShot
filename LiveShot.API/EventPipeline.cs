@@ -21,7 +21,7 @@ namespace LiveShot.Objects
             actions.Add(action);
         }
 
-        public static void Dispatch<T>(EventArgs e) where T : Event, new()
+        public static void Dispatch<T>(object e) where T : Event, new()
         {
             if (!Actions.TryGetValue(typeof(T), out var actions)) 
                 return;
