@@ -11,14 +11,14 @@ namespace LiveShot.Objects
 
         public static void Subscribe<T>(Action<Event> action)
         {
-            if (!Actions.TryGetValue(typeof(T), out var actions))
+            var key = typeof(T);
+
+            if (!Actions.ContainsKey(key))
             {
-                actions = new Collection<Action<Event>>();
-                
-                Actions.Add(typeof(T), actions);
+                Actions[key] = new Collection<Action<Event>>();
             }
             
-            actions.Add(action);
+            Actions[key].Add(action);
         }
 
         public static void Dispatch<T>(object e) where T : Event, new()
