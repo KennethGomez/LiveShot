@@ -21,14 +21,14 @@ namespace LiveShot.Objects
             actions.Add(action);
         }
 
-        public static void Dispatch<T>(EventArgs e)
+        public static void Dispatch<T>(EventArgs e) where T : Event, new()
         {
             if (!Actions.TryGetValue(typeof(T), out var actions)) 
                 return;
 
             foreach (var action in actions)
             {
-                action(new Event(e));
+                action(new T().With(e));
             }
         }
     }

@@ -1,14 +1,18 @@
-﻿namespace LiveShot.Objects.Events
+﻿using System;
+
+namespace LiveShot.Objects.Events
 {
     public class Event
     {
-        private readonly object _args;
+        private object? _args;
 
-        public Event(object args)
+        public Event With(object args)
         {
             _args = args;
+            
+            return this;
         }
 
-        public T GetArgs<T>() => (T) _args;
+        public T GetArgs<T>() => (T) (_args ?? throw new InvalidOperationException());
     }
 }
