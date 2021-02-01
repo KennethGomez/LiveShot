@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.IO;
 using System.Windows;
-using LiveShot.Objects;
+using LiveShot.API;
 using LiveShot.UI.Views;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

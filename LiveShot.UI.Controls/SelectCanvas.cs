@@ -3,9 +3,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using LiveShot.Objects;
-using LiveShot.Objects.Events;
-using LiveShot.Objects.Events.Input;
+using LiveShot.API;
+using LiveShot.API.Events;
+using LiveShot.API.Events.Input;
 
 namespace LiveShot.UI.Controls
 {
@@ -59,7 +59,9 @@ namespace LiveShot.UI.Controls
             SetLeft(Selection.Rectangle, Selection.Left);
             SetTop(Selection.Rectangle, Selection.Top);
 
-            SizeLabel.Content = Selection.IsClear ? "Empty selection" : $"{Selection.Width} × {Selection.Height}";
+            SizeLabel.Content = Selection.IsClear
+                ? API.Properties.Resources.CaptureScreen_SizeLabel_Empty
+                : $"{Selection.Width} × {Selection.Height}";
         }
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)

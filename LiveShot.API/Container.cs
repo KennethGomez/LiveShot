@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace LiveShot.Objects
+namespace LiveShot.API
 {
     public static class Container
     {

@@ -1,7 +1,7 @@
 ﻿using System;
-using LiveShot.Objects.Events;
+using LiveShot.API.Events;
 
-namespace LiveShot.Objects
+namespace LiveShot.API
 {
     public interface IEventPipeline
     {

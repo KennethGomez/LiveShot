@@ -21,4 +21,7 @@
     <data name="ExportWindow.Title" xml:space="preserve">
         <value>Export screenshot</value>
     </data>
+    <data name="CaptureScreen.SizeLabel.Empty" xml:space="preserve">
+        <value>Empty selection</value>
+    </data>
 </root>

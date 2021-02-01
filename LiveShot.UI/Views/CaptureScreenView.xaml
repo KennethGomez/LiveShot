@@ -5,6 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:LiveShot.UI.Views"
         xmlns:controls="clr-namespace:LiveShot.UI.Controls;assembly=LiveShot.UI.Controls"
+        xmlns:properties="clr-namespace:LiveShot.API.Properties;assembly=LiveShot.API"
         mc:Ignorable="d"
         Title="CaptureScreenView" Height="450" Width="800"
         WindowStyle="None"
@@ -19,6 +20,7 @@
         </Grid.RowDefinitions>
         <controls:SelectCanvas Grid.Row="0" x:Name="SelectCanvas" SizeLabel="{Binding ElementName=SizeLabel}" />
         <Label Name="SizeLabel" Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Center" FontSize="16"
-               Background="#1EFFFFFF" Foreground="White" Content="Empty selection" Padding="25,10" />
+               Background="#1EFFFFFF" Foreground="White" Padding="25,10"
+               Content="{x:Static properties:Resources.CaptureScreen_SizeLabel_Empty}" />
     </Grid>
 </Window>

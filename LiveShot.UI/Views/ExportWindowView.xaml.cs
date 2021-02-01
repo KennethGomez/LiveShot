@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows;
-using LiveShot.Objects;
-using LiveShot.Objects.Events.Window;
+using LiveShot.API;
+using LiveShot.API.Events.Window;
 
 namespace LiveShot.UI.Views
 {

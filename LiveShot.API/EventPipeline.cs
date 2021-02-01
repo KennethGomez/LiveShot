@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using LiveShot.Objects.Events;
+using LiveShot.API.Events;
 
-namespace LiveShot.Objects
+namespace LiveShot.API
 {
     public class EventPipeline : IEventPipeline
     {

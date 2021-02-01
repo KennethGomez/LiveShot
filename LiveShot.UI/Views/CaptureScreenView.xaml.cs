@@ -3,10 +3,10 @@ using System.Drawing;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-using LiveShot.Objects;
-using LiveShot.Objects.Events;
-using LiveShot.Objects.Events.Input;
-using LiveShot.Objects.Events.Window;
+using LiveShot.API;
+using LiveShot.API.Events;
+using LiveShot.API.Events.Input;
+using LiveShot.API.Events.Window;
 using LiveShot.Utils;
 using Microsoft.Extensions.DependencyInjection;
 

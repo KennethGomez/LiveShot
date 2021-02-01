@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace LiveShot.UI.Properties {
+namespace LiveShot.API.Properties {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace LiveShot.UI.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Resources_en_US {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resources_en_US() {
+        internal Resources() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace LiveShot.UI.Properties {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("LiveShot.UI.Properties.Resources.en-US", typeof(Resources_en_US).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("LiveShot.API.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,7 +61,16 @@ namespace LiveShot.UI.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Export screenshot.
+        ///   Looks up a localized string similar to CaptureScreen.SizeLabel.Empty.
+        /// </summary>
+        public static string CaptureScreen_SizeLabel_Empty {
+            get {
+                return ResourceManager.GetString("CaptureScreen.SizeLabel.Empty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ExportWindow.Title.
         /// </summary>
         public static string ExportWindow_Title {
             get {

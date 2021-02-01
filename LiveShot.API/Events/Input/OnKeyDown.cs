@@ -1,4 +1,4 @@
-﻿namespace LiveShot.Objects.Events.Input
+﻿namespace LiveShot.API.Events.Input
 {
     public class OnKeyDown : Event
     {

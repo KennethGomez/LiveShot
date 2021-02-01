@@ -1,8 +1,7 @@
 ﻿using System;
-
 using RootWindow = System.Windows.Window;
 
-namespace LiveShot.Objects.Events.Window
+namespace LiveShot.API.Events.Window
 {
     public class OnClosed : Event
     {

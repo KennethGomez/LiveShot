@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LiveShot.Objects.Events
+namespace LiveShot.API.Events
 {
     public class Event
     {
