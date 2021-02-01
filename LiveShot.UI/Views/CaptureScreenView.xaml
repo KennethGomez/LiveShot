@@ -12,7 +12,7 @@
         WindowState="Maximized"
         ShowInTaskbar="False"
         WindowStartupLocation="CenterScreen">
-    <Grid>
+    <Grid Name="Grid">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />

@@ -5,25 +5,25 @@ using LiveShot.Objects.Events;
 
 namespace LiveShot.Objects
 {
-    public class EventPipeline
+    public class EventPipeline : IEventPipeline
     {
-        private static readonly Dictionary<Type, Collection<Action<Event>>> Actions = new();
+        private readonly Dictionary<Type, Collection<Action<Event>>> _actions = new();
 
-        public static void Subscribe<T>(Action<Event> action)
+        public void Subscribe<T>(Action<Event> action)
         {
             var key = typeof(T);
 
-            if (!Actions.ContainsKey(key))
+            if (!_actions.ContainsKey(key))
             {
-                Actions[key] = new Collection<Action<Event>>();
+                _actions[key] = new Collection<Action<Event>>();
             }
             
-            Actions[key].Add(action);
+            _actions[key].Add(action);
         }
 
-        public static void Dispatch<T>(object e) where T : Event, new()
+        public void Dispatch<T>(object e) where T : Event, new()
         {
-            if (!Actions.TryGetValue(typeof(T), out var actions)) 
+            if (!_actions.TryGetValue(typeof(T), out var actions)) 
                 return;
 
             foreach (var action in actions)

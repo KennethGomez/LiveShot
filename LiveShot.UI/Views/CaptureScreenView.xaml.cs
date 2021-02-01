@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -7,17 +8,24 @@ using LiveShot.Objects.Events;
 using LiveShot.Objects.Events.Input;
 using LiveShot.Objects.Events.Window;
 using LiveShot.Utils;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace LiveShot.UI.Views
 {
     public partial class CaptureScreenView
     {
+        private readonly IServiceProvider _services;
+        private readonly IEventPipeline _events;
+        
         private ExportWindowView? _exportWindow;
         private Bitmap? _screenShot;
 
-        public CaptureScreenView()
+        public CaptureScreenView(IEventPipeline events, IServiceProvider services)
         {
             InitializeComponent();
+
+            _events = events;
+            _services = services;
 
             Top = SystemParameters.VirtualScreenTop;
             Left = SystemParameters.VirtualScreenLeft;
@@ -26,10 +34,11 @@ namespace LiveShot.UI.Views
 
             SelectCanvas.Width = Width;
             SelectCanvas.Height = Height;
+            SelectCanvas.WithEvents(events);
 
             CaptureScreen();
 
-            EventPipeline.Subscribe<OnClosed>(OnWindowClosed);
+            _events.Subscribe<OnClosed>(OnWindowClosed);
         }
 
         private static bool IsCtrlPressed => Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl);
@@ -66,7 +75,7 @@ namespace LiveShot.UI.Views
                     break;
             }
 
-            EventPipeline.Dispatch<OnKeyDown>(e);
+            _events.Dispatch<OnKeyDown>(e);
         }
 
         private void OpenExportWindow()
@@ -77,7 +86,10 @@ namespace LiveShot.UI.Views
 
             if (selection == null || selection.IsClear) return;
 
-            _exportWindow = new ExportWindowView();
+            _exportWindow = _services.GetService<ExportWindowView>();
+            
+            if (_exportWindow is null) return;
+            
             _exportWindow.Show();
 
             double x = Width - _exportWindow.Width - 100;

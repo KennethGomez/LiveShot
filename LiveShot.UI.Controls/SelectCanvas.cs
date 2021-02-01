@@ -24,8 +24,6 @@ namespace LiveShot.UI.Controls
         {
             Background = Brushes.Black;
             Opacity = .4;
-
-            EventPipeline.Subscribe<OnKeyDown>(OnKeyDown);
         }
 
         public Label SizeLabel
@@ -38,6 +36,11 @@ namespace LiveShot.UI.Controls
         private static bool ShiftPressed => Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift);
 
         public Selection? Selection { get; private set; }
+
+        public void WithEvents(IEventPipeline events)
+        {
+            events.Subscribe<OnKeyDown>(OnKeyDown);
+        }
 
         private static void OnSelectionKeyDown(Action<int> shiftPressed, Action<int> normal)
         {

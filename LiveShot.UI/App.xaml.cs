@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.IO;
 using System.Windows;
+using LiveShot.Objects;
 using LiveShot.UI.Views;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,6 +24,7 @@ namespace LiveShot.UI
             SetUICulture();
 
             var serviceCollection = new ServiceCollection()
+                .ConfigureAPI()
                 .ConfigureUI();
  
             ServiceProvider = serviceCollection.BuildServiceProvider();
