@@ -10,8 +10,8 @@ namespace LiveShot.Objects.Events.Window
 
     public record OnClosedArgs
     {
-        public EventArgs Root { get; init; }
+        public EventArgs? Root { get; init; }
 
-        public RootWindow Window { get; init; }
+        public RootWindow? Window { get; init; }
     }
 }

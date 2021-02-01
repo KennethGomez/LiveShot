@@ -108,5 +108,12 @@ namespace LiveShot.UI.Views
                 Close();
             }
         }
+
+        private new void Close()
+        {
+            _exportWindow?.Close();
+
+            base.Close();
+        }
     }
 }

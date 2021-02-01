@@ -7,10 +7,19 @@
         mc:Ignorable="d"
         Title="LiveShot.UI.Avalonia"
         ResizeMode="NoResize"
-        Width="300"
-        Height="75"
+        SizeToContent="Width"
+        Height="80"
         Topmost="True">
-    <Grid>
-        
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Height="20" Margin="20,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Button Grid.Column="0" Content="Abrir" Padding="10,0" />
+        <Button Grid.Column="2" Content="Copiar" Padding="10,0" />
+        <TextBox Grid.Column="4" Text="https://imgur.com/asdads" Width="150" IsReadOnly="True" />
     </Grid>
 </Window>
