@@ -3,9 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:local="clr-namespace:LiveShot.UI.Views"
+        xmlns:p="clr-namespace:LiveShot.UI.Properties"
         mc:Ignorable="d"
-        Title="LiveShot.UI.Avalonia"
+        Title="{x:Static p:Resources.ExportWindow_Title}"
         ResizeMode="NoResize"
         SizeToContent="Width"
         Height="80"
@@ -18,7 +18,7 @@
             <ColumnDefinition Width="5" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Button Grid.Column="0" Content="Abrir" Padding="10,0" />
+        <Button Grid.Column="0" Content="Abrir" Padding="10,0" Name="Btn1" />
         <Button Grid.Column="2" Content="Copiar" Padding="10,0" />
         <TextBox Grid.Column="4" Text="https://imgur.com/asdads" Width="150" IsReadOnly="True" />
     </Grid>
