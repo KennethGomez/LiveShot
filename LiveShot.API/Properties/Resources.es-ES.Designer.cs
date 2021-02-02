@@ -22,24 +22,24 @@ namespace LiveShot.API.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Resources {
+    internal class Resources_es_ES {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resources() {
+        internal Resources_es_ES() {
         }
         
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Resources.ResourceManager ResourceManager {
+        internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("LiveShot.API.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("LiveShot.API.Properties.Resources.es-ES", typeof(Resources_es_ES).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -51,7 +51,7 @@ namespace LiveShot.API.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Globalization.CultureInfo Culture {
+        internal static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -61,36 +61,36 @@ namespace LiveShot.API.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to CaptureScreen.SizeLabel.Empty.
+        ///   Looks up a localized string similar to Selección vacía.
         /// </summary>
-        public static string CaptureScreen_SizeLabel_Empty {
+        internal static string CaptureScreen_SizeLabel_Empty {
             get {
                 return ResourceManager.GetString("CaptureScreen.SizeLabel.Empty", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ExportWindow.Copy.
+        ///   Looks up a localized string similar to Copiar.
         /// </summary>
-        public static string ExportWindow_Copy {
+        internal static string ExportWindow_Copy {
             get {
                 return ResourceManager.GetString("ExportWindow.Copy", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ExportWindow.Open.
+        ///   Looks up a localized string similar to Abrir.
         /// </summary>
-        public static string ExportWindow_Open {
+        internal static string ExportWindow_Open {
             get {
                 return ResourceManager.GetString("ExportWindow.Open", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ExportWindow.Title.
+        ///   Looks up a localized string similar to Exportar captura de pantalla.
         /// </summary>
-        public static string ExportWindow_Title {
+        internal static string ExportWindow_Title {
             get {
                 return ResourceManager.GetString("ExportWindow.Title", resourceCulture);
             }

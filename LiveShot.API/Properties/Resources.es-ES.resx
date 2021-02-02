@@ -19,15 +19,15 @@
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
     <data name="CaptureScreen.SizeLabel.Empty" xml:space="preserve">
-        <value>CaptureScreen.SizeLabel.Empty</value>
+        <value>Selección vacía</value>
     </data>
     <data name="ExportWindow.Title" xml:space="preserve">
-        <value>ExportWindow.Title</value>
-    </data>
-    <data name="ExportWindow.Open" xml:space="preserve">
-        <value>ExportWindow.Open</value>
+        <value>Exportar captura de pantalla</value>
     </data>
     <data name="ExportWindow.Copy" xml:space="preserve">
-        <value>ExportWindow.Copy</value>
+        <value>Copiar</value>
+    </data>
+    <data name="ExportWindow.Open" xml:space="preserve">
+        <value>Abrir</value>
     </data>
 </root>

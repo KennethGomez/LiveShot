@@ -20,6 +20,10 @@
         <Generator>PublicResXFileCodeGenerator</Generator>
         <LastGenOutput>Resources.en-US.Designer.cs</LastGenOutput>
       </EmbeddedResource>
+      <EmbeddedResource Update="Properties\Resources.es-ES.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Resources.es-ES.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
     </ItemGroup>
 
     <ItemGroup>
@@ -32,6 +36,11 @@
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>
         <DependentUpon>Resources.en-US.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Properties\Resources.es-ES.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Resources.es-ES.resx</DependentUpon>
       </Compile>
     </ItemGroup>
 
