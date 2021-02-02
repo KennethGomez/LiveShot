@@ -11,19 +11,26 @@ namespace LiveShot.Utils
     {
         public static void CopyImage(Selection selection, Bitmap source)
         {
-            using var target = new Bitmap((int) selection.Width, (int) selection.Height);
-            using var graphics = Graphics.FromImage(target);
+            var bitmap = GetBitmap(selection, source);
+            var bitmapSource = GetBitmapSource(bitmap);
+
+            Clipboard.SetImage(bitmapSource);
+        }
+
+        public static Bitmap GetBitmap(Selection selection, Bitmap source)
+        {
+            var bitmap = new Bitmap((int) selection.Width, (int) selection.Height);
+
+            using var graphics = Graphics.FromImage(bitmap);
 
             graphics.DrawImage(
                 source,
-                new Rectangle(0, 0, target.Width, target.Height),
-                new Rectangle((int) selection.Left, (int) selection.Top, target.Width, target.Height),
+                new Rectangle(0, 0, bitmap.Width, bitmap.Height),
+                new Rectangle((int) selection.Left, (int) selection.Top, bitmap.Width, bitmap.Height),
                 GraphicsUnit.Pixel
             );
 
-            var bitmapSource = GetBitmapSource(target);
-
-            Clipboard.SetImage(bitmapSource);
+            return bitmap;
         }
 
         public static Bitmap CaptureScreen(int width, int height, int left, int top)

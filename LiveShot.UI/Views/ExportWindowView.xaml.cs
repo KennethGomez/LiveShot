@@ -1,29 +1,56 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows;
+using System.Windows.Threading;
 using LiveShot.API;
 using LiveShot.API.Events.Window;
+using LiveShot.API.Upload;
 
 namespace LiveShot.UI.Views
 {
     public partial class ExportWindowView : Window
     {
         private readonly IEventPipeline _events;
-        
-        public ExportWindowView(IEventPipeline events)
+        private readonly IUploadService _uploadService;
+
+        public ExportWindowView(IEventPipeline events, IUploadService uploadService)
         {
             InitializeComponent();
 
             _events = events;
+            _uploadService = uploadService;
         }
 
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
-            
+
             _events.Dispatch<OnClosed>(new OnClosedArgs
             {
                 Root = e,
                 Window = this
+            });
+        }
+
+        public void Upload(Bitmap bitmap)
+        {
+            Dispatcher.BeginInvoke(async () =>
+            {
+                try
+                {
+                    LinkBox.Text = await _uploadService.Upload(bitmap);
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(
+                        e.Message,
+                        API.Properties.Resources.Exception_Message,
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Error
+                    );
+
+                    Close();
+                }
             });
         }
     }

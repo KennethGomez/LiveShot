@@ -37,8 +37,6 @@ namespace LiveShot.UI.Views
             SelectCanvas.WithEvents(events);
 
             CaptureScreen();
-
-            _events.Subscribe<OnClosed>(OnWindowClosed);
         }
 
         private static bool IsCtrlPressed => Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl);
@@ -71,24 +69,29 @@ namespace LiveShot.UI.Views
                     CopyImage();
                     break;
                 case Key.D:
-                    OpenExportWindow();
+                    if (OpenExportWindow())
+                    {
+                        Close();
+                    }
                     break;
             }
 
             _events.Dispatch<OnKeyDown>(e);
         }
 
-        private void OpenExportWindow()
+        private bool OpenExportWindow()
         {
-            if (!IsCtrlPressed || _exportWindow is not null) return;
+            if (!IsCtrlPressed || _exportWindow is not null || _screenShot is null) return false;
 
             var selection = SelectCanvas.Selection;
 
-            if (selection == null || selection.IsClear) return;
+            if (selection is null || selection.IsClear) return false;
 
+            var bitmap = ImageUtils.GetBitmap(selection, _screenShot);
+            
             _exportWindow = _services.GetService<ExportWindowView>();
             
-            if (_exportWindow is null) return;
+            if (_exportWindow is null) return false;
             
             _exportWindow.Show();
 
@@ -97,6 +100,10 @@ namespace LiveShot.UI.Views
 
             _exportWindow.Left = x;
             _exportWindow.Top = y;
+            
+            _exportWindow.Upload(bitmap);
+
+            return true;
         }
 
         private void CopyImage()
@@ -109,23 +116,6 @@ namespace LiveShot.UI.Views
             ImageUtils.CopyImage(selection, _screenShot);
 
             Close();
-        }
-
-        private void OnWindowClosed(Event e)
-        {
-            if (e.GetArgs<OnClosedArgs>().Window == _exportWindow)
-            {
-                _exportWindow = null;
-
-                Close();
-            }
-        }
-
-        private new void Close()
-        {
-            _exportWindow?.Close();
-
-            base.Close();
         }
     }
 }

@@ -30,4 +30,10 @@
     <data name="ExportWindow.Copy" xml:space="preserve">
         <value>ExportWindow.Copy</value>
     </data>
+    <data name="Imgur.InvalidClientIdException" xml:space="preserve">
+        <value>Imgur.InvalidClientIdException</value>
+    </data>
+    <data name="Exception.Message" xml:space="preserve">
+        <value>Exception.Message</value>
+    </data>
 </root>

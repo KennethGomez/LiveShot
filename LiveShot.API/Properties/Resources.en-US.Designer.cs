@@ -70,6 +70,15 @@ namespace LiveShot.API.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        public static string Exception_Message {
+            get {
+                return ResourceManager.GetString("Exception.Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Copy.
         /// </summary>
         public static string ExportWindow_Copy {
@@ -93,6 +102,15 @@ namespace LiveShot.API.Properties {
         public static string ExportWindow_Title {
             get {
                 return ResourceManager.GetString("ExportWindow.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid client ID for imgur API.
+        /// </summary>
+        public static string Imgur_InvalidClientIdException {
+            get {
+                return ResourceManager.GetString("Imgur.InvalidClientIdException", resourceCulture);
             }
         }
     }

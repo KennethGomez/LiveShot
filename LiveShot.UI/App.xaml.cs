@@ -26,7 +26,10 @@ namespace LiveShot.UI
             var serviceCollection = new ServiceCollection()
                 .ConfigureAPI()
                 .ConfigureUI();
- 
+
+            if (Configuration != null) 
+                serviceCollection.AddSingleton(Configuration);
+
             ServiceProvider = serviceCollection.BuildServiceProvider();
             ServiceProvider.GetRequiredService<CaptureScreenView>().Show();
         }

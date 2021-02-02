@@ -20,6 +20,6 @@
         </Grid.ColumnDefinitions>
         <Button Grid.Column="0" Content="{x:Static properties:Resources.ExportWindow_Open}" Padding="10,0" />
         <Button Grid.Column="2" Content="{x:Static properties:Resources.ExportWindow_Copy}" Padding="10,0" />
-        <TextBox Grid.Column="4" Text="https://imgur.com/asdads" Width="150" IsReadOnly="True" />
+        <TextBox Grid.Column="4" Text="Uploading" Width="150" IsReadOnly="True" Name="LinkBox" />
     </Grid>
 </Window>

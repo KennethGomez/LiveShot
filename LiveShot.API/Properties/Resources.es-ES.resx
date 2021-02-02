@@ -30,4 +30,10 @@
     <data name="ExportWindow.Open" xml:space="preserve">
         <value>Abrir</value>
     </data>
+    <data name="Imgur.InvalidClientIdException" xml:space="preserve">
+        <value>La ClientID proporcionada para la API de imgur es inválida</value>
+    </data>
+    <data name="Exception.Message" xml:space="preserve">
+        <value>Excepción</value>
+    </data>
 </root>

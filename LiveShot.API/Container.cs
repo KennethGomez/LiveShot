@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using LiveShot.API.Upload;
+using LiveShot.API.Upload.Imgur;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace LiveShot.API
 {
@@ -7,6 +9,7 @@ namespace LiveShot.API
         public static IServiceCollection ConfigureAPI(this IServiceCollection services)
         {
             services.AddSingleton<IEventPipeline, EventPipeline>();
+            services.AddSingleton<IUploadService, ImgurService>();
 
             return services;
         }
