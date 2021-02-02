@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.IO;
+using System.Threading;
 using System.Windows;
 using LiveShot.API;
 using LiveShot.UI.Views;
@@ -10,14 +11,14 @@ using Microsoft.Extensions.DependencyInjection;
 namespace LiveShot.UI
 {
     /// <summary>
-    /// Interaction logic for App.xaml
+    ///     Interaction logic for App.xaml
     /// </summary>
     public partial class App : Application
     {
         private IServiceProvider? ServiceProvider { get; set; }
 
         private IConfiguration? Configuration { get; set; }
- 
+
         protected override void OnStartup(StartupEventArgs e)
         {
             LoadConfiguration();
@@ -27,7 +28,7 @@ namespace LiveShot.UI
                 .ConfigureAPI()
                 .ConfigureUI();
 
-            if (Configuration != null) 
+            if (Configuration != null)
                 serviceCollection.AddSingleton(Configuration);
 
             ServiceProvider = serviceCollection.BuildServiceProvider();
@@ -38,10 +39,7 @@ namespace LiveShot.UI
         {
             string? culture = Configuration?["CultureUI"];
 
-            if (culture is not null)
-            {
-                System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo(culture);
-            }
+            if (culture is not null) Thread.CurrentThread.CurrentUICulture = new CultureInfo(culture);
         }
 
         private void LoadConfiguration()

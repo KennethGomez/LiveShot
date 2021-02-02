@@ -69,7 +69,7 @@ namespace LiveShot.API
 
         public Rectangle Rectangle => _rectangle;
 
-        public static Selection Empty => new Selection(0, 0, 0, 0);
+        public static Selection Empty => new(0, 0, 0, 0);
 
         public bool IsClear => Width == 0 && Height == 0 && Top == 0 && Height == 0;
 

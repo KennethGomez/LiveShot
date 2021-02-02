@@ -9,10 +9,13 @@ namespace LiveShot.API.Events
         public Event With(object args)
         {
             _args = args;
-            
+
             return this;
         }
 
-        public T GetArgs<T>() => (T) (_args ?? throw new InvalidOperationException());
+        public T GetArgs<T>()
+        {
+            return (T) (_args ?? throw new InvalidOperationException());
+        }
     }
 }

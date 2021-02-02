@@ -13,23 +13,17 @@ namespace LiveShot.API
         {
             var key = typeof(T);
 
-            if (!_actions.ContainsKey(key))
-            {
-                _actions[key] = new Collection<Action<Event>>();
-            }
-            
+            if (!_actions.ContainsKey(key)) _actions[key] = new Collection<Action<Event>>();
+
             _actions[key].Add(action);
         }
 
         public void Dispatch<T>(object e) where T : Event, new()
         {
-            if (!_actions.TryGetValue(typeof(T), out var actions)) 
+            if (!_actions.TryGetValue(typeof(T), out var actions))
                 return;
 
-            foreach (var action in actions)
-            {
-                action(new T().With(e));
-            }
+            foreach (var action in actions) action(new T().With(e));
         }
     }
 }

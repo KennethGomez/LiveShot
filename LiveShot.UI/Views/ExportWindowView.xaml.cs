@@ -33,14 +33,14 @@ namespace LiveShot.UI.Views
         private void OpenBtnOnClick(object sender, RoutedEventArgs e)
         {
             string url = LinkBox.Text;
-            
+
             try
             {
                 Process.Start(url);
             }
             catch (Exception)
             {
-                Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
+                Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") {CreateNoWindow = true});
             }
         }
 

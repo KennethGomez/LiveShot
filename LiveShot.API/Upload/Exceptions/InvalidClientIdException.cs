@@ -5,7 +5,7 @@ namespace LiveShot.API.Upload.Exceptions
 {
     public class InvalidClientIdException : Exception
     {
-        public InvalidClientIdException() 
+        public InvalidClientIdException()
             : base(Resources.Imgur_InvalidClientIdException)
         {
         }

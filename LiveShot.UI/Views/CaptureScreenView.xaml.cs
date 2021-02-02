@@ -4,9 +4,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using LiveShot.API;
-using LiveShot.API.Events;
 using LiveShot.API.Events.Input;
-using LiveShot.API.Events.Window;
 using LiveShot.Utils;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -14,9 +12,9 @@ namespace LiveShot.UI.Views
 {
     public partial class CaptureScreenView
     {
-        private readonly IServiceProvider _services;
         private readonly IEventPipeline _events;
-        
+        private readonly IServiceProvider _services;
+
         private ExportWindowView? _exportWindow;
         private Bitmap? _screenShot;
 
@@ -69,10 +67,7 @@ namespace LiveShot.UI.Views
                     CopyImage();
                     break;
                 case Key.D:
-                    if (OpenExportWindow())
-                    {
-                        Close();
-                    }
+                    if (OpenExportWindow()) Close();
                     break;
             }
 
@@ -88,11 +83,11 @@ namespace LiveShot.UI.Views
             if (selection is null || selection.IsClear) return false;
 
             var bitmap = ImageUtils.GetBitmap(selection, _screenShot);
-            
+
             _exportWindow = _services.GetService<ExportWindowView>();
-            
+
             if (_exportWindow is null) return false;
-            
+
             _exportWindow.Show();
 
             double x = Width - _exportWindow.Width - 100;
@@ -100,7 +95,7 @@ namespace LiveShot.UI.Views
 
             _exportWindow.Left = x;
             _exportWindow.Top = y;
-            
+
             _exportWindow.Upload(bitmap);
 
             return true;
