@@ -12,7 +12,7 @@
         Topmost="True">
     <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Height="20" Margin="20,0">
         <Grid Name="ProgressBarGrid">
-            <ProgressBar Minimum="0" Maximum="100" IsIndeterminate="True"></ProgressBar>
+            <ProgressBar Minimum="0" Maximum="100" IsIndeterminate="True" />
         </Grid>
         <Grid Visibility="Hidden" Name="UploadResultGrid">
             <Grid.ColumnDefinitions>
@@ -22,8 +22,10 @@
                 <ColumnDefinition Width="5" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Content="{x:Static properties:Resources.ExportWindow_Open}" Padding="10,0" />
-            <Button Grid.Column="2" Content="{x:Static properties:Resources.ExportWindow_Copy}" Padding="10,0" />
+            <Button Grid.Column="0" Content="{x:Static properties:Resources.ExportWindow_Open}" Padding="10,0"
+                    Name="OpenBtn" />
+            <Button Grid.Column="2" Content="{x:Static properties:Resources.ExportWindow_Copy}" Padding="10,0"
+                    Name="CopyBtn" />
             <TextBox Grid.Column="4" Text="Uploading" Width="150" IsReadOnly="True" Name="LinkBox" />
         </Grid>
     </Grid>

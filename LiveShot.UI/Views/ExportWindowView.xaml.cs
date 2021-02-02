@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows;
 using System.Windows.Threading;
@@ -19,6 +20,28 @@ namespace LiveShot.UI.Views
 
             _events = events;
             _uploadService = uploadService;
+
+            OpenBtn.Click += OpenBtnOnClick;
+            CopyBtn.Click += CopyBtnOnClick;
+        }
+
+        private void CopyBtnOnClick(object sender, RoutedEventArgs e)
+        {
+            Clipboard.SetText(LinkBox.Text);
+        }
+
+        private void OpenBtnOnClick(object sender, RoutedEventArgs e)
+        {
+            string url = LinkBox.Text;
+            
+            try
+            {
+                Process.Start(url);
+            }
+            catch (Exception)
+            {
+                Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
+            }
         }
 
         protected override void OnClosed(EventArgs e)
