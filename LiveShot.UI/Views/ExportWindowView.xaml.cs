@@ -39,6 +39,9 @@ namespace LiveShot.UI.Views
                 try
                 {
                     LinkBox.Text = await _uploadService.Upload(bitmap);
+
+                    UploadResultGrid.Visibility = Visibility.Visible;
+                    ProgressBarGrid.Visibility = Visibility.Hidden;
                 }
                 catch (Exception e)
                 {
