@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
 using LiveShot.API;
+using LiveShot.API.Canvas;
 
 namespace LiveShot.Utils
 {

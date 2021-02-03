@@ -3,7 +3,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
-namespace LiveShot.API
+namespace LiveShot.API.Canvas
 {
     public record Selection
     {
@@ -15,8 +15,7 @@ namespace LiveShot.API
         {
             _rectangle = new Rectangle
             {
-                Fill = Brushes.White,
-                Opacity = 0.3,
+                Fill = Brushes.Transparent,
                 Width = width,
                 Height = height
             };
@@ -66,6 +65,8 @@ namespace LiveShot.API
                 if (value >= 0) _rectangle.Height = value;
             }
         }
+
+        public (double, double, double, double) Transform => (_left, _top, _rectangle.Width, _rectangle.Height);
 
         public Rectangle Rectangle => _rectangle;
 

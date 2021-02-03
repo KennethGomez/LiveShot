@@ -10,14 +10,19 @@
         WindowStyle="None"
         ResizeMode="NoResize"
         WindowState="Maximized"
-        ShowInTaskbar="False"
+        ShowInTaskbar="True"
         WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <controls:SelectCanvas Grid.Row="0" x:Name="SelectCanvas" SizeLabel="{Binding ElementName=SizeLabel}" />
+        <controls:SelectCanvas Grid.Row="0" x:Name="SelectCanvas" SizeLabel="{Binding ElementName=SizeLabel}"
+                               OpacityRectangle="{Binding ElementName=OpacityRectangle}">
+            <Rectangle Name="OpacityRectangle" Fill="Black" Opacity="0.4"
+                       Width="{Binding ElementName=SelectCanvas, Path=Width}"
+                       Height="{Binding ElementName=SelectCanvas, Path=Height}" />
+        </controls:SelectCanvas>
         <Label Name="SizeLabel" Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Center" FontSize="16"
                Background="#1EFFFFFF" Foreground="White" Padding="25,10"
                Content="{x:Static properties:Resources.CaptureScreen_SizeLabel_Empty}" />

@@ -7,6 +7,7 @@ using LiveShot.API;
 using LiveShot.API.Events.Input;
 using LiveShot.Utils;
 using Microsoft.Extensions.DependencyInjection;
+using Brushes = System.Windows.Media.Brushes;
 
 namespace LiveShot.UI.Views
 {
@@ -44,16 +45,13 @@ namespace LiveShot.UI.Views
             (int screenTop, int screenLeft, int screenWidth, int screenHeight) =
                 ((int, int, int, int)) (Top, Left, Width, Height);
 
-            Opacity = .0;
-
             var bitmap = ImageUtils.CaptureScreen(screenWidth, screenHeight, screenLeft, screenTop);
             var bitmapSource = ImageUtils.GetBitmapSource(bitmap);
 
             _screenShot = bitmap;
 
-            Background = new ImageBrush(bitmapSource);
-
-            Opacity = 1;
+            Background = Brushes.Transparent;
+            SelectCanvas.Background = new ImageBrush(bitmapSource);
         }
 
         protected override void OnKeyDown(KeyEventArgs e)
