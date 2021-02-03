@@ -10,12 +10,16 @@ namespace LiveShot.Utils
 {
     public static class ImageUtils
     {
-        public static void CopyImage(Selection selection, Bitmap source)
+        public static bool CopyImage(Selection selection, Bitmap source)
         {
+            if (selection.HasInvalidSize) return false;
+            
             var bitmap = GetBitmap(selection, source);
             var bitmapSource = GetBitmapSource(bitmap);
 
             Clipboard.SetImage(bitmapSource);
+
+            return true;
         }
 
         public static Bitmap GetBitmap(Selection selection, Bitmap source)

@@ -78,7 +78,7 @@ namespace LiveShot.UI.Views
 
             var selection = SelectCanvas.Selection;
 
-            if (selection is null || selection.IsClear) return false;
+            if (selection is null || selection.IsClear || selection.HasInvalidSize) return false;
 
             var bitmap = ImageUtils.GetBitmap(selection, _screenShot);
 
@@ -106,9 +106,9 @@ namespace LiveShot.UI.Views
             var selection = SelectCanvas.Selection;
             if (selection is null || selection.IsClear) return;
 
-            ImageUtils.CopyImage(selection, _screenShot);
+            bool copied = ImageUtils.CopyImage(selection, _screenShot);
 
-            Close();
+            if (copied) Close();
         }
     }
 }
