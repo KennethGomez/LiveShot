@@ -5,24 +5,32 @@
         <TargetFramework>net5.0-windows</TargetFramework>
         <UseWPF>true</UseWPF>
         <Nullable>enable</Nullable>
+        <ApplicationIcon>icon.ico</ApplicationIcon>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\LiveShot.API\LiveShot.API.csproj" />
-      <ProjectReference Include="..\LiveShot.UI.Controls\LiveShot.UI.Controls.csproj" />
-      <ProjectReference Include="..\LiveShot.Utils\LiveShot.Utils.csproj" />
+        <ProjectReference Include="..\LiveShot.API\LiveShot.API.csproj" />
+        <ProjectReference Include="..\LiveShot.UI.Controls\LiveShot.UI.Controls.csproj" />
+        <ProjectReference Include="..\LiveShot.Utils\LiveShot.Utils.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
-      <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="5.0.0" />
-      <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
-      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="5.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
     </ItemGroup>
 
     <ItemGroup>
-      <None Update="Properties\appsettings.json">
+        <None Update="Properties\appsettings.json">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="icon.ico" />
+      <Resource Include="icon.ico">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
+      </Resource>
     </ItemGroup>
 </Project>

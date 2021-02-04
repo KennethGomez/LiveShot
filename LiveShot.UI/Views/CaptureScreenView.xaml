@@ -11,6 +11,7 @@
         ResizeMode="NoResize"
         WindowState="Maximized"
         ShowInTaskbar="True"
+        Icon="/icon.ico"
         WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>

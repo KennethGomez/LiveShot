@@ -9,6 +9,7 @@
         ResizeMode="NoResize"
         SizeToContent="Width"
         Height="80"
+        Icon="/icon.ico"
         Topmost="True">
     <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Height="20" Margin="20,0">
         <Grid Name="ProgressBarGrid">
