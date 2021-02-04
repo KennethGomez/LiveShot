@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -7,6 +9,7 @@ using LiveShot.API;
 using LiveShot.API.Events.Input;
 using LiveShot.Utils;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Win32;
 using Brushes = System.Windows.Media.Brushes;
 
 namespace LiveShot.UI.Views
@@ -62,19 +65,70 @@ namespace LiveShot.UI.Views
                     Close();
                     break;
                 case Key.C:
-                    CopyImage();
+                    if (IsCtrlPressed)
+                        CopyImage();
+                    break;
+                case Key.S:
+                    if (IsCtrlPressed)
+                        if (SaveImage())
+                            Close();
                     break;
                 case Key.D:
-                    if (OpenExportWindow()) Close();
+                    if (IsCtrlPressed)
+                        if (OpenExportWindow())
+                            Close();
                     break;
             }
 
             _events.Dispatch<OnKeyDown>(e);
         }
 
+        private bool SaveImage()
+        {
+            if (_screenShot is null) return false;
+            
+            SaveFileDialog dialog = new()
+            {
+                Filter = "PNG|*.png|JPEG|*.jpeg|BMP|*.bmp",
+                FileName = $"Screenshot {DateTime.Now:dd-MM-yyyy HH mm}",
+                RestoreDirectory = true,
+                Title = API.Properties.Resources.CaptureScreenView_SaveImage_Title
+            };
+
+            dialog.ShowDialog();
+
+            if (string.IsNullOrWhiteSpace(dialog.FileName)) return false;
+
+            try
+            {
+                FileStream fs = (FileStream) dialog.OpenFile();
+
+                switch (dialog.FilterIndex)
+                {
+                    case 1:
+                        _screenShot.Save(fs, ImageFormat.Png);
+                        break;
+                    case 2:
+                        _screenShot.Save(fs, ImageFormat.Jpeg);
+                        break;
+                    case 3:
+                        _screenShot.Save(fs, ImageFormat.Bmp);
+                        break;
+                }
+
+                fs.Close();
+            }
+            catch
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         private bool OpenExportWindow()
         {
-            if (!IsCtrlPressed || _exportWindow is not null || _screenShot is null) return false;
+            if (_exportWindow is not null || _screenShot is null) return false;
 
             var selection = SelectCanvas.Selection;
 
@@ -101,8 +155,6 @@ namespace LiveShot.UI.Views
 
         private void CopyImage()
         {
-            if (!IsCtrlPressed) return;
-
             var selection = SelectCanvas.Selection;
             if (selection is null || selection.IsClear) return;
 

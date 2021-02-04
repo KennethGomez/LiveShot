@@ -70,6 +70,15 @@ namespace LiveShot.API.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Save image.
+        /// </summary>
+        public static string CaptureScreenView_SaveImage_Title {
+            get {
+                return ResourceManager.GetString("CaptureScreenView.SaveImage.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error.
         /// </summary>
         public static string Exception_Message {
