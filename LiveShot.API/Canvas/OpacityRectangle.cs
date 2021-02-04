@@ -10,7 +10,7 @@ namespace LiveShot.API.Canvas
             Width = width < 0 ? 0 : width,
             Height = height < 0 ? 0 : height,
             Fill = Brushes.Black,
-            Opacity = .4
+            Opacity = .5
         };
     }
 }
