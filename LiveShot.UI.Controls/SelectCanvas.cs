@@ -21,6 +21,10 @@ namespace LiveShot.UI.Controls
             "OpacityRectangle", typeof(Rectangle), typeof(SelectCanvas)
         );
 
+        public static readonly DependencyProperty PanelProperty = DependencyProperty.Register(
+            "Panel", typeof(Panel), typeof(SelectCanvas)
+        );
+
         private readonly Collection<Rectangle> _rectangles = new();
 
         private bool _dragging = true;
@@ -39,6 +43,12 @@ namespace LiveShot.UI.Controls
         {
             get => (Rectangle) GetValue(OpacityRectangleProperty);
             set => SetValue(OpacityRectangleProperty, value);
+        }
+
+        public Panel Panel
+        {
+            get => (Panel) GetValue(PanelProperty);
+            set => SetValue(PanelProperty, value);
         }
 
         private static bool CtrlPressed => Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl);
@@ -71,6 +81,7 @@ namespace LiveShot.UI.Controls
             }
 
             UpdateOpacityRectangles();
+            UpdatePanel();
 
             SetLeft(Selection.Rectangle, Selection.Left);
             SetTop(Selection.Rectangle, Selection.Top);
@@ -78,6 +89,39 @@ namespace LiveShot.UI.Controls
             SizeLabel.Content = Selection.IsClear
                 ? API.Properties.Resources.CaptureScreen_SizeLabel_Empty
                 : $"{Selection.Width} × {Selection.Height}";
+        }
+
+        private void UpdatePanel()
+        {
+            if (Selection is null || Selection.HasInvalidSize || _dragging)
+            {
+                Panel.Visibility = Visibility.Hidden;
+
+                return;
+            }
+
+            Panel.Visibility = Visibility.Visible;
+
+            const double gap = 10;
+
+            double left = Selection.Width + Selection.Left + gap;
+            double top = Selection.Top;
+
+            double maxLeft = Width - Panel.ActualWidth - gap;
+
+            if (left > maxLeft)
+            {
+                left = Selection.Width + Selection.Left - gap - Panel.ActualWidth;
+                top += gap;
+
+                if (left > maxLeft)
+                {
+                    left = maxLeft;
+                }
+            }
+            
+            SetLeft(Panel, left);
+            SetTop(Panel, top);
         }
 
         private void UpdateOpacityRectangles()

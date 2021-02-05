@@ -28,11 +28,12 @@
         </Grid.RowDefinitions>
         <controls:SelectCanvas ToolTip="{x:Static properties:Resources.CaptureScreen_Canvas_Tooltip}" Grid.Row="0"
                                x:Name="SelectCanvas" SizeLabel="{Binding ElementName=SizeLabel}"
-                               OpacityRectangle="{Binding ElementName=OpacityRectangle}">
+                               OpacityRectangle="{Binding ElementName=OpacityRectangle}"
+                               Panel="{Binding ElementName=Panel}">
             <Rectangle Name="OpacityRectangle" Fill="Black" Opacity=".5"
                        Width="{Binding ElementName=SelectCanvas, Path=Width}"
                        Height="{Binding ElementName=SelectCanvas, Path=Height}" />
-            <StackPanel Orientation="Vertical" ZIndex="1" Margin="220">
+            <StackPanel Orientation="Vertical" ZIndex="1" Name="Panel" Visibility="Hidden">
                 <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Pencil}"
                         Style="{StaticResource FirstCanvasButton}">
                     <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Pencil}" />
