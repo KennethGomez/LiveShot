@@ -57,6 +57,17 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <Style x:Key="SplitCanvasButton" BasedOn="{StaticResource CanvasButton}" TargetType="Button">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border CornerRadius="5,5,5,5" Background="{TemplateBinding Background}" BorderBrush="Transparent">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
     <Style x:Key="CanvasPath" TargetType="Path">
         <Setter Property="Fill" Value="Black" />
         <Setter Property="Margin" Value="7" />

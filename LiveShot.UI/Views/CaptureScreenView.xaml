@@ -59,11 +59,11 @@
                     <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Text}" />
                 </Button>
                 <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_ColorPicker}"
-                        Style="{StaticResource CanvasButton}">
+                        Style="{StaticResource LastCanvasButton}">
                     <Rectangle Width="20" Height="20" Fill="Red" />
                 </Button>
                 <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Undo}"
-                        Style="{StaticResource LastCanvasButton}">
+                        Style="{StaticResource SplitCanvasButton}" Margin="0,5">
                     <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Undo}" />
                 </Button>
             </StackPanel>
