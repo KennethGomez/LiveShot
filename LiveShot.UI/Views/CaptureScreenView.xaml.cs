@@ -98,7 +98,7 @@ namespace LiveShot.UI.Views
                 Title = API.Properties.Resources.CaptureScreen_SaveImage_Title
             };
 
-            dialog.ShowDialog();
+            if (!(dialog.ShowDialog() ?? false)) return false;
 
             if (string.IsNullOrWhiteSpace(dialog.FileName)) return false;
 
