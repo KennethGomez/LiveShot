@@ -26,35 +26,44 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <controls:SelectCanvas Grid.Row="0" x:Name="SelectCanvas" SizeLabel="{Binding ElementName=SizeLabel}"
+        <controls:SelectCanvas ToolTip="{x:Static properties:Resources.CaptureScreen_Canvas_Tooltip}" Grid.Row="0"
+                               x:Name="SelectCanvas" SizeLabel="{Binding ElementName=SizeLabel}"
                                OpacityRectangle="{Binding ElementName=OpacityRectangle}">
             <Rectangle Name="OpacityRectangle" Fill="Black" Opacity=".5"
                        Width="{Binding ElementName=SelectCanvas, Path=Width}"
                        Height="{Binding ElementName=SelectCanvas, Path=Height}" />
             <StackPanel Orientation="Vertical" ZIndex="1" Margin="220">
-                <Button Style="{StaticResource FirstCanvasButton}">
+                <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Pencil}"
+                        Style="{StaticResource FirstCanvasButton}">
                     <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Pencil}" />
                 </Button>
-                <Button Style="{StaticResource CanvasButton}">
-                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Pencil}" />
+                <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Stroke}"
+                        Style="{StaticResource CanvasButton}">
+                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Stroke}" />
                 </Button>
-                <Button Style="{StaticResource CanvasButton}">
-                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Pencil}" />
+                <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Arrow}"
+                        Style="{StaticResource CanvasButton}">
+                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Arrow}" />
                 </Button>
-                <Button Style="{StaticResource CanvasButton}">
-                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Pencil}" />
+                <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Rectangle}"
+                        Style="{StaticResource CanvasButton}">
+                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Square}" />
                 </Button>
-                <Button Style="{StaticResource CanvasButton}">
-                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Pencil}" />
+                <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Highlighter}"
+                        Style="{StaticResource CanvasButton}">
+                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Highlighter}" />
                 </Button>
-                <Button Style="{StaticResource CanvasButton}">
-                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Pencil}" />
+                <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Text}"
+                        Style="{StaticResource CanvasButton}">
+                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Text}" />
                 </Button>
-                <Button Style="{StaticResource CanvasButton}">
-                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Pencil}" />
+                <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_ColorPicker}"
+                        Style="{StaticResource CanvasButton}">
+                    <Rectangle Width="20" Height="20" Fill="Red" />
                 </Button>
-                <Button Style="{StaticResource LastCanvasButton}">
-                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Pencil}" />
+                <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Undo}"
+                        Style="{StaticResource LastCanvasButton}">
+                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Undo}" />
                 </Button>
             </StackPanel>
         </controls:SelectCanvas>

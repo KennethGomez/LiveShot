@@ -61,6 +61,88 @@ namespace LiveShot.API.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CaptureScreen.Canvas.Tooltip.
+        /// </summary>
+        public static string CaptureScreen_Canvas_Tooltip {
+            get {
+                return ResourceManager.GetString("CaptureScreen.Canvas.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CaptureScreen.CanvasButtons.Arrow.
+        /// </summary>
+        public static string CaptureScreen_CanvasButtons_Arrow {
+            get {
+                return ResourceManager.GetString("CaptureScreen.CanvasButtons.Arrow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CaptureScreen.CanvasButtons.ColorPicker.
+        /// </summary>
+        public static string CaptureScreen_CanvasButtons_ColorPicker {
+            get {
+                return ResourceManager.GetString("CaptureScreen.CanvasButtons.ColorPicker", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CaptureScreen.CanvasButtons.Highlighter.
+        /// </summary>
+        public static string CaptureScreen_CanvasButtons_Highlighter {
+            get {
+                return ResourceManager.GetString("CaptureScreen.CanvasButtons.Highlighter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CaptureScreen.CanvasButtons.Pencil.
+        /// </summary>
+        public static string CaptureScreen_CanvasButtons_Pencil {
+            get {
+                return ResourceManager.GetString("CaptureScreen.CanvasButtons.Pencil", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CaptureScreen.CanvasButtons.Rectangle.
+        /// </summary>
+        public static string CaptureScreen_CanvasButtons_Rectangle {
+            get {
+                return ResourceManager.GetString("CaptureScreen.CanvasButtons.Rectangle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 
+        ///CaptureScreen.CanvasButtons.Stroke.
+        /// </summary>
+        public static string CaptureScreen_CanvasButtons_Stroke {
+            get {
+                return ResourceManager.GetString("CaptureScreen.CanvasButtons.Stroke", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CaptureScreen.CanvasButtons.Text.
+        /// </summary>
+        public static string CaptureScreen_CanvasButtons_Text {
+            get {
+                return ResourceManager.GetString("CaptureScreen.CanvasButtons.Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CaptureScreen.CanvasButtons.Undo.
+        /// </summary>
+        public static string CaptureScreen_CanvasButtons_Undo {
+            get {
+                return ResourceManager.GetString("CaptureScreen.CanvasButtons.Undo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to CaptureScreen.SaveImage.FileName.
         /// </summary>
         public static string CaptureScreen_SaveImage_FileName {

@@ -61,6 +61,87 @@ namespace LiveShot.API.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Selección.
+        /// </summary>
+        internal static string CaptureScreen_Canvas_Tooltip {
+            get {
+                return ResourceManager.GetString("CaptureScreen.Canvas.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Flecha.
+        /// </summary>
+        internal static string CaptureScreen_CanvasButtons_Arrow {
+            get {
+                return ResourceManager.GetString("CaptureScreen.CanvasButtons.Arrow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seleccionar color.
+        /// </summary>
+        internal static string CaptureScreen_CanvasButtons_ColorPicker {
+            get {
+                return ResourceManager.GetString("CaptureScreen.CanvasButtons.ColorPicker", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subrayador.
+        /// </summary>
+        internal static string CaptureScreen_CanvasButtons_Highlighter {
+            get {
+                return ResourceManager.GetString("CaptureScreen.CanvasButtons.Highlighter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lápiz.
+        /// </summary>
+        internal static string CaptureScreen_CanvasButtons_Pencil {
+            get {
+                return ResourceManager.GetString("CaptureScreen.CanvasButtons.Pencil", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rectángulo.
+        /// </summary>
+        internal static string CaptureScreen_CanvasButtons_Rectangle {
+            get {
+                return ResourceManager.GetString("CaptureScreen.CanvasButtons.Rectangle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Línea.
+        /// </summary>
+        internal static string CaptureScreen_CanvasButtons_Stroke {
+            get {
+                return ResourceManager.GetString("CaptureScreen.CanvasButtons.Stroke", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Texto.
+        /// </summary>
+        internal static string CaptureScreen_CanvasButtons_Text {
+            get {
+                return ResourceManager.GetString("CaptureScreen.CanvasButtons.Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deshacer.
+        /// </summary>
+        internal static string CaptureScreen_CanvasButtons_Undo {
+            get {
+                return ResourceManager.GetString("CaptureScreen.CanvasButtons.Undo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Captura de pantalla {0:dd-MM-yyyy HH mm}.
         /// </summary>
         internal static string CaptureScreen_SaveImage_FileName {

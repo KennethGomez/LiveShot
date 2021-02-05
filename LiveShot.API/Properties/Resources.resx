@@ -42,4 +42,32 @@
     <data name="CaptureScreen.SaveImage.FileName" xml:space="preserve">
         <value>CaptureScreen.SaveImage.FileName</value>
     </data>
+    <data name="CaptureScreen.CanvasButtons.Undo" xml:space="preserve">
+        <value>CaptureScreen.CanvasButtons.Undo</value>
+    </data>
+    <data name="CaptureScreen.CanvasButtons.ColorPicker" xml:space="preserve">
+        <value>CaptureScreen.CanvasButtons.ColorPicker</value>
+    </data>
+    <data name="CaptureScreen.CanvasButtons.Text" xml:space="preserve">
+        <value>CaptureScreen.CanvasButtons.Text</value>
+    </data>
+    <data name="CaptureScreen.CanvasButtons.Highlighter" xml:space="preserve">
+        <value>CaptureScreen.CanvasButtons.Highlighter</value>
+    </data>
+    <data name="CaptureScreen.CanvasButtons.Rectangle" xml:space="preserve">
+        <value>CaptureScreen.CanvasButtons.Rectangle</value>
+    </data>
+    <data name="CaptureScreen.CanvasButtons.Arrow" xml:space="preserve">
+        <value>CaptureScreen.CanvasButtons.Arrow</value>
+    </data>
+    <data name="CaptureScreen.CanvasButtons.Stroke" xml:space="preserve">
+        <value>
+CaptureScreen.CanvasButtons.Stroke</value>
+    </data>
+    <data name="CaptureScreen.CanvasButtons.Pencil" xml:space="preserve">
+        <value>CaptureScreen.CanvasButtons.Pencil</value>
+    </data>
+    <data name="CaptureScreen.Canvas.Tooltip" xml:space="preserve">
+        <value>CaptureScreen.Canvas.Tooltip</value>
+    </data>
 </root>
