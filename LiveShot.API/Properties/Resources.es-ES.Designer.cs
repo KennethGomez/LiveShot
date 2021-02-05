@@ -61,20 +61,29 @@ namespace LiveShot.API.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Selección vacía.
+        ///   Looks up a localized string similar to Captura de pantalla {0:dd-MM-yyyy HH mm}.
         /// </summary>
-        internal static string CaptureScreen_SizeLabel_Empty {
+        internal static string CaptureScreen_SaveImage_FileName {
             get {
-                return ResourceManager.GetString("CaptureScreen.SizeLabel.Empty", resourceCulture);
+                return ResourceManager.GetString("CaptureScreen.SaveImage.FileName", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Guardar imagen.
         /// </summary>
-        internal static string CaptureScreenView_SaveImage_Title {
+        internal static string CaptureScreen_SaveImage_Title {
             get {
-                return ResourceManager.GetString("CaptureScreenView.SaveImage.Title", resourceCulture);
+                return ResourceManager.GetString("CaptureScreen.SaveImage.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selección vacía.
+        /// </summary>
+        internal static string CaptureScreen_SizeLabel_Empty {
+            get {
+                return ResourceManager.GetString("CaptureScreen.SizeLabel.Empty", resourceCulture);
             }
         }
         

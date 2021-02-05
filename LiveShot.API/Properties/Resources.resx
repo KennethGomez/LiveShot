@@ -36,7 +36,10 @@
     <data name="Exception.Message" xml:space="preserve">
         <value>Exception.Message</value>
     </data>
-    <data name="CaptureScreenView.SaveImage.Title" xml:space="preserve">
-        <value>CaptureScreenView.SaveImage.Title</value>
+    <data name="CaptureScreen.SaveImage.Title" xml:space="preserve">
+        <value>CaptureScreen.SaveImage.Title</value>
+    </data>
+    <data name="CaptureScreen.SaveImage.FileName" xml:space="preserve">
+        <value>CaptureScreen.SaveImage.FileName</value>
     </data>
 </root>

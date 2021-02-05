@@ -61,20 +61,29 @@ namespace LiveShot.API.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Empty selection.
+        ///   Looks up a localized string similar to Screenshot {0:dd-MM-yyyy HH mm}.
         /// </summary>
-        public static string CaptureScreen_SizeLabel_Empty {
+        public static string CaptureScreen_SaveImage_FileName {
             get {
-                return ResourceManager.GetString("CaptureScreen.SizeLabel.Empty", resourceCulture);
+                return ResourceManager.GetString("CaptureScreen.SaveImage.FileName", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Save image.
         /// </summary>
-        public static string CaptureScreenView_SaveImage_Title {
+        public static string CaptureScreen_SaveImage_Title {
             get {
-                return ResourceManager.GetString("CaptureScreenView.SaveImage.Title", resourceCulture);
+                return ResourceManager.GetString("CaptureScreen.SaveImage.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Empty selection.
+        /// </summary>
+        public static string CaptureScreen_SizeLabel_Empty {
+            get {
+                return ResourceManager.GetString("CaptureScreen.SizeLabel.Empty", resourceCulture);
             }
         }
         

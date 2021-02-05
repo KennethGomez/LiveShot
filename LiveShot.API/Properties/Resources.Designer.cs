@@ -61,20 +61,29 @@ namespace LiveShot.API.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CaptureScreen.SaveImage.FileName.
+        /// </summary>
+        public static string CaptureScreen_SaveImage_FileName {
+            get {
+                return ResourceManager.GetString("CaptureScreen.SaveImage.FileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CaptureScreen.SaveImage.Title.
+        /// </summary>
+        public static string CaptureScreen_SaveImage_Title {
+            get {
+                return ResourceManager.GetString("CaptureScreen.SaveImage.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to CaptureScreen.SizeLabel.Empty.
         /// </summary>
         public static string CaptureScreen_SizeLabel_Empty {
             get {
                 return ResourceManager.GetString("CaptureScreen.SizeLabel.Empty", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to CaptureScreenView.SaveImage.Title.
-        /// </summary>
-        public static string CaptureScreenView_SaveImage_Title {
-            get {
-                return ResourceManager.GetString("CaptureScreenView.SaveImage.Title", resourceCulture);
             }
         }
         
