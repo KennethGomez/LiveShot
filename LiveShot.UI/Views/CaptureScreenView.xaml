@@ -13,6 +13,14 @@
         ShowInTaskbar="True"
         Icon="/icon.ico"
         WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles.xaml" />
+                <ResourceDictionary Source="/Icons.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -23,6 +31,32 @@
             <Rectangle Name="OpacityRectangle" Fill="Black" Opacity=".5"
                        Width="{Binding ElementName=SelectCanvas, Path=Width}"
                        Height="{Binding ElementName=SelectCanvas, Path=Height}" />
+            <StackPanel Orientation="Vertical" ZIndex="1" Margin="220">
+                <Button Style="{StaticResource FirstCanvasButton}">
+                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Pencil}" />
+                </Button>
+                <Button Style="{StaticResource CanvasButton}">
+                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Pencil}" />
+                </Button>
+                <Button Style="{StaticResource CanvasButton}">
+                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Pencil}" />
+                </Button>
+                <Button Style="{StaticResource CanvasButton}">
+                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Pencil}" />
+                </Button>
+                <Button Style="{StaticResource CanvasButton}">
+                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Pencil}" />
+                </Button>
+                <Button Style="{StaticResource CanvasButton}">
+                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Pencil}" />
+                </Button>
+                <Button Style="{StaticResource CanvasButton}">
+                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Pencil}" />
+                </Button>
+                <Button Style="{StaticResource LastCanvasButton}">
+                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Pencil}" />
+                </Button>
+            </StackPanel>
         </controls:SelectCanvas>
         <Label Name="SizeLabel" Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Center" FontSize="16"
                Background="#1EFFFFFF" Foreground="White" Padding="25,10"

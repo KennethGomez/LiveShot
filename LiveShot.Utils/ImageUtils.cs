@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
-using LiveShot.API;
 using LiveShot.API.Canvas;
 
 namespace LiveShot.Utils
@@ -15,7 +12,7 @@ namespace LiveShot.Utils
         public static bool CopyImage(Selection selection, Bitmap source)
         {
             if (selection.HasInvalidSize) return false;
-            
+
             var bitmap = GetBitmap(selection, source);
             var bitmapSource = GetBitmapSource(bitmap);
 

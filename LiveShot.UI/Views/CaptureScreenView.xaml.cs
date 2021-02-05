@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -90,7 +89,7 @@ namespace LiveShot.UI.Views
             if (_screenShot is null) return false;
 
             var formats = ImageSaveFormats.Supported;
-            
+
             SaveFileDialog dialog = new()
             {
                 Filter = string.Join('|', formats.Select(f => f.Filter)),

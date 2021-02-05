@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Shapes;
 using LiveShot.API;
 using LiveShot.API.Canvas;
@@ -35,7 +34,7 @@ namespace LiveShot.UI.Controls
             get => (Label) GetValue(SizeLabelProperty);
             set => SetValue(SizeLabelProperty, value);
         }
-        
+
         public Rectangle OpacityRectangle
         {
             get => (Rectangle) GetValue(OpacityRectangleProperty);
@@ -87,11 +86,8 @@ namespace LiveShot.UI.Controls
 
             OpacityRectangle.Visibility = Visibility.Hidden;
 
-            foreach (var rectangle in _rectangles)
-            {
-                Children.Remove(rectangle);
-            }
-            
+            foreach (var rectangle in _rectangles) Children.Remove(rectangle);
+
             _rectangles.Clear();
 
             foreach (var bound in RectangleBounds.GetBounds(Selection, Width, Height))
@@ -100,12 +96,12 @@ namespace LiveShot.UI.Controls
 
                 rectangle.MouseLeftButtonUp += RectangleOnMouseLeftButtonUp;
                 rectangle.MouseLeftButtonDown += RectangleOnMouseLeftButtonDown;
-                
+
                 Children.Add(rectangle);
-            
+
                 SetLeft(rectangle, left);
                 SetTop(rectangle, top);
-            
+
                 _rectangles.Add(rectangle);
             }
         }
