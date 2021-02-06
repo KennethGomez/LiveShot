@@ -69,4 +69,7 @@
     <data name="CaptureScreen.Canvas.Tooltip" xml:space="preserve">
         <value>Draw selection</value>
     </data>
+    <data name="CaptureScreen.Title" xml:space="preserve">
+        <value>Capture screen</value>
+    </data>
 </root>

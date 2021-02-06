@@ -169,6 +169,15 @@ namespace LiveShot.API.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Capture screen.
+        /// </summary>
+        public static string CaptureScreen_Title {
+            get {
+                return ResourceManager.GetString("CaptureScreen.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error.
         /// </summary>
         public static string Exception_Message {

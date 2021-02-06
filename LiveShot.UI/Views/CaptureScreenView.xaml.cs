@@ -39,6 +39,8 @@ namespace LiveShot.UI.Views
             SelectCanvas.Height = Height;
             SelectCanvas.WithEvents(events);
 
+            CanvasRightPanel.With(events, Width, Height);
+
             CaptureScreen();
         }
 

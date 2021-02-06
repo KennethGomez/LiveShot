@@ -8,6 +8,7 @@ using LiveShot.API;
 using LiveShot.API.Canvas;
 using LiveShot.API.Events;
 using LiveShot.API.Events.Input;
+using LiveShot.API.Events.Selection;
 
 namespace LiveShot.UI.Controls
 {
@@ -28,8 +29,9 @@ namespace LiveShot.UI.Controls
         private readonly Collection<Rectangle> _rectangles = new();
 
         private bool _dragging = true;
-        private bool _moving;
 
+        private IEventPipeline? _events;
+        private bool _moving;
         private Point? _startPosition;
         private Point? _tmpCursorPosition;
 
@@ -58,7 +60,9 @@ namespace LiveShot.UI.Controls
 
         public void WithEvents(IEventPipeline events)
         {
-            events.Subscribe<OnKeyDown>(OnKeyDown);
+            _events = events;
+
+            _events.Subscribe<OnKeyDown>(OnKeyDown);
         }
 
         private static void OnSelectionKeyDown(Action<int> shiftPressed, Action<int> normal)
@@ -81,47 +85,18 @@ namespace LiveShot.UI.Controls
             }
 
             UpdateOpacityRectangles();
-            UpdatePanel();
 
             SetLeft(Selection.Rectangle, Selection.Left);
             SetTop(Selection.Rectangle, Selection.Top);
 
-            SizeLabel.Content = Selection.IsClear
-                ? API.Properties.Resources.CaptureScreen_SizeLabel_Empty
-                : $"{Selection.Width} × {Selection.Height}";
-        }
+            SizeLabel.Content = Selection.Label;
 
-        private void UpdatePanel()
-        {
-            if (Selection is null || Selection.HasInvalidSize || _dragging)
-            {
+            if (Selection.HasInvalidSize || _dragging)
                 Panel.Visibility = Visibility.Hidden;
+            else
+                Panel.Visibility = Visibility.Visible;
 
-                return;
-            }
-
-            Panel.Visibility = Visibility.Visible;
-
-            const double gap = 10;
-
-            double left = Selection.Width + Selection.Left + gap;
-            double top = Selection.Top;
-
-            double maxLeft = Width - Panel.ActualWidth - gap;
-
-            if (left > maxLeft)
-            {
-                left = Selection.Width + Selection.Left - gap - Panel.ActualWidth;
-                top += gap;
-
-                if (left > maxLeft)
-                {
-                    left = maxLeft;
-                }
-            }
-            
-            SetLeft(Panel, left);
-            SetTop(Panel, top);
+            _events?.Dispatch<OnSelectionChange>(OnSelectionChangeArgs.From(Selection));
         }
 
         private void UpdateOpacityRectangles()

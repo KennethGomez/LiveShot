@@ -6,7 +6,7 @@
         xmlns:controls="clr-namespace:LiveShot.UI.Controls;assembly=LiveShot.UI.Controls"
         xmlns:properties="clr-namespace:LiveShot.API.Properties;assembly=LiveShot.API"
         mc:Ignorable="d"
-        Title="CaptureScreenView" Height="450" Width="800"
+        Title="{x:Static properties:Resources.CaptureScreen_Title}" Height="450" Width="800"
         WindowStyle="None"
         ResizeMode="NoResize"
         WindowState="Maximized"
@@ -30,11 +30,11 @@
         <controls:SelectCanvas ToolTip="{x:Static properties:Resources.CaptureScreen_Canvas_Tooltip}" Grid.Row="0"
                                x:Name="SelectCanvas" SizeLabel="{Binding ElementName=SizeLabel}"
                                OpacityRectangle="{Binding ElementName=OpacityRectangle}"
-                               Panel="{Binding ElementName=Panel}">
+                               Panel="{Binding ElementName=CanvasRightPanel}">
             <Rectangle Name="OpacityRectangle" Fill="Black" Opacity=".5"
                        Width="{Binding ElementName=SelectCanvas, Path=Width}"
                        Height="{Binding ElementName=SelectCanvas, Path=Height}" />
-            <StackPanel Orientation="Vertical" ZIndex="1" Name="Panel" Visibility="Hidden">
+            <controls:CanvasPanel Name="CanvasRightPanel" Visibility="Hidden">
                 <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Pencil}"
                         Style="{StaticResource FirstCanvasButton}">
                     <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Pencil}" />
@@ -67,7 +67,7 @@
                         Style="{StaticResource SplitCanvasButton}" Margin="0,5">
                     <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Undo}" />
                 </Button>
-            </StackPanel>
+            </controls:CanvasPanel>
         </controls:SelectCanvas>
         <Label Name="SizeLabel" Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Center" FontSize="16"
                Background="#1EFFFFFF" Foreground="White" Padding="25,10"

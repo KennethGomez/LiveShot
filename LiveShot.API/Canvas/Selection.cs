@@ -75,6 +75,10 @@ namespace LiveShot.API.Canvas
         public bool IsClear => Width == 0 && Height == 0 && Top == 0 && Height == 0;
         public bool HasInvalidSize => Width == 0 || Height == 0;
 
+        public string Label => IsClear
+            ? Properties.Resources.CaptureScreen_SizeLabel_Empty
+            : $"{Width} × {Height}";
+
         public bool Contains(Point point)
         {
             return point.X >= _left &&
