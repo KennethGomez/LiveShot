@@ -10,6 +10,7 @@
         WindowStyle="None"
         ResizeMode="NoResize"
         WindowState="Maximized"
+        Topmost="True"
         ShowInTaskbar="True"
         Icon="/icon.ico"
         WindowStartupLocation="CenterScreen">
