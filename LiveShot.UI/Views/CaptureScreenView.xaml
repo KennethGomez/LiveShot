@@ -70,7 +70,7 @@
             </controls:CanvasPanel>
             <controls:CanvasPanel Name="CanvasLeftPanel" Visibility="Hidden" Orientation="Horizontal">
                 <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Upload}"
-                        Style="{StaticResource FirstLeftCanvasButton}">
+                        Style="{StaticResource FirstLeftCanvasButton}" Name="UploadBtn">
                     <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Upload}" />
                 </Button>
                 <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Share}"
@@ -86,15 +86,15 @@
                     <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Print}" />
                 </Button>
                 <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Copy}"
-                        Style="{StaticResource CanvasButton}">
+                        Style="{StaticResource CanvasButton}" Name="CopyBtn">
                     <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Copy}" />
                 </Button>
                 <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Save}"
-                        Style="{StaticResource LastLeftCanvasButton}">
+                        Style="{StaticResource LastLeftCanvasButton}" Name="SaveBtn">
                     <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Save}" />
                 </Button>
                 <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Close}"
-                        Style="{StaticResource SplitCanvasButton}" Margin="5 0 0 0">
+                        Style="{StaticResource SplitCanvasButton}" Margin="5 0 0 0" Name="CloseBtn">
                     <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Close}" />
                 </Button>
             </controls:CanvasPanel>

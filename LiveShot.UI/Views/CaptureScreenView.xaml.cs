@@ -42,10 +42,35 @@ namespace LiveShot.UI.Views
             CanvasRightPanel.With(events, Width, Height);
             CanvasLeftPanel.With(events, Width, Height);
 
+            UploadBtn.Click += UploadBtnOnClick;
+            CopyBtn.Click += CopyBtnOnClick;
+            SaveBtn.Click += SaveBtnOnClick;
+            CloseBtn.Click += CloseBtnOnClick;
+
             CaptureScreen();
         }
 
         private static bool IsCtrlPressed => Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl);
+
+        private void CloseBtnOnClick(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void SaveBtnOnClick(object sender, RoutedEventArgs e)
+        {
+            SaveImage();
+        }
+
+        private void CopyBtnOnClick(object sender, RoutedEventArgs e)
+        {
+            CopyImage();
+        }
+
+        private void UploadBtnOnClick(object sender, RoutedEventArgs e)
+        {
+            OpenExportWindow();
+        }
 
         private void CaptureScreen()
         {
@@ -74,24 +99,22 @@ namespace LiveShot.UI.Views
                     break;
                 case Key.S:
                     if (IsCtrlPressed)
-                        if (SaveImage())
-                            Close();
+                        SaveImage();
                     break;
                 case Key.D:
                     if (IsCtrlPressed)
-                        if (OpenExportWindow())
-                            Close();
+                        OpenExportWindow();
                     break;
             }
 
             _events.Dispatch<OnKeyDown>(e);
         }
 
-        private bool SaveImage()
+        private void SaveImage()
         {
-            if (_screenShot is null) return false;
+            if (_screenShot is null) return;
 
-            var formats = ImageSaveFormats.Supported;
+            ImageSaveFormat[]? formats = ImageSaveFormats.Supported;
 
             SaveFileDialog dialog = new()
             {
@@ -101,9 +124,9 @@ namespace LiveShot.UI.Views
                 Title = API.Properties.Resources.CaptureScreen_SaveImage_Title
             };
 
-            if (!(dialog.ShowDialog() ?? false)) return false;
+            if (!(dialog.ShowDialog() ?? false)) return;
 
-            if (string.IsNullOrWhiteSpace(dialog.FileName)) return false;
+            if (string.IsNullOrWhiteSpace(dialog.FileName)) return;
 
             try
             {
@@ -117,25 +140,25 @@ namespace LiveShot.UI.Views
             }
             catch
             {
-                return false;
+                return;
             }
 
-            return true;
+            Close();
         }
 
-        private bool OpenExportWindow()
+        private void OpenExportWindow()
         {
-            if (_exportWindow is not null || _screenShot is null) return false;
+            if (_exportWindow is not null || _screenShot is null) return;
 
             var selection = SelectCanvas.Selection;
 
-            if (selection is null || selection.IsClear || selection.HasInvalidSize) return false;
+            if (selection is null || selection.IsClear || selection.HasInvalidSize) return;
 
             var bitmap = ImageUtils.GetBitmap(selection, _screenShot);
 
             _exportWindow = _services.GetService<ExportWindowView>();
 
-            if (_exportWindow is null) return false;
+            if (_exportWindow is null) return;
 
             _exportWindow.Show();
 
@@ -147,7 +170,7 @@ namespace LiveShot.UI.Views
 
             _exportWindow.Upload(bitmap);
 
-            return true;
+            Close();
         }
 
         private void CopyImage()
