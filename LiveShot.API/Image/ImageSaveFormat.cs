@@ -27,6 +27,11 @@ namespace LiveShot.API.Image
                 {
                     Filter = "BMP|*.bmp",
                     Format = ImageFormat.Bmp
+                },
+                new()
+                {
+                    Filter = "GIF|*.gif",
+                    Format = ImageFormat.Bmp
                 }
             };
     }

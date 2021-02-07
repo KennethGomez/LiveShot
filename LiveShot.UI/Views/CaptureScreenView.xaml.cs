@@ -138,9 +138,12 @@ namespace LiveShot.UI.Views
             {
                 FileStream fs = (FileStream) dialog.OpenFile();
 
-                var selectedFormat = formats[dialog.FilterIndex];
+                var selectedFormat = formats[dialog.FilterIndex - 1];
 
-                _screenShot.Save(fs, selectedFormat.Format);
+                var selection = SelectCanvas.Selection;
+                if (selection is null || selection.IsClear) return;
+
+                ImageUtils.GetBitmap(selection, _screenShot).Save(fs, selectedFormat.Format);
 
                 fs.Close();
             }
