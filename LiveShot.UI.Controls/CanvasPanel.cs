@@ -51,6 +51,13 @@ namespace LiveShot.UI.Controls
                 }
             }
             
+            var maxTop = (double) (_screenHeight - ActualHeight - gap);
+
+            if (top > maxTop)
+            {
+                top = maxTop;
+            }
+            
             Canvas.SetLeft(this, left);
             Canvas.SetTop(this, top);
         }
