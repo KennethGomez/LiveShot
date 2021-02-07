@@ -79,11 +79,38 @@ namespace LiveShot.API.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cerrar.
+        /// </summary>
+        internal static string CaptureScreen_CanvasButtons_Close {
+            get {
+                return ResourceManager.GetString("CaptureScreen.CanvasButtons.Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Seleccionar color.
         /// </summary>
         internal static string CaptureScreen_CanvasButtons_ColorPicker {
             get {
                 return ResourceManager.GetString("CaptureScreen.CanvasButtons.ColorPicker", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copiar.
+        /// </summary>
+        internal static string CaptureScreen_CanvasButtons_Copy {
+            get {
+                return ResourceManager.GetString("CaptureScreen.CanvasButtons.Copy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Buscar imágenes similares en Google.
+        /// </summary>
+        internal static string CaptureScreen_CanvasButtons_Google {
+            get {
+                return ResourceManager.GetString("CaptureScreen.CanvasButtons.Google", resourceCulture);
             }
         }
         
@@ -106,11 +133,38 @@ namespace LiveShot.API.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Imprimir.
+        /// </summary>
+        internal static string CaptureScreen_CanvasButtons_Print {
+            get {
+                return ResourceManager.GetString("CaptureScreen.CanvasButtons.Print", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rectángulo.
         /// </summary>
         internal static string CaptureScreen_CanvasButtons_Rectangle {
             get {
                 return ResourceManager.GetString("CaptureScreen.CanvasButtons.Rectangle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Guardar como.
+        /// </summary>
+        internal static string CaptureScreen_CanvasButtons_Save {
+            get {
+                return ResourceManager.GetString("CaptureScreen.CanvasButtons.Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Compartir.
+        /// </summary>
+        internal static string CaptureScreen_CanvasButtons_Share {
+            get {
+                return ResourceManager.GetString("CaptureScreen.CanvasButtons.Share", resourceCulture);
             }
         }
         
@@ -138,6 +192,15 @@ namespace LiveShot.API.Properties {
         internal static string CaptureScreen_CanvasButtons_Undo {
             get {
                 return ResourceManager.GetString("CaptureScreen.CanvasButtons.Undo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subir.
+        /// </summary>
+        internal static string CaptureScreen_CanvasButtons_Upload {
+            get {
+                return ResourceManager.GetString("CaptureScreen.CanvasButtons.Upload", resourceCulture);
             }
         }
         

@@ -73,4 +73,25 @@ CaptureScreen.CanvasButtons.Stroke</value>
     <data name="CaptureScreen.Title" xml:space="preserve">
         <value>CaptureScreen.Title</value>
     </data>
+    <data name="CaptureScreen.CanvasButtons.Upload" xml:space="preserve">
+        <value>CaptureScreen.CanvasButtons.Upload</value>
+    </data>
+    <data name="CaptureScreen.CanvasButtons.Share" xml:space="preserve">
+        <value>CaptureScreen.CanvasButtons.Share</value>
+    </data>
+    <data name="CaptureScreen.CanvasButtons.Google" xml:space="preserve">
+        <value>CaptureScreen.CanvasButtons.Google</value>
+    </data>
+    <data name="CaptureScreen.CanvasButtons.Print" xml:space="preserve">
+        <value>CaptureScreen.CanvasButtons.Print</value>
+    </data>
+    <data name="CaptureScreen.CanvasButtons.Copy" xml:space="preserve">
+        <value>CaptureScreen.CanvasButtons.Copy</value>
+    </data>
+    <data name="CaptureScreen.CanvasButtons.Save" xml:space="preserve">
+        <value>CaptureScreen.CanvasButtons.Save</value>
+    </data>
+    <data name="CaptureScreen.CanvasButtons.Close" xml:space="preserve">
+        <value>CaptureScreen.CanvasButtons.Close</value>
+    </data>
 </root>

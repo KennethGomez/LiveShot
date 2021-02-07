@@ -72,4 +72,25 @@
     <data name="CaptureScreen.Title" xml:space="preserve">
         <value>Captura la pantalla</value>
     </data>
+    <data name="CaptureScreen.CanvasButtons.Close" xml:space="preserve">
+        <value>Cerrar</value>
+    </data>
+    <data name="CaptureScreen.CanvasButtons.Copy" xml:space="preserve">
+        <value>Copiar</value>
+    </data>
+    <data name="CaptureScreen.CanvasButtons.Google" xml:space="preserve">
+        <value>Buscar imágenes similares en Google</value>
+    </data>
+    <data name="CaptureScreen.CanvasButtons.Print" xml:space="preserve">
+        <value>Imprimir</value>
+    </data>
+    <data name="CaptureScreen.CanvasButtons.Save" xml:space="preserve">
+        <value>Guardar como</value>
+    </data>
+    <data name="CaptureScreen.CanvasButtons.Share" xml:space="preserve">
+        <value>Compartir</value>
+    </data>
+    <data name="CaptureScreen.CanvasButtons.Upload" xml:space="preserve">
+        <value>Subir</value>
+    </data>
 </root>

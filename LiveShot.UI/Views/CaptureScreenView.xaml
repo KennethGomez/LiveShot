@@ -69,33 +69,33 @@
                 </Button>
             </controls:CanvasPanel>
             <controls:CanvasPanel Name="CanvasLeftPanel" Visibility="Hidden" Orientation="Horizontal">
-                <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Pencil}"
+                <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Upload}"
                         Style="{StaticResource FirstLeftCanvasButton}">
-                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Pencil}" />
+                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Upload}" />
                 </Button>
-                <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Pencil}"
+                <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Share}"
                         Style="{StaticResource CanvasButton}">
-                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Pencil}" />
+                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Share}" />
                 </Button>
-                <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Pencil}"
+                <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Google}"
                         Style="{StaticResource CanvasButton}">
-                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Pencil}" />
+                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Google}" />
                 </Button>
-                <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Pencil}"
+                <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Print}"
                         Style="{StaticResource CanvasButton}">
-                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Pencil}" />
+                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Print}" />
                 </Button>
-                <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Pencil}"
+                <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Copy}"
                         Style="{StaticResource CanvasButton}">
-                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Pencil}" />
+                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Copy}" />
                 </Button>
-                <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Pencil}"
+                <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Save}"
                         Style="{StaticResource LastLeftCanvasButton}">
-                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Pencil}" />
+                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Save}" />
                 </Button>
-                <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Undo}"
+                <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Close}"
                         Style="{StaticResource SplitCanvasButton}" Margin="5 0 0 0">
-                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Undo}" />
+                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Close}" />
                 </Button>
             </controls:CanvasPanel>
         </controls:SelectCanvas>
