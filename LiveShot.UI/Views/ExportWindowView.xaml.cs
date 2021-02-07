@@ -32,8 +32,11 @@ namespace LiveShot.UI.Views
 
         private void OpenBtnOnClick(object sender, RoutedEventArgs e)
         {
-            string url = LinkBox.Text;
+            OpenUrl(LinkBox.Text);
+        }
 
+        private void OpenUrl(string url)
+        {
             try
             {
                 Process.Start(url);
@@ -55,7 +58,7 @@ namespace LiveShot.UI.Views
             });
         }
 
-        public void Upload(Bitmap bitmap)
+        public void Upload(Bitmap bitmap, bool google)
         {
             Dispatcher.BeginInvoke(async () =>
             {
@@ -65,6 +68,12 @@ namespace LiveShot.UI.Views
 
                     UploadResultGrid.Visibility = Visibility.Visible;
                     ProgressBarGrid.Visibility = Visibility.Hidden;
+
+                    if (google)
+                    {
+                        OpenUrl($"https://www.google.com/searchbyimage?image_url={LinkBox.Text}");
+                        Close();
+                    }
                 }
                 catch (Exception e)
                 {

@@ -43,6 +43,7 @@ namespace LiveShot.UI.Views
             CanvasLeftPanel.With(events, Width, Height);
 
             UploadBtn.Click += UploadBtnOnClick;
+            GoogleBtn.Click += GoogleBtnOnClick;
             CopyBtn.Click += CopyBtnOnClick;
             SaveBtn.Click += SaveBtnOnClick;
             CloseBtn.Click += CloseBtnOnClick;
@@ -51,6 +52,11 @@ namespace LiveShot.UI.Views
         }
 
         private static bool IsCtrlPressed => Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl);
+
+        private void GoogleBtnOnClick(object sender, RoutedEventArgs e)
+        {
+            OpenExportWindow(true);
+        }
 
         private void CloseBtnOnClick(object sender, RoutedEventArgs e)
         {
@@ -124,7 +130,7 @@ namespace LiveShot.UI.Views
                 Title = API.Properties.Resources.CaptureScreen_SaveImage_Title
             };
 
-            if (!(dialog.ShowDialog() ?? false)) return;
+            if (dialog.ShowDialog() == false) return;
 
             if (string.IsNullOrWhiteSpace(dialog.FileName)) return;
 
@@ -146,7 +152,7 @@ namespace LiveShot.UI.Views
             Close();
         }
 
-        private void OpenExportWindow()
+        private void OpenExportWindow(bool google = false)
         {
             if (_exportWindow is not null || _screenShot is null) return;
 
@@ -168,7 +174,7 @@ namespace LiveShot.UI.Views
             _exportWindow.Left = x;
             _exportWindow.Top = y;
 
-            _exportWindow.Upload(bitmap);
+            _exportWindow.Upload(bitmap, google);
 
             Close();
         }
