@@ -22,8 +22,12 @@ namespace LiveShot.UI.Controls
             "OpacityRectangle", typeof(Rectangle), typeof(SelectCanvas)
         );
 
-        public static readonly DependencyProperty PanelProperty = DependencyProperty.Register(
-            "Panel", typeof(Panel), typeof(SelectCanvas)
+        public static readonly DependencyProperty RightPanelProperty = DependencyProperty.Register(
+            "RightPanel", typeof(Panel), typeof(SelectCanvas)
+        );
+
+        public static readonly DependencyProperty LeftPanelProperty = DependencyProperty.Register(
+            "LeftPanel", typeof(CanvasPanel), typeof(SelectCanvas)
         );
 
         private readonly Collection<Rectangle> _rectangles = new();
@@ -47,10 +51,16 @@ namespace LiveShot.UI.Controls
             set => SetValue(OpacityRectangleProperty, value);
         }
 
-        public Panel Panel
+        public Panel RightPanel
         {
-            get => (Panel) GetValue(PanelProperty);
-            set => SetValue(PanelProperty, value);
+            get => (Panel) GetValue(RightPanelProperty);
+            set => SetValue(RightPanelProperty, value);
+        }
+
+        public CanvasPanel LeftPanel
+        {
+            get => (CanvasPanel) GetValue(LeftPanelProperty);
+            set => SetValue(LeftPanelProperty, value);
         }
 
         private static bool CtrlPressed => Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl);
@@ -92,9 +102,15 @@ namespace LiveShot.UI.Controls
             SizeLabel.Content = Selection.Label;
 
             if (Selection.HasInvalidSize || _dragging)
-                Panel.Visibility = Visibility.Hidden;
+            {
+                RightPanel.Visibility = Visibility.Hidden;
+                LeftPanel.Visibility = Visibility.Hidden;
+            }
             else
-                Panel.Visibility = Visibility.Visible;
+            {
+                RightPanel.Visibility = Visibility.Visible;
+                LeftPanel.Visibility = Visibility.Visible;
+            }
 
             _events?.Dispatch<OnSelectionChange>(OnSelectionChangeArgs.From(Selection));
         }

@@ -35,7 +35,7 @@
             </Trigger>
         </Style.Triggers>
     </Style>
-    <Style x:Key="FirstCanvasButton" BasedOn="{StaticResource CanvasButton}" TargetType="Button">
+    <Style x:Key="FirstRightCanvasButton" BasedOn="{StaticResource CanvasButton}" TargetType="Button">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -46,11 +46,33 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="LastCanvasButton" BasedOn="{StaticResource CanvasButton}" TargetType="Button">
+    <Style x:Key="LastRightCanvasButton" BasedOn="{StaticResource CanvasButton}" TargetType="Button">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Border CornerRadius="0,0,5,5" Background="{TemplateBinding Background}" BorderBrush="Transparent">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="FirstLeftCanvasButton" BasedOn="{StaticResource CanvasButton}" TargetType="Button">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border CornerRadius="5,0,0,5" Background="{TemplateBinding Background}" BorderBrush="Transparent">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="LastLeftCanvasButton" BasedOn="{StaticResource CanvasButton}" TargetType="Button">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border CornerRadius="0,5,5,0" Background="{TemplateBinding Background}" BorderBrush="Transparent">
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </Border>
                 </ControlTemplate>

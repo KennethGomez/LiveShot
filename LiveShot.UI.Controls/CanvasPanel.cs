@@ -7,14 +7,14 @@ namespace LiveShot.UI.Controls
 {
     public class CanvasPanel : StackPanel
     {
+        private const int Gap = 10;
+        
         private IEventPipeline? _events;
         private double? _screenWidth;
         private double? _screenHeight;
         
         public CanvasPanel()
         {
-            Orientation = Orientation.Vertical;
-
             SetValue(ZIndexProperty, 1);
         }
 
@@ -29,21 +29,42 @@ namespace LiveShot.UI.Controls
 
         private void OnSelectionChange(Event e)
         {
-            if (_screenWidth is null || _screenHeight is null) return;
-            
             var args = e.GetArgs<OnSelectionChangeArgs>();
 
-            const double gap = 10;
+            if (Orientation == Orientation.Vertical)
+            {
+                SetRightPanelPosition(args);
+            }
+            else
+            {
+                SetLeftPanelPosition(args);
+            }
+        }
 
-            double left = args.NewWidth + args.NewLeft + gap;
+        private void SetLeftPanelPosition(OnSelectionChangeArgs args)
+        {
+            if (_screenWidth is null || _screenHeight is null) return;
+
+            double left = args.NewLeft + args.NewWidth - ActualWidth;
+            double top = args.NewTop + args.NewHeight + Gap;
+            
+            Canvas.SetLeft(this, left);
+            Canvas.SetTop(this, top);
+        }
+
+        private void SetRightPanelPosition(OnSelectionChangeArgs args)
+        {
+            if (_screenWidth is null || _screenHeight is null) return;
+
+            double left = args.NewWidth + args.NewLeft + Gap;
             double top = args.NewTop;
 
-            var maxLeft = (double) (_screenWidth - ActualWidth - gap);
+            var maxLeft = (double) (_screenWidth - ActualWidth - Gap);
 
             if (left > maxLeft)
             {
-                left = args.NewWidth + args.NewLeft - gap - ActualWidth;
-                top += gap;
+                left = args.NewWidth + args.NewLeft - Gap - ActualWidth;
+                top += Gap;
 
                 if (left > maxLeft)
                 {
@@ -51,7 +72,7 @@ namespace LiveShot.UI.Controls
                 }
             }
             
-            var maxTop = (double) (_screenHeight - ActualHeight - gap);
+            var maxTop = (double) (_screenHeight - ActualHeight - Gap);
 
             if (top > maxTop)
             {

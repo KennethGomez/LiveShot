@@ -40,6 +40,7 @@ namespace LiveShot.UI.Views
             SelectCanvas.WithEvents(events);
 
             CanvasRightPanel.With(events, Width, Height);
+            CanvasLeftPanel.With(events, Width, Height);
 
             CaptureScreen();
         }

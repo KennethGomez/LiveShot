@@ -30,13 +30,13 @@
         <controls:SelectCanvas ToolTip="{x:Static properties:Resources.CaptureScreen_Canvas_Tooltip}" Grid.Row="0"
                                x:Name="SelectCanvas" SizeLabel="{Binding ElementName=SizeLabel}"
                                OpacityRectangle="{Binding ElementName=OpacityRectangle}"
-                               Panel="{Binding ElementName=CanvasRightPanel}">
+                               RightPanel="{Binding ElementName=CanvasRightPanel}" LeftPanel="{Binding ElementName=CanvasLeftPanel}">
             <Rectangle Name="OpacityRectangle" Fill="Black" Opacity=".5"
                        Width="{Binding ElementName=SelectCanvas, Path=Width}"
                        Height="{Binding ElementName=SelectCanvas, Path=Height}" />
-            <controls:CanvasPanel Name="CanvasRightPanel" Visibility="Hidden">
+            <controls:CanvasPanel Name="CanvasRightPanel" Visibility="Hidden" Orientation="Vertical">
                 <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Pencil}"
-                        Style="{StaticResource FirstCanvasButton}">
+                        Style="{StaticResource FirstRightCanvasButton}">
                     <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Pencil}" />
                 </Button>
                 <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Stroke}"
@@ -60,11 +60,41 @@
                     <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Text}" />
                 </Button>
                 <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_ColorPicker}"
-                        Style="{StaticResource LastCanvasButton}">
+                        Style="{StaticResource LastRightCanvasButton}">
                     <Rectangle Width="20" Height="20" Fill="Red" />
                 </Button>
                 <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Undo}"
-                        Style="{StaticResource SplitCanvasButton}" Margin="0,5">
+                        Style="{StaticResource SplitCanvasButton}" Margin="0 5">
+                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Undo}" />
+                </Button>
+            </controls:CanvasPanel>
+            <controls:CanvasPanel Name="CanvasLeftPanel" Visibility="Hidden" Orientation="Horizontal">
+                <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Pencil}"
+                        Style="{StaticResource FirstLeftCanvasButton}">
+                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Pencil}" />
+                </Button>
+                <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Pencil}"
+                        Style="{StaticResource CanvasButton}">
+                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Pencil}" />
+                </Button>
+                <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Pencil}"
+                        Style="{StaticResource CanvasButton}">
+                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Pencil}" />
+                </Button>
+                <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Pencil}"
+                        Style="{StaticResource CanvasButton}">
+                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Pencil}" />
+                </Button>
+                <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Pencil}"
+                        Style="{StaticResource CanvasButton}">
+                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Pencil}" />
+                </Button>
+                <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Pencil}"
+                        Style="{StaticResource LastLeftCanvasButton}">
+                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Pencil}" />
+                </Button>
+                <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Undo}"
+                        Style="{StaticResource SplitCanvasButton}" Margin="5 0 0 0">
                     <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Undo}" />
                 </Button>
             </controls:CanvasPanel>
