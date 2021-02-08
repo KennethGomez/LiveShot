@@ -95,7 +95,10 @@ namespace LiveShot.UI.Controls.Canvas
                 return;
             }
 
-            UpdateOpacityRectangles();
+            if (_moving || _dragging)
+            {
+                UpdateOpacityRectangles();
+            }
 
             SetLeft(Selection.Rectangle, Selection.Left);
             SetTop(Selection.Rectangle, Selection.Top);
@@ -145,7 +148,7 @@ namespace LiveShot.UI.Controls.Canvas
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
             base.OnMouseLeftButtonDown(e);
-            
+
             MouseLeftButtonPress(e);
         }
 
@@ -185,7 +188,7 @@ namespace LiveShot.UI.Controls.Canvas
         protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
         {
             base.OnMouseLeftButtonUp(e);
-            
+
             MouseLeftButtonRelease();
         }
 
@@ -209,7 +212,19 @@ namespace LiveShot.UI.Controls.Canvas
         protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseMove(e);
-            
+
+            if (Selection is not null)
+            {
+                if (Action != CanvasAction.Default)
+                {
+                    Selection.Cursor = Cursors.Arrow;
+
+                    return;
+                }
+
+                Selection.Cursor = Cursors.SizeAll;
+            }
+
             var newPosition = e.GetPosition(this);
 
             if (_moving)
@@ -258,7 +273,7 @@ namespace LiveShot.UI.Controls.Canvas
             var args = e.GetArgs<KeyEventArgs>();
 
             base.OnKeyDown(args);
-            
+
             if (Selection == null) return;
 
             switch (args.Key)

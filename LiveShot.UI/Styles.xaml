@@ -1,14 +1,13 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:button="clr-namespace:LiveShot.UI.Controls.Button;assembly=LiveShot.UI.Controls">
-    <Style x:Key="CanvasButton" TargetType="button:ActionButton">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style x:Key="CanvasButton" TargetType="Button">
         <Setter Property="Background" Value="#F4F4F4" />
         <Setter Property="Width" Value="36" />
         <Setter Property="Height" Value="36" />
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="button:ActionButton">
+                <ControlTemplate TargetType="Button">
                     <Border Background="{TemplateBinding Background}" BorderBrush="Transparent">
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </Border>
@@ -16,34 +15,27 @@
             </Setter.Value>
         </Setter>
         <Style.Triggers>
-            <MultiTrigger>
-                <MultiTrigger.Conditions>
-                    <Condition Property="IsMouseOver" Value="True"></Condition>
-                    <Condition Property="IsActive" Value="False"></Condition>
-                </MultiTrigger.Conditions>
-                <MultiTrigger.EnterActions>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Trigger.EnterActions>
                     <BeginStoryboard>
                         <Storyboard>
                             <ColorAnimation Duration="0:0:0.1" Storyboard.TargetProperty="Background.Color"
                                             To="#A8A8A8" />
                         </Storyboard>
                     </BeginStoryboard>
-                </MultiTrigger.EnterActions>
-                <MultiTrigger.ExitActions>
+                </Trigger.EnterActions>
+                <Trigger.ExitActions>
                     <BeginStoryboard>
                         <Storyboard FillBehavior="Stop">
                             <ColorAnimation Duration="0:0:0.1" Storyboard.TargetProperty="Background.Color"
                                             To="#F4F4F4" />
                         </Storyboard>
                     </BeginStoryboard>
-                </MultiTrigger.ExitActions>
-            </MultiTrigger>
-            <Trigger Property="IsActive" Value="True">
-                <Setter Property="Background" Value="#A8A8A8"></Setter>
+                </Trigger.ExitActions>
             </Trigger>
         </Style.Triggers>
     </Style>
-    <Style x:Key="FirstRightCanvasButton" BasedOn="{StaticResource CanvasButton}" TargetType="button:ActionButton">
+    <Style x:Key="FirstRightCanvasButton" BasedOn="{StaticResource CanvasButton}" TargetType="Button">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -54,7 +46,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="LastRightCanvasButton" BasedOn="{StaticResource CanvasButton}" TargetType="button:ActionButton">
+    <Style x:Key="LastRightCanvasButton" BasedOn="{StaticResource CanvasButton}" TargetType="Button">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -65,7 +57,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="FirstLeftCanvasButton" BasedOn="{StaticResource CanvasButton}" TargetType="button:ActionButton">
+    <Style x:Key="FirstLeftCanvasButton" BasedOn="{StaticResource CanvasButton}" TargetType="Button">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -76,7 +68,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="LastLeftCanvasButton" BasedOn="{StaticResource CanvasButton}" TargetType="button:ActionButton">
+    <Style x:Key="LastLeftCanvasButton" BasedOn="{StaticResource CanvasButton}" TargetType="Button">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -87,7 +79,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="SplitCanvasButton" BasedOn="{StaticResource CanvasButton}" TargetType="button:ActionButton">
+    <Style x:Key="SplitCanvasButton" BasedOn="{StaticResource CanvasButton}" TargetType="Button">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">

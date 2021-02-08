@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.Windows.Media;
 using LiveShot.API;
 using LiveShot.API.Events.Input;
 using LiveShot.API.Image;
+using LiveShot.UI.Controls.Button;
 using LiveShot.UI.Controls.Canvas;
 using LiveShot.Utils;
 using Microsoft.Extensions.DependencyInjection;
@@ -44,7 +46,12 @@ namespace LiveShot.UI.Views
             CanvasRightPanel.With(events, Width, Height);
             CanvasBottomPanel.With(events, Width, Height);
 
-            PencilBtn.Click += PencilBtnOnClick;
+            var actionButtons = WindowUtils.FindVisualChildren<ActionButton>(SelectCanvas).ToList();
+
+            foreach (var actionButton in actionButtons)
+            {
+                actionButton.Click += (actual, _) => ActionButtonOnClick(actual, actionButtons);
+            }
 
             UploadBtn.Click += UploadBtnOnClick;
             GoogleBtn.Click += GoogleBtnOnClick;
@@ -55,12 +62,22 @@ namespace LiveShot.UI.Views
             CaptureScreen();
         }
 
-        private static bool IsCtrlPressed => Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl);
-
-        private void PencilBtnOnClick(object sender, RoutedEventArgs e)
+        private static void ActionButtonOnClick(object sender, IEnumerable<ActionButton> all)
         {
-            SelectCanvas.Action = CanvasAction.Pencil;
+            foreach (var button in all)
+            {
+                if (button == sender)
+                {
+                    button.UpdateActive(!button.IsActive);
+                    
+                    continue;
+                }
+
+                button.IsActive = false;
+            }
         }
+
+        private static bool IsCtrlPressed => Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl);
 
         private void GoogleBtnOnClick(object sender, RoutedEventArgs e)
         {
