@@ -11,7 +11,6 @@ using LiveShot.API;
 using LiveShot.API.Events.Input;
 using LiveShot.API.Image;
 using LiveShot.UI.Controls.Button;
-using LiveShot.UI.Controls.Canvas;
 using LiveShot.Utils;
 using Microsoft.Extensions.DependencyInjection;
 using Brushes = System.Windows.Media.Brushes;
@@ -73,7 +72,7 @@ namespace LiveShot.UI.Views
             if (dialog.ShowDialog() != System.Windows.Forms.DialogResult.OK) return;
 
             var color = Color.FromArgb(dialog.Color.A, dialog.Color.R, dialog.Color.G, dialog.Color.B);
-                
+
             SelectCanvas.Color = new SolidColorBrush(color);
         }
 
@@ -83,7 +82,8 @@ namespace LiveShot.UI.Views
             {
                 if (button == sender)
                 {
-                    button.UpdateActive(!button.IsActive);
+                    button.IsActive = !button.IsActive;
+                    button.UpdateAction();
 
                     continue;
                 }
@@ -182,7 +182,7 @@ namespace LiveShot.UI.Views
                 var selection = SelectCanvas.Selection;
                 if (selection is null || selection.IsClear) return;
 
-                ImageUtils.GetBitmap(selection, _screenShot).Save(fs, selectedFormat.Format);
+                ImageUtils.GetBitmap(selection, _screenShot, SelectCanvas).Save(fs, selectedFormat.Format);
 
                 fs.Close();
             }
@@ -202,7 +202,7 @@ namespace LiveShot.UI.Views
 
             if (selection is null || selection.IsClear || selection.HasInvalidSize) return;
 
-            var bitmap = ImageUtils.GetBitmap(selection, _screenShot);
+            var bitmap = ImageUtils.GetBitmap(selection, _screenShot, SelectCanvas);
 
             _exportWindow = _services.GetService<ExportWindowView>();
 
@@ -226,7 +226,7 @@ namespace LiveShot.UI.Views
             var selection = SelectCanvas.Selection;
             if (selection is null || selection.IsClear) return;
 
-            bool copied = ImageUtils.CopyImage(selection, _screenShot);
+            bool copied = ImageUtils.CopyImage(selection, _screenShot, SelectCanvas);
 
             if (copied) Close();
         }

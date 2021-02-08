@@ -41,10 +41,8 @@ namespace LiveShot.UI.Controls.Button
             set => SetValue(ActiveActionProperty, value);
         }
 
-        public void UpdateActive(bool active)
+        public void UpdateAction()
         {
-            IsActive = active;
-
             DrawCanvas.Action = IsActive ? ActiveAction : CanvasAction.Default;
         }
     }
