@@ -8,9 +8,11 @@ using System.Windows.Media;
 using LiveShot.API;
 using LiveShot.API.Events.Input;
 using LiveShot.API.Image;
+using LiveShot.UI.Controls.Canvas;
 using LiveShot.Utils;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Win32;
+using Brush = System.Windows.Media.Brush;
 using Brushes = System.Windows.Media.Brushes;
 
 namespace LiveShot.UI.Views
@@ -42,6 +44,8 @@ namespace LiveShot.UI.Views
             CanvasRightPanel.With(events, Width, Height);
             CanvasBottomPanel.With(events, Width, Height);
 
+            PencilBtn.Click += PencilBtnOnClick;
+
             UploadBtn.Click += UploadBtnOnClick;
             GoogleBtn.Click += GoogleBtnOnClick;
             CopyBtn.Click += CopyBtnOnClick;
@@ -52,6 +56,11 @@ namespace LiveShot.UI.Views
         }
 
         private static bool IsCtrlPressed => Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl);
+
+        private void PencilBtnOnClick(object sender, RoutedEventArgs e)
+        {
+            SelectCanvas.Action = CanvasAction.Pencil;
+        }
 
         private void GoogleBtnOnClick(object sender, RoutedEventArgs e)
         {

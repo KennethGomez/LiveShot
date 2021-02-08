@@ -56,8 +56,8 @@ namespace LiveShot.UI.Controls.Panel
                 top = maxTop;
             }
             
-            Canvas.SetLeft(this, left);
-            Canvas.SetTop(this, top);
+            System.Windows.Controls.Canvas.SetLeft(this, left);
+            System.Windows.Controls.Canvas.SetTop(this, top);
         }
 
         protected abstract (double, double)? GetPositions(OnSelectionChangeArgs args);

@@ -11,9 +11,9 @@ using LiveShot.API.Events.Input;
 using LiveShot.API.Events.Selection;
 using LiveShot.UI.Controls.Panel;
 
-namespace LiveShot.UI.Controls
+namespace LiveShot.UI.Controls.Canvas
 {
-    public class SelectCanvas : Canvas
+    public class SelectCanvas : DrawCanvas
     {
         public static readonly DependencyProperty SizeLabelProperty = DependencyProperty.Register(
             "SizeLabel", typeof(Label), typeof(SelectCanvas)
@@ -144,6 +144,8 @@ namespace LiveShot.UI.Controls
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
+            base.OnMouseLeftButtonDown(e);
+            
             MouseLeftButtonPress(e);
         }
 
@@ -182,6 +184,8 @@ namespace LiveShot.UI.Controls
 
         protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
         {
+            base.OnMouseLeftButtonUp(e);
+            
             MouseLeftButtonRelease();
         }
 
@@ -204,6 +208,8 @@ namespace LiveShot.UI.Controls
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
+            base.OnMouseMove(e);
+            
             var newPosition = e.GetPosition(this);
 
             if (_moving)
@@ -249,9 +255,13 @@ namespace LiveShot.UI.Controls
 
         private void OnKeyDown(Event e)
         {
+            var args = e.GetArgs<KeyEventArgs>();
+
+            base.OnKeyDown(args);
+            
             if (Selection == null) return;
 
-            switch (e.GetArgs<KeyEventArgs>().Key)
+            switch (args.Key)
             {
                 case Key.Up:
                     OnSelectionKeyDown(n => Selection.Height -= n, n => Selection.Top -= n);
