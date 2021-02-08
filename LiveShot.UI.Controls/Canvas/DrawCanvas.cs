@@ -7,7 +7,17 @@ namespace LiveShot.UI.Controls.Canvas
 {
     public class DrawCanvas : System.Windows.Controls.Canvas
     {
+        public static readonly DependencyProperty ColorProperty = DependencyProperty.Register(
+            "Color", typeof(Brush), typeof(DrawCanvas), new PropertyMetadata(Brushes.Red)
+        );
+        
         public static CanvasAction Action = CanvasAction.Default;
+
+        public Brush Color
+        {
+            get => (Brush) GetValue(ColorProperty);
+            set => SetValue(ColorProperty, value);
+        }
 
         private Point _currentPoint;
 
@@ -23,7 +33,7 @@ namespace LiveShot.UI.Controls.Canvas
 
             Line line = new()
             {
-                Stroke = Brushes.Red,
+                Stroke = Color,
                 X1 = _currentPoint.X,
                 Y1 = _currentPoint.Y,
                 X2 = e.GetPosition(this).X,

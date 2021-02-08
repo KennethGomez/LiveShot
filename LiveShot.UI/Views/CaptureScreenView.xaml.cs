@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using LiveShot.API;
@@ -13,9 +14,10 @@ using LiveShot.UI.Controls.Button;
 using LiveShot.UI.Controls.Canvas;
 using LiveShot.Utils;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Win32;
-using Brush = System.Windows.Media.Brush;
 using Brushes = System.Windows.Media.Brushes;
+using Color = System.Windows.Media.Color;
+using KeyEventArgs = System.Windows.Input.KeyEventArgs;
+using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
 
 namespace LiveShot.UI.Views
 {
@@ -49,9 +51,9 @@ namespace LiveShot.UI.Views
             var actionButtons = WindowUtils.FindVisualChildren<ActionButton>(SelectCanvas).ToList();
 
             foreach (var actionButton in actionButtons)
-            {
                 actionButton.Click += (actual, _) => ActionButtonOnClick(actual, actionButtons);
-            }
+
+            ColorPickerBtn.Click += ColorPickerBtnOnClick;
 
             UploadBtn.Click += UploadBtnOnClick;
             GoogleBtn.Click += GoogleBtnOnClick;
@@ -62,6 +64,19 @@ namespace LiveShot.UI.Views
             CaptureScreen();
         }
 
+        private static bool IsCtrlPressed => Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl);
+
+        private void ColorPickerBtnOnClick(object sender, RoutedEventArgs e)
+        {
+            var dialog = new ColorDialog();
+
+            if (dialog.ShowDialog() != System.Windows.Forms.DialogResult.OK) return;
+
+            var color = Color.FromArgb(dialog.Color.A, dialog.Color.R, dialog.Color.G, dialog.Color.B);
+                
+            SelectCanvas.Color = new SolidColorBrush(color);
+        }
+
         private static void ActionButtonOnClick(object sender, IEnumerable<ActionButton> all)
         {
             foreach (var button in all)
@@ -69,15 +84,13 @@ namespace LiveShot.UI.Views
                 if (button == sender)
                 {
                     button.UpdateActive(!button.IsActive);
-                    
+
                     continue;
                 }
 
                 button.IsActive = false;
             }
         }
-
-        private static bool IsCtrlPressed => Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl);
 
         private void GoogleBtnOnClick(object sender, RoutedEventArgs e)
         {

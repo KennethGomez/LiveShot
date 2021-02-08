@@ -63,8 +63,8 @@
                     <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Text}" />
                 </button:ActionButton>
                 <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_ColorPicker}"
-                                     Style="{StaticResource LastRightCanvasButton}">
-                    <Rectangle Width="20" Height="20" Fill="Red" />
+                                     Style="{StaticResource LastRightCanvasButton}" Name="ColorPickerBtn">
+                    <Rectangle Width="20" Height="20" Fill="{Binding ElementName=SelectCanvas, Path=Color}" />
                 </Button>
                 <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Undo}"
                                      Style="{StaticResource SplitCanvasButton}" Margin="0 5 0 0">
