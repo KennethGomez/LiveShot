@@ -36,6 +36,31 @@ namespace LiveShot.UI.Controls.Panel
             SetPanelPosition(args);
         }
 
-        protected abstract void SetPanelPosition(OnSelectionChangeArgs args);
+        private void SetPanelPosition(OnSelectionChangeArgs args)
+        {
+            var positions = GetPositions(args);
+            var maxPositions = GetMaxPositions(args);
+
+            if (!positions.HasValue || !maxPositions.HasValue) return;
+            
+            (double left, double top) = positions.Value;
+            (double maxLeft, double maxTop) = maxPositions.Value;
+
+            if (left > maxLeft)
+            {
+                left = maxLeft;
+            }
+
+            if (top > maxTop)
+            {
+                top = maxTop;
+            }
+            
+            Canvas.SetLeft(this, left);
+            Canvas.SetTop(this, top);
+        }
+
+        protected abstract (double, double)? GetPositions(OnSelectionChangeArgs args);
+        protected abstract (double, double)? GetMaxPositions(OnSelectionChangeArgs args);
     }
 }

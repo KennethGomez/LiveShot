@@ -1,33 +1,27 @@
-﻿using System.Windows.Controls;
-using LiveShot.API.Events.Selection;
+﻿using LiveShot.API.Events.Selection;
 
 namespace LiveShot.UI.Controls.Panel
 {
     public class BottomDragPanel : DragPanel
     {
-        protected override void SetPanelPosition(OnSelectionChangeArgs args)
+        protected override (double, double)? GetPositions(OnSelectionChangeArgs args)
         {
-            if (ScreenWidth is null || ScreenHeight is null) return;
+            if (ScreenWidth is null || ScreenHeight is null) return null;
 
             double left = args.NewLeft + args.NewWidth - ActualWidth;
             double top = args.NewTop + args.NewHeight + Gap;
 
+            return (left, top);
+        }
+
+        protected override (double, double)? GetMaxPositions(OnSelectionChangeArgs args)
+        {
+            if (ScreenWidth is null || ScreenHeight is null) return null;
+
             var maxLeft = (double) (ScreenWidth - ActualWidth - Gap * 2 - ButtonSize);
-
-            if (left > maxLeft)
-            {
-                left = maxLeft;
-            }
-
             var maxTop = (double) (ScreenHeight - ActualHeight - Gap);
 
-            if (top > maxTop)
-            {
-                top = maxTop;
-            }
-
-            Canvas.SetLeft(this, left);
-            Canvas.SetTop(this, top);
+            return (maxLeft, maxTop);
         }
     }
 }
