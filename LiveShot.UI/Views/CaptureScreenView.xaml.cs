@@ -40,7 +40,7 @@ namespace LiveShot.UI.Views
             SelectCanvas.WithEvents(events);
 
             CanvasRightPanel.With(events, Width, Height);
-            CanvasLeftPanel.With(events, Width, Height);
+            CanvasBottomPanel.With(events, Width, Height);
 
             UploadBtn.Click += UploadBtnOnClick;
             GoogleBtn.Click += GoogleBtnOnClick;

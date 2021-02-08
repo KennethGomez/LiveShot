@@ -9,6 +9,7 @@ using LiveShot.API.Canvas;
 using LiveShot.API.Events;
 using LiveShot.API.Events.Input;
 using LiveShot.API.Events.Selection;
+using LiveShot.UI.Controls.Panel;
 
 namespace LiveShot.UI.Controls
 {
@@ -23,11 +24,11 @@ namespace LiveShot.UI.Controls
         );
 
         public static readonly DependencyProperty RightPanelProperty = DependencyProperty.Register(
-            "RightPanel", typeof(Panel), typeof(SelectCanvas)
+            "RightPanel", typeof(RightDragPanel), typeof(SelectCanvas)
         );
 
-        public static readonly DependencyProperty LeftPanelProperty = DependencyProperty.Register(
-            "LeftPanel", typeof(CanvasPanel), typeof(SelectCanvas)
+        public static readonly DependencyProperty BottomPanelProperty = DependencyProperty.Register(
+            "BottomPanel", typeof(BottomDragPanel), typeof(SelectCanvas)
         );
 
         private readonly Collection<Rectangle> _rectangles = new();
@@ -51,16 +52,16 @@ namespace LiveShot.UI.Controls
             set => SetValue(OpacityRectangleProperty, value);
         }
 
-        public Panel RightPanel
+        public RightDragPanel RightPanel
         {
-            get => (Panel) GetValue(RightPanelProperty);
+            get => (RightDragPanel) GetValue(RightPanelProperty);
             set => SetValue(RightPanelProperty, value);
         }
 
-        public CanvasPanel LeftPanel
+        public BottomDragPanel BottomPanel
         {
-            get => (CanvasPanel) GetValue(LeftPanelProperty);
-            set => SetValue(LeftPanelProperty, value);
+            get => (BottomDragPanel) GetValue(BottomPanelProperty);
+            set => SetValue(BottomPanelProperty, value);
         }
 
         private static bool CtrlPressed => Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl);
@@ -104,12 +105,12 @@ namespace LiveShot.UI.Controls
             if (Selection.HasInvalidSize || _dragging)
             {
                 RightPanel.Visibility = Visibility.Hidden;
-                LeftPanel.Visibility = Visibility.Hidden;
+                BottomPanel.Visibility = Visibility.Hidden;
             }
             else
             {
                 RightPanel.Visibility = Visibility.Visible;
-                LeftPanel.Visibility = Visibility.Visible;
+                BottomPanel.Visibility = Visibility.Visible;
             }
 
             _events?.Dispatch<OnSelectionChange>(OnSelectionChangeArgs.From(Selection));

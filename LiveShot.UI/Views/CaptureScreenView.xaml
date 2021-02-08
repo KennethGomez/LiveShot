@@ -5,6 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:controls="clr-namespace:LiveShot.UI.Controls;assembly=LiveShot.UI.Controls"
         xmlns:properties="clr-namespace:LiveShot.API.Properties;assembly=LiveShot.API"
+        xmlns:panel="clr-namespace:LiveShot.UI.Controls.Panel;assembly=LiveShot.UI.Controls"
         mc:Ignorable="d"
         Title="{x:Static properties:Resources.CaptureScreen_Title}" Height="450" Width="800"
         WindowStyle="None"
@@ -30,11 +31,11 @@
         <controls:SelectCanvas ToolTip="{x:Static properties:Resources.CaptureScreen_Canvas_Tooltip}" Grid.Row="0"
                                x:Name="SelectCanvas" SizeLabel="{Binding ElementName=SizeLabel}"
                                OpacityRectangle="{Binding ElementName=OpacityRectangle}"
-                               RightPanel="{Binding ElementName=CanvasRightPanel}" LeftPanel="{Binding ElementName=CanvasLeftPanel}">
+                               RightPanel="{Binding ElementName=CanvasRightPanel}" BottomPanel="{Binding ElementName=CanvasBottomPanel}">
             <Rectangle Name="OpacityRectangle" Fill="Black" Opacity=".5"
                        Width="{Binding ElementName=SelectCanvas, Path=Width}"
                        Height="{Binding ElementName=SelectCanvas, Path=Height}" />
-            <controls:CanvasPanel Name="CanvasRightPanel" Visibility="Hidden" Orientation="Vertical">
+            <panel:RightDragPanel Name="CanvasRightPanel" Visibility="Hidden" Orientation="Vertical">
                 <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Pencil}"
                         Style="{StaticResource FirstRightCanvasButton}">
                     <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Pencil}" />
@@ -64,11 +65,11 @@
                     <Rectangle Width="20" Height="20" Fill="Red" />
                 </Button>
                 <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Undo}"
-                        Style="{StaticResource SplitCanvasButton}" Margin="0 5">
+                        Style="{StaticResource SplitCanvasButton}" Margin="0 5 0 0">
                     <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Undo}" />
                 </Button>
-            </controls:CanvasPanel>
-            <controls:CanvasPanel Name="CanvasLeftPanel" Visibility="Hidden" Orientation="Horizontal">
+            </panel:RightDragPanel>
+            <panel:BottomDragPanel Name="CanvasBottomPanel" Visibility="Hidden" Orientation="Horizontal">
                 <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Upload}"
                         Style="{StaticResource FirstLeftCanvasButton}" Name="UploadBtn">
                     <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Upload}" />
@@ -97,7 +98,7 @@
                         Style="{StaticResource SplitCanvasButton}" Margin="5 0 0 0" Name="CloseBtn">
                     <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Close}" />
                 </Button>
-            </controls:CanvasPanel>
+            </panel:BottomDragPanel>
         </controls:SelectCanvas>
         <Label Name="SizeLabel" Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Center" FontSize="16"
                Background="#1EFFFFFF" Foreground="White" Padding="25,10"
