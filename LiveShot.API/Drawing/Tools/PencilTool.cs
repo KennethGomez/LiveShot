@@ -10,7 +10,9 @@ namespace LiveShot.API.Drawing.Tools
 
         public override void OnMouseLeftButtonDown(MouseButtonEventArgs e, System.Windows.Controls.Canvas canvas)
         {
-            
+            if (e.LeftButton != MouseButtonState.Pressed) return;
+
+            LastPoint = e.GetPosition(canvas);
         }
 
         public override void OnMouseLeftButtonUp(MouseButtonEventArgs e, System.Windows.Controls.Canvas canvas)
