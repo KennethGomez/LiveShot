@@ -205,7 +205,7 @@ namespace LiveShot.UI.Controls.Canvas
             _startPosition = null;
             _tmpCursorPosition = null;
 
-            if (Selection is null) return;
+            if (Selection is null || Tool == CanvasTool.Default) return;
 
             Selection.Cursor = Cursors.SizeAll;
         }
