@@ -11,7 +11,7 @@ namespace LiveShot.UI.Controls.Canvas
             "Color", typeof(Brush), typeof(DrawCanvas), new PropertyMetadata(Brushes.Red)
         );
         
-        public static CanvasAction Action = CanvasAction.Default;
+        public CanvasAction Action = CanvasAction.Default;
 
         public Brush Color
         {

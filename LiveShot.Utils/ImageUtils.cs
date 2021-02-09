@@ -14,11 +14,11 @@ namespace LiveShot.Utils
 {
     public static class ImageUtils
     {
-        public static bool CopyImage(Selection selection, Bitmap source, Canvas canvas)
+        public static bool CopyImage(Selection selection, Bitmap source, Bitmap canvasBitmap)
         {
-            if (selection.HasInvalidSize) return false;
+            if (selection.Invalid) return false;
 
-            var bitmap = GetBitmap(selection, source, canvas);
+            var bitmap = GetBitmap(selection, source, canvasBitmap);
             var bitmapSource = GetBitmapSource(bitmap);
 
             Clipboard.SetImage(bitmapSource);
@@ -26,14 +26,9 @@ namespace LiveShot.Utils
             return true;
         }
 
-        public static Bitmap GetBitmap(Selection selection, Bitmap source, Canvas canvas)
+        public static Bitmap GetBitmap(Selection selection, Bitmap source, Bitmap canvasBitmap)
         {
             var bitmap = new Bitmap((int) selection.Width, (int) selection.Height);
-
-            var canvasBitmap = new RenderTargetBitmap(
-                (int) canvas.ActualWidth, (int) canvas.ActualHeight, 96, 96, PixelFormats.Pbgra32
-            );
-            canvasBitmap.Render(canvas);
 
             using var graphics = Graphics.FromImage(bitmap);
 
@@ -45,13 +40,23 @@ namespace LiveShot.Utils
             );
             
             graphics.DrawImage(
-                GetBitmapFromSource(canvasBitmap),
+                canvasBitmap,
                 new Rectangle(0, 0, bitmap.Width, bitmap.Height),
                 new Rectangle((int) selection.Left, (int) selection.Top, bitmap.Width, bitmap.Height),
                 GraphicsUnit.Pixel
             );
 
             return bitmap;
+        }
+
+        public static Bitmap GetBitmapFromCanvas(Canvas canvas)
+        {
+            var bitmapSource = new RenderTargetBitmap(
+                (int) canvas.ActualWidth, (int) canvas.ActualHeight, 96, 96, PixelFormats.Pbgra32
+            );
+            bitmapSource.Render(canvas);
+
+            return GetBitmapFromSource(bitmapSource);
         }
 
         public static Bitmap CaptureScreen(int width, int height, int left, int top)

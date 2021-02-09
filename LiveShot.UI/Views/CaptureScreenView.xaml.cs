@@ -11,6 +11,7 @@ using LiveShot.API;
 using LiveShot.API.Events.Input;
 using LiveShot.API.Image;
 using LiveShot.UI.Controls.Button;
+using LiveShot.UI.Controls.Canvas;
 using LiveShot.Utils;
 using Microsoft.Extensions.DependencyInjection;
 using Brushes = System.Windows.Media.Brushes;
@@ -76,14 +77,15 @@ namespace LiveShot.UI.Views
             SelectCanvas.Color = new SolidColorBrush(color);
         }
 
-        private static void ActionButtonOnClick(object sender, IEnumerable<ActionButton> all)
+        private void ActionButtonOnClick(object sender, IEnumerable<ActionButton> all)
         {
             foreach (var button in all)
             {
                 if (button == sender)
                 {
                     button.IsActive = !button.IsActive;
-                    button.UpdateAction();
+
+                    SelectCanvas.Action = button.IsActive ? button.ActiveAction : CanvasAction.Default;
 
                     continue;
                 }
@@ -157,41 +159,14 @@ namespace LiveShot.UI.Views
 
         private void SaveImage()
         {
-            if (_screenShot is null) return;
+            var selection = SelectCanvas.Selection;
 
-            ImageSaveFormat[]? formats = ImageSaveFormats.Supported;
+            if (_screenShot is null || selection is null || selection.Invalid) return;
 
-            SaveFileDialog dialog = new()
-            {
-                Filter = string.Join('|', formats.Select(f => f.Filter)),
-                FileName = string.Format(API.Properties.Resources.CaptureScreen_SaveImage_FileName, DateTime.Now),
-                RestoreDirectory = true,
-                Title = API.Properties.Resources.CaptureScreen_SaveImage_Title
-            };
+            bool saved = FileUtils.SaveImage(selection, _screenShot, ImageUtils.GetBitmapFromCanvas(SelectCanvas));
 
-            if (dialog.ShowDialog() == false) return;
-
-            if (string.IsNullOrWhiteSpace(dialog.FileName)) return;
-
-            try
-            {
-                FileStream fs = (FileStream) dialog.OpenFile();
-
-                var selectedFormat = formats[dialog.FilterIndex - 1];
-
-                var selection = SelectCanvas.Selection;
-                if (selection is null || selection.IsClear) return;
-
-                ImageUtils.GetBitmap(selection, _screenShot, SelectCanvas).Save(fs, selectedFormat.Format);
-
-                fs.Close();
-            }
-            catch
-            {
-                return;
-            }
-
-            Close();
+            if (saved)
+                Close();
         }
 
         private void OpenExportWindow(bool google = false)
@@ -200,9 +175,9 @@ namespace LiveShot.UI.Views
 
             var selection = SelectCanvas.Selection;
 
-            if (selection is null || selection.IsClear || selection.HasInvalidSize) return;
+            if (selection is null || selection.Invalid) return;
 
-            var bitmap = ImageUtils.GetBitmap(selection, _screenShot, SelectCanvas);
+            var bitmap = ImageUtils.GetBitmap(selection, _screenShot, ImageUtils.GetBitmapFromCanvas(SelectCanvas));
 
             _exportWindow = _services.GetService<ExportWindowView>();
 
@@ -224,9 +199,9 @@ namespace LiveShot.UI.Views
         private void CopyImage()
         {
             var selection = SelectCanvas.Selection;
-            if (selection is null || selection.IsClear) return;
+            if (selection is null || selection.Invalid) return;
 
-            bool copied = ImageUtils.CopyImage(selection, _screenShot, SelectCanvas);
+            bool copied = ImageUtils.CopyImage(selection, _screenShot, ImageUtils.GetBitmapFromCanvas(SelectCanvas));
 
             if (copied) Close();
         }

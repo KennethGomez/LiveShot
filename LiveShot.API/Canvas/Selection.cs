@@ -72,8 +72,9 @@ namespace LiveShot.API.Canvas
 
         public static Selection Empty => new(0, 0, 0, 0);
 
-        public bool IsClear => Width == 0 && Height == 0 && Top == 0 && Height == 0;
-        public bool HasInvalidSize => Width == 0 || Height == 0;
+        private bool IsClear => Width == 0 && Height == 0 && Top == 0 && Left == 0;
+        private bool HasInvalidSize => Width == 0 || Height == 0;
+        public bool Invalid => HasInvalidSize || IsClear;
 
         public string Label => IsClear
             ? Properties.Resources.CaptureScreen_SizeLabel_Empty

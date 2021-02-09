@@ -105,7 +105,7 @@ namespace LiveShot.UI.Controls.Canvas
 
             SizeLabel.Content = Selection.Label;
 
-            if (Selection.HasInvalidSize || _dragging)
+            if (Selection.Invalid || _dragging)
             {
                 RightPanel.Visibility = Visibility.Hidden;
                 BottomPanel.Visibility = Visibility.Hidden;
