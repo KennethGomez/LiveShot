@@ -1,8 +1,8 @@
 ﻿using System.Windows;
 
-namespace LiveShot.API
+namespace LiveShot.API.Utils
 {
-    public static class Points
+    public static class PointUtils
     {
         public static (double, double) GetCoords(Point start, Point end)
         {

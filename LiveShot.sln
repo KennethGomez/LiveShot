@@ -6,8 +6,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveShot.UI.Controls", "Liv
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveShot.API", "LiveShot.API\LiveShot.API.csproj", "{90390EB4-F8D3-4698-A20F-71B9CD0E851E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveShot.Utils", "LiveShot.Utils\LiveShot.Utils.csproj", "{20B4A5E9-5E84-4ED6-986A-71EFF9AEC61F}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,9 +24,5 @@ Global
 		{90390EB4-F8D3-4698-A20F-71B9CD0E851E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{90390EB4-F8D3-4698-A20F-71B9CD0E851E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{90390EB4-F8D3-4698-A20F-71B9CD0E851E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{20B4A5E9-5E84-4ED6-986A-71EFF9AEC61F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{20B4A5E9-5E84-4ED6-986A-71EFF9AEC61F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{20B4A5E9-5E84-4ED6-986A-71EFF9AEC61F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{20B4A5E9-5E84-4ED6-986A-71EFF9AEC61F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

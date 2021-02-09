@@ -10,6 +10,7 @@ using LiveShot.API.Drawing;
 using LiveShot.API.Events;
 using LiveShot.API.Events.Input;
 using LiveShot.API.Events.Selection;
+using LiveShot.API.Utils;
 using LiveShot.UI.Controls.Panel;
 
 namespace LiveShot.UI.Controls.Canvas
@@ -239,7 +240,7 @@ namespace LiveShot.UI.Controls.Canvas
         {
             if (_startPosition is not { } startPosition || Selection is null) return;
 
-            (double left, double top) = Points.GetCoords(startPosition, cursorPosition);
+            (double left, double top) = PointUtils.GetCoords(startPosition, cursorPosition);
 
             Selection.Left = (int) left;
             Selection.Top = (int) top;

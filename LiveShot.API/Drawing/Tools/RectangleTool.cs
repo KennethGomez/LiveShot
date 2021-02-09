@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using LiveShot.API.Utils;
 
 namespace LiveShot.API.Drawing.Tools
 {
@@ -46,7 +47,7 @@ namespace LiveShot.API.Drawing.Tools
 
             var point = e.GetPosition(canvas);
 
-            (double left, double top) = Points.GetCoords(lastPoint, point);
+            (double left, double top) = PointUtils.GetCoords(lastPoint, point);
 
             _rectangle.Width = Math.Abs(lastPoint.X - point.X);
             _rectangle.Height = Math.Abs(lastPoint.Y - point.Y);

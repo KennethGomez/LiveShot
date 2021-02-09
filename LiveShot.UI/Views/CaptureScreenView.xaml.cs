@@ -9,8 +9,8 @@ using System.Windows.Media;
 using LiveShot.API;
 using LiveShot.API.Drawing;
 using LiveShot.API.Events.Input;
+using LiveShot.API.Utils;
 using LiveShot.UI.Controls.Button;
-using LiveShot.Utils;
 using Microsoft.Extensions.DependencyInjection;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 

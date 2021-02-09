@@ -6,7 +6,7 @@ using LiveShot.API.Canvas;
 using LiveShot.API.Image;
 using Microsoft.Win32;
 
-namespace LiveShot.Utils
+namespace LiveShot.API.Utils
 {
     public static class FileUtils
     {

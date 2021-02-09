@@ -2,7 +2,6 @@
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -10,7 +9,7 @@ using LiveShot.API.Canvas;
 using PixelFormat = System.Windows.Media.PixelFormat;
 using Point = System.Drawing.Point;
 
-namespace LiveShot.Utils
+namespace LiveShot.API.Utils
 {
     public static class ImageUtils
     {
@@ -49,7 +48,7 @@ namespace LiveShot.Utils
             return bitmap;
         }
 
-        public static Bitmap GetBitmapFromCanvas(Canvas canvas)
+        public static Bitmap GetBitmapFromCanvas(System.Windows.Controls.Canvas canvas)
         {
             var bitmapSource = new RenderTargetBitmap(
                 (int) canvas.ActualWidth, (int) canvas.ActualHeight, 96, 96, PixelFormats.Pbgra32

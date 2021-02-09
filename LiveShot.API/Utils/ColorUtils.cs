@@ -1,6 +1,6 @@
 ﻿using System.Windows.Media;
 
-namespace LiveShot.Utils
+namespace LiveShot.API.Utils
 {
     public static class ColorUtils
     {
