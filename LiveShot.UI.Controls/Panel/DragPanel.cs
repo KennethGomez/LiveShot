@@ -41,10 +41,10 @@ namespace LiveShot.UI.Controls.Panel
             var positions = GetPositions(args);
             var maxPositions = GetMaxPositions(args);
 
-            if (!positions.HasValue || !maxPositions.HasValue) return;
+            if (positions is not { } coords || maxPositions is not { } maxCoords) return;
             
-            (double left, double top) = positions.Value;
-            (double maxLeft, double maxTop) = maxPositions.Value;
+            (double left, double top) = coords;
+            (double maxLeft, double maxTop) = maxCoords;
 
             if (left > maxLeft)
             {

@@ -1,5 +1,4 @@
-﻿using System.Windows;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using System.Windows.Shapes;
 
 namespace LiveShot.API.Drawing.Tools
@@ -22,15 +21,13 @@ namespace LiveShot.API.Drawing.Tools
 
         public override void OnMouseMove(MouseEventArgs e, System.Windows.Controls.Canvas canvas)
         {
-            if (LastPoint is null || e.LeftButton != MouseButtonState.Pressed) return;
-
-            var point = LastPoint.Value;
+            if (LastPoint is not { } lastPoint || e.LeftButton != MouseButtonState.Pressed) return;
 
             Line line = new()
             {
                 Stroke = Color,
-                X1 = point.X,
-                Y1 = point.Y,
+                X1 = lastPoint.X,
+                Y1 = lastPoint.Y,
                 X2 = e.GetPosition(canvas).X,
                 Y2 = e.GetPosition(canvas).Y
             };

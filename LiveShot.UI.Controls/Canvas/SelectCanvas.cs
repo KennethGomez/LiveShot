@@ -239,19 +239,12 @@ namespace LiveShot.UI.Controls.Canvas
         {
             if (_startPosition is not { } startPosition || Selection is null) return;
 
-            double xDiff = cursorPosition.X - startPosition.X;
-            double yDiff = cursorPosition.Y - startPosition.Y;
+            (double left, double top) = Points.GetCoords(startPosition, cursorPosition);
 
-            bool growingX = xDiff > 0;
-            bool growingY = yDiff > 0;
-
-            double rectTop = growingY ? startPosition.Y : cursorPosition.Y;
-            double rectLeft = growingX ? startPosition.X : cursorPosition.X;
-
-            Selection.Left = (int) rectLeft;
-            Selection.Top = (int) rectTop;
-            Selection.Width = (int) Math.Abs(xDiff);
-            Selection.Height = (int) Math.Abs(yDiff);
+            Selection.Left = (int) left;
+            Selection.Top = (int) top;
+            Selection.Width = (int) Math.Abs(startPosition.X - cursorPosition.X);
+            Selection.Height = (int) Math.Abs(startPosition.Y - cursorPosition.Y);
         }
 
         private void MoveSelection(Point cursorPosition)
