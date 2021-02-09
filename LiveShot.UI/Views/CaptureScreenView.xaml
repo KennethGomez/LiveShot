@@ -38,7 +38,7 @@
                        Height="{Binding ElementName=SelectCanvas, Path=Height}" />
             <panel:RightDragPanel Name="CanvasRightPanel" Visibility="Hidden" Orientation="Vertical">
                 <button:ActionButton ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Pencil}"
-                                     Style="{StaticResource FirstRightCanvasButton}" Name="PencilBtn" ActiveAction="Pencil">
+                                     Style="{StaticResource FirstRightCanvasButton}" Name="PencilBtn" ActiveTool="Pencil">
                     <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Pencil}"
                           Fill="{Binding ElementName=PencilBtn, Path=IconFill}" />
                 </button:ActionButton>

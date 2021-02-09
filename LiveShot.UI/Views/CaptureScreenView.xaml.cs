@@ -1,23 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using LiveShot.API;
+using LiveShot.API.Drawing;
 using LiveShot.API.Events.Input;
-using LiveShot.API.Image;
 using LiveShot.UI.Controls.Button;
-using LiveShot.UI.Controls.Canvas;
 using LiveShot.Utils;
 using Microsoft.Extensions.DependencyInjection;
-using Brushes = System.Windows.Media.Brushes;
-using Color = System.Windows.Media.Color;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
-using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
 
 namespace LiveShot.UI.Views
 {
@@ -29,7 +24,7 @@ namespace LiveShot.UI.Views
         private ExportWindowView? _exportWindow;
         private Bitmap? _screenShot;
 
-        public CaptureScreenView(IEventPipeline events, IServiceProvider services)
+        public CaptureScreenView(IEventPipeline events, IServiceProvider services, IEnumerable<IDrawingTool> tools)
         {
             InitializeComponent();
 
@@ -44,6 +39,7 @@ namespace LiveShot.UI.Views
             SelectCanvas.Width = Width;
             SelectCanvas.Height = Height;
             SelectCanvas.WithEvents(events);
+            SelectCanvas.WithDrawingTools(tools);
 
             CanvasRightPanel.With(events, Width, Height);
             CanvasBottomPanel.With(events, Width, Height);
@@ -72,9 +68,9 @@ namespace LiveShot.UI.Views
 
             if (dialog.ShowDialog() != System.Windows.Forms.DialogResult.OK) return;
 
-            var color = Color.FromArgb(dialog.Color.A, dialog.Color.R, dialog.Color.G, dialog.Color.B);
-
-            SelectCanvas.Color = new SolidColorBrush(color);
+            SelectCanvas.Color = ColorUtils.GetBrushFromChannels(
+                dialog.Color.R, dialog.Color.G, dialog.Color.B, dialog.Color.A
+            );
         }
 
         private void ActionButtonOnClick(object sender, IEnumerable<ActionButton> all)
@@ -85,7 +81,7 @@ namespace LiveShot.UI.Views
                 {
                     button.IsActive = !button.IsActive;
 
-                    SelectCanvas.Action = button.IsActive ? button.ActiveAction : CanvasAction.Default;
+                    SelectCanvas.Tool = button.IsActive ? button.ActiveTool : CanvasTool.Default;
 
                     continue;
                 }
@@ -129,7 +125,6 @@ namespace LiveShot.UI.Views
 
             _screenShot = bitmap;
 
-            Background = Brushes.Transparent;
             SelectCanvas.Background = new ImageBrush(bitmapSource);
         }
 

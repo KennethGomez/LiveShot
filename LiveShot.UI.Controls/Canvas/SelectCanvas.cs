@@ -6,6 +6,7 @@ using System.Windows.Input;
 using System.Windows.Shapes;
 using LiveShot.API;
 using LiveShot.API.Canvas;
+using LiveShot.API.Drawing;
 using LiveShot.API.Events;
 using LiveShot.API.Events.Input;
 using LiveShot.API.Events.Selection;
@@ -215,7 +216,7 @@ namespace LiveShot.UI.Controls.Canvas
 
             if (Selection is not null)
             {
-                if (Action != CanvasAction.Default)
+                if (Tool != CanvasTool.Default)
                 {
                     Selection.Cursor = Cursors.Arrow;
 

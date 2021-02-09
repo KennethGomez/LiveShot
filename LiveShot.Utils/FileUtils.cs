@@ -8,7 +8,7 @@ using Microsoft.Win32;
 
 namespace LiveShot.Utils
 {
-    public class FileUtils
+    public static class FileUtils
     {
         public static bool SaveImage(Selection selection, Bitmap source, Bitmap canvasBitmap)
         {

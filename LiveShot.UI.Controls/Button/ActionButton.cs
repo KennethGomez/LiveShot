@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Media;
+using LiveShot.API.Drawing;
 using LiveShot.UI.Controls.Canvas;
 
 namespace LiveShot.UI.Controls.Button
@@ -14,8 +15,8 @@ namespace LiveShot.UI.Controls.Button
             "IconFill", typeof(Brush), typeof(ActionButton), new PropertyMetadata(Brushes.Black)
         );
 
-        public static readonly DependencyProperty ActiveActionProperty = DependencyProperty.Register(
-            "ActiveAction", typeof(CanvasAction), typeof(ActionButton), new PropertyMetadata(CanvasAction.Default)
+        public static readonly DependencyProperty ActiveToolProperty = DependencyProperty.Register(
+            "ActiveTool", typeof(CanvasTool), typeof(ActionButton), new PropertyMetadata(CanvasTool.Default)
         );
 
         public bool IsActive
@@ -35,10 +36,10 @@ namespace LiveShot.UI.Controls.Button
             private set => SetValue(IconFillProperty, value);
         }
 
-        public CanvasAction ActiveAction
+        public CanvasTool ActiveTool
         {
-            get => (CanvasAction) GetValue(ActiveActionProperty);
-            set => SetValue(ActiveActionProperty, value);
+            get => (CanvasTool) GetValue(ActiveToolProperty);
+            set => SetValue(ActiveToolProperty, value);
         }
     }
 }
