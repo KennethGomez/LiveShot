@@ -51,8 +51,9 @@
                     <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Arrow}" />
                 </button:ActionButton>
                 <button:ActionButton ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Rectangle}"
-                                     Style="{StaticResource CanvasButton}">
-                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Square}" />
+                                     Style="{StaticResource CanvasButton}" Name="RectangleBtn" ActiveTool="Rectangle">
+                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Square}" 
+                          Fill="{Binding ElementName=RectangleBtn, Path=IconFill}" />
                 </button:ActionButton>
                 <button:ActionButton ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Highlighter}"
                                      Style="{StaticResource CanvasButton}">

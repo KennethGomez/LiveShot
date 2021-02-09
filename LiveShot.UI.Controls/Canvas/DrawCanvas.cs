@@ -34,7 +34,7 @@ namespace LiveShot.UI.Controls.Canvas
 
             if (tool is null) return null;
 
-            tool.Color = Color;
+            tool.Color = Color; 
 
             return tool;
         }

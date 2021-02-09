@@ -3,6 +3,7 @@
     public enum CanvasTool
     {
         Default,
-        Pencil
+        Pencil,
+        Rectangle
     }
 }

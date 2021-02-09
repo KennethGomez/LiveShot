@@ -6,27 +6,23 @@ namespace LiveShot.API.Drawing.Tools
 {
     public class PencilTool : DrawingTool
     {
-        private Point? _currentPoint;
-
         public override CanvasTool Tool => CanvasTool.Pencil;
 
         public override void OnMouseLeftButtonDown(MouseButtonEventArgs e, System.Windows.Controls.Canvas canvas)
         {
-            if (e.LeftButton != MouseButtonState.Pressed) return;
-
-            _currentPoint = e.GetPosition(canvas);
+            
         }
 
         public override void OnMouseLeftButtonUp(MouseButtonEventArgs e, System.Windows.Controls.Canvas canvas)
         {
-            _currentPoint = null;
+            LastPoint = null;
         }
 
         public override void OnMouseMove(MouseEventArgs e, System.Windows.Controls.Canvas canvas)
         {
-            if (_currentPoint is null || e.LeftButton != MouseButtonState.Pressed) return;
+            if (LastPoint is null || e.LeftButton != MouseButtonState.Pressed) return;
 
-            var point = _currentPoint.Value;
+            var point = LastPoint.Value;
 
             Line line = new()
             {
@@ -37,7 +33,7 @@ namespace LiveShot.API.Drawing.Tools
                 Y2 = e.GetPosition(canvas).Y
             };
 
-            _currentPoint = e.GetPosition(canvas);
+            LastPoint = e.GetPosition(canvas);
 
             canvas.Children.Add(line);
         }
