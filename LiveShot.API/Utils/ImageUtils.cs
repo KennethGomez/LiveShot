@@ -6,8 +6,6 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using LiveShot.API.Canvas;
-using PixelFormat = System.Windows.Media.PixelFormat;
-using Point = System.Drawing.Point;
 
 namespace LiveShot.API.Utils
 {
@@ -37,7 +35,7 @@ namespace LiveShot.API.Utils
                 new Rectangle((int) selection.Left, (int) selection.Top, bitmap.Width, bitmap.Height),
                 GraphicsUnit.Pixel
             );
-            
+
             graphics.DrawImage(
                 canvasBitmap,
                 new Rectangle(0, 0, bitmap.Width, bitmap.Height),
@@ -84,7 +82,7 @@ namespace LiveShot.API.Utils
             var bitmap = new Bitmap(source.PixelWidth, source.PixelHeight);
 
             var data = bitmap.LockBits(
-                new Rectangle(Point.Empty, bitmap.Size),
+                new Rectangle(System.Drawing.Point.Empty, bitmap.Size),
                 ImageLockMode.WriteOnly,
                 bitmap.PixelFormat
             );

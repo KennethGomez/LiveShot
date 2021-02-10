@@ -3,7 +3,9 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Shapes;
 using LiveShot.API.Drawing;
+using LiveShot.API.Utils;
 
 namespace LiveShot.UI.Controls.Canvas
 {
@@ -17,7 +19,18 @@ namespace LiveShot.UI.Controls.Canvas
 
         private ICollection<IDrawingTool>? _drawingTools;
 
+        private Ellipse CursorEllipse => new()
+        {
+            Width = StrokeThickness * 4,
+            Height = StrokeThickness * 4,
+            Stroke = Color,
+            Opacity = 0.5
+        };
+
+        protected Cursor DrawCursor => CursorUtils.GetCursorFromElement(CursorEllipse, new Point(0.5, 0.5));
+
         public CanvasTool Tool = CanvasTool.Default;
+        public double StrokeThickness = 1;
 
         protected DrawCanvas()
         {
@@ -59,7 +72,7 @@ namespace LiveShot.UI.Controls.Canvas
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
             _history[_history.Count] = (Children.Count, new List<UIElement>());
-            
+
             GetCanvasTool()?.OnMouseLeftButtonDown(e, this);
         }
 
@@ -69,7 +82,7 @@ namespace LiveShot.UI.Controls.Canvas
 
             (int startIndex, var uiElements) = _history.LastOrDefault().Value;
 
-            for (int i = startIndex; i < Children.Count; i++) 
+            for (int i = startIndex; i < Children.Count; i++)
                 uiElements.Add(Children[i]);
         }
 

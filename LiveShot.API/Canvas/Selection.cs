@@ -24,12 +24,6 @@ namespace LiveShot.API.Canvas
             _top = top;
         }
 
-        public Cursor Cursor
-        {
-            get => _rectangle.Cursor;
-            set => _rectangle.Cursor = value;
-        }
-
         public double Left
         {
             get => _left;

@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using System.Windows.Input;
 using LiveShot.API;
 using LiveShot.API.Events;
 using LiveShot.API.Events.Selection;
@@ -18,6 +19,9 @@ namespace LiveShot.UI.Controls.Panel
         protected DragPanel()
         {
             SetValue(ZIndexProperty, 1);
+
+            ForceCursor = true;
+            Cursor = Cursors.Arrow;
         }
 
         public void With(IEventPipeline events, double width, double height)

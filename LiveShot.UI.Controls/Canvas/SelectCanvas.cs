@@ -161,6 +161,9 @@ namespace LiveShot.UI.Controls.Canvas
 
         private void MouseLeftButtonPress(MouseButtonEventArgs e)
         {
+            if (Tool != CanvasTool.Default)
+                return;
+            
             if (Selection is null)
             {
                 Selection = Selection.Empty;
@@ -170,6 +173,7 @@ namespace LiveShot.UI.Controls.Canvas
 
             if (e.ClickCount >= 2)
             {
+                // TODO: not clearing selection
                 Selection.Clear();
 
                 UpdateSelection();
@@ -183,8 +187,6 @@ namespace LiveShot.UI.Controls.Canvas
             _dragging = !_moving;
             _startPosition = position;
             _tmpCursorPosition = _startPosition;
-
-            if (!_moving) Selection.Cursor = Cursors.Arrow;
         }
 
         protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
@@ -205,35 +207,33 @@ namespace LiveShot.UI.Controls.Canvas
             _moving = false;
             _startPosition = null;
             _tmpCursorPosition = null;
-
-            if (Selection is null || Tool == CanvasTool.Default) return;
-
-            Selection.Cursor = Cursors.SizeAll;
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseMove(e);
 
-            if (Selection is not null)
-            {
-                if (Tool != CanvasTool.Default)
-                {
-                    Selection.Cursor = Cursors.Arrow;
-
-                    return;
-                }
-
-                Selection.Cursor = Cursors.SizeAll;
-            }
-
             var newPosition = e.GetPosition(this);
+
+            Cursor = GetCursor(newPosition);
 
             if (_moving)
                 MoveSelection(newPosition);
             else if (_dragging) ResizeSelection(newPosition);
 
             UpdateSelection();
+        }
+
+        private Cursor GetCursor(Point point)
+        {
+            if (Selection is null)
+                return Cursors.Arrow;
+
+            if (Selection.Contains(point) && Tool == CanvasTool.Default)
+                return Cursors.SizeAll;
+
+
+            return Tool == CanvasTool.Default ? Cursors.Arrow : DrawCursor;
         }
 
         private void ResizeSelection(Point cursorPosition)
