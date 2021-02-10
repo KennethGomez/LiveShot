@@ -4,6 +4,7 @@
     {
         Default,
         Pencil,
-        Rectangle
+        Rectangle,
+        Line
     }
 }

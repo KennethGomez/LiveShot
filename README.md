@@ -19,9 +19,9 @@ With this tool you can select some rectangle on your screen and then draw on it 
   - Search image on Google `100%`
   - Print image `-`
   - Share image on social networks `-`
-- Drawing tools `37%`
+- Drawing tools `50%`
   - Pencil `100%`
-  - Line `-`
+  - Line `100%`
   - Arrow `-`
   - Rectangle `100%`
   - Highlighter `-`

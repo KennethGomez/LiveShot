@@ -43,8 +43,9 @@
                           Fill="{Binding ElementName=PencilBtn, Path=IconFill}" />
                 </button:ActionButton>
                 <button:ActionButton ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Stroke}"
-                                     Style="{StaticResource CanvasButton}">
-                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Stroke}" />
+                                     Style="{StaticResource CanvasButton}" Name="LineBtn" ActiveTool="Line">
+                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Stroke}"
+                          Fill="{Binding ElementName=LineBtn, Path=IconFill}" />
                 </button:ActionButton>
                 <button:ActionButton ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Arrow}"
                                      Style="{StaticResource CanvasButton}">
