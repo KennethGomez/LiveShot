@@ -19,7 +19,7 @@ With this tool you can select some rectangle on your screen and then draw on it 
   - Search image on Google `100%`
   - Print image `-`
   - Share image on social networks `-`
-- Drawing tools `50%`
+- Drawing tools `62%`
   - Pencil `100%`
   - Line `100%`
   - Arrow `-`
@@ -27,7 +27,7 @@ With this tool you can select some rectangle on your screen and then draw on it 
   - Highlighter `-`
   - Text `-`
   - Color picker `100%`
-  - Undo `-`
+  - Undo `100%`
 - Background app
   - Configuration window `-`
   - Open app with shortcut `-`

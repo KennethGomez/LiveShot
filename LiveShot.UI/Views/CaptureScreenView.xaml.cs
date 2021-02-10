@@ -50,6 +50,7 @@ namespace LiveShot.UI.Views
                 actionButton.Click += (actual, _) => ActionButtonOnClick(actual, actionButtons);
 
             ColorPickerBtn.Click += ColorPickerBtnOnClick;
+            UndoBtn.Click += UndoBtnOnClick;
 
             UploadBtn.Click += UploadBtnOnClick;
             GoogleBtn.Click += GoogleBtnOnClick;
@@ -61,6 +62,11 @@ namespace LiveShot.UI.Views
         }
 
         private static bool IsCtrlPressed => Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl);
+        
+        private void UndoBtnOnClick(object sender, RoutedEventArgs e)
+        {
+            Undo();
+        }
 
         private void ColorPickerBtnOnClick(object sender, RoutedEventArgs e)
         {
@@ -115,6 +121,11 @@ namespace LiveShot.UI.Views
             OpenExportWindow();
         }
 
+        private void Undo()
+        {
+            SelectCanvas.Undo();
+        }
+
         private void CaptureScreen()
         {
             (int screenTop, int screenLeft, int screenWidth, int screenHeight) =
@@ -146,6 +157,10 @@ namespace LiveShot.UI.Views
                 case Key.D:
                     if (IsCtrlPressed)
                         OpenExportWindow();
+                    break;
+                case Key.Z:
+                    if (IsCtrlPressed)
+                        Undo();
                     break;
             }
 
