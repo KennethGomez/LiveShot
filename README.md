@@ -1,4 +1,5 @@
 ![](https://img.shields.io/badge/state-development-blue?style=for-the-badge)
+![](https://img.shields.io/badge/.NET-5-blue?style=for-the-badge)
 ![](https://img.shields.io/github/commit-activity/w/KennethGomez/LiveShot?style=for-the-badge)
 ![](https://img.shields.io/github/v/tag/KennethGomez/LiveShot?style=for-the-badge)
 ![](https://img.shields.io/github/contributors/KennethGomez/LiveShot?style=for-the-badge)
