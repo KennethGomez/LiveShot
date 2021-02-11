@@ -90,10 +90,10 @@ namespace LiveShot.UI.Controls.Canvas
 
         private void UpdateSelection()
         {
-            UpdateOpacityRectangles();
-
             if (Selection is null)
             {
+                ClearOpacityRectangles();
+
                 OpacityRectangle.Visibility = Visibility.Visible;
 
                 SizeLabel.Content = API.Properties.Resources.CaptureScreen_SizeLabel_Empty;
@@ -108,6 +108,11 @@ namespace LiveShot.UI.Controls.Canvas
 
             SizeLabel.Content = Selection.Label;
 
+            if (_dragging || _moving)
+            {
+                UpdateOpacityRectangles();
+            }
+
             if (Selection.Invalid || _dragging)
             {
                 SetPanelsVisibility(Visibility.Hidden);
@@ -120,6 +125,14 @@ namespace LiveShot.UI.Controls.Canvas
             _events?.Dispatch<OnSelectionChange>(OnSelectionChangeArgs.From(Selection));
         }
 
+        private void ClearOpacityRectangles()
+        {
+            foreach (var rectangle in _rectangles)
+                Children.Remove(rectangle);
+
+            _rectangles.Clear();
+        }
+
         private void SetPanelsVisibility(Visibility visibility)
         {
             RightPanel.Visibility = visibility;
@@ -128,13 +141,10 @@ namespace LiveShot.UI.Controls.Canvas
 
         private void UpdateOpacityRectangles()
         {
-            foreach (var rectangle in _rectangles) 
-                Children.Remove(rectangle);
-
-            _rectangles.Clear();
-
             if (Selection is null) return;
 
+            ClearOpacityRectangles();
+            
             OpacityRectangle.Visibility = Visibility.Hidden;
 
             foreach (var bound in RectangleBounds.GetBounds(Selection, Width, Height))
@@ -296,6 +306,7 @@ namespace LiveShot.UI.Controls.Canvas
             }
 
             UpdateSelection();
+            UpdateOpacityRectangles();
         }
     }
 }
