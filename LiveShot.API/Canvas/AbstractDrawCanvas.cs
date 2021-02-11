@@ -8,6 +8,7 @@ namespace LiveShot.API.Canvas
     {
         public abstract Brush DrawingColor { get; set; }
         public abstract Cursor DrawingCursor { get; }
+        public abstract double DrawingStrokeThickness { get; set; }
         public abstract CanvasTool Tool { get; set; }
 
         public abstract void Undo();

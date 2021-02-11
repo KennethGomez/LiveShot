@@ -22,7 +22,8 @@ namespace LiveShot.API.Drawing.Tools
                 X1 = point.X,
                 X2 = point.X,
                 Y1 = point.Y,
-                Y2 = point.Y
+                Y2 = point.Y,
+                StrokeThickness = canvas.DrawingStrokeThickness
             };
 
             canvas.Children.Add(line);

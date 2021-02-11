@@ -40,7 +40,7 @@ namespace LiveShot.UI.Views
             SelectCanvas.Height = Height;
             SelectCanvas.WithEvents(events);
 
-            DrawingCanvas.WithDrawingTools(tools);
+            DrawingCanvas.With(tools, events);
 
             CanvasRightPanel.With(events, Width, Height);
             CanvasBottomPanel.With(events, Width, Height);
@@ -62,8 +62,6 @@ namespace LiveShot.UI.Views
             CaptureScreen();
         }
 
-        private static bool IsCtrlPressed => Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl);
-        
         private void UndoBtnOnClick(object sender, RoutedEventArgs e)
         {
             Undo();
@@ -148,19 +146,19 @@ namespace LiveShot.UI.Views
                     Close();
                     break;
                 case Key.C:
-                    if (IsCtrlPressed)
+                    if (KeyBoardUtils.IsCtrlPressed)
                         CopyImage();
                     break;
                 case Key.S:
-                    if (IsCtrlPressed)
+                    if (KeyBoardUtils.IsCtrlPressed)
                         SaveImage();
                     break;
                 case Key.D:
-                    if (IsCtrlPressed)
+                    if (KeyBoardUtils.IsCtrlPressed)
                         OpenExportWindow();
                     break;
                 case Key.Z:
-                    if (IsCtrlPressed)
+                    if (KeyBoardUtils.IsCtrlPressed)
                         Undo();
                     break;
             }
@@ -210,7 +208,7 @@ namespace LiveShot.UI.Views
         private void CopyImage()
         {
             var selection = SelectCanvas.Selection;
-            if (selection is null || selection.Invalid) return;
+            if (selection is null || selection.Invalid || _screenShot is null) return;
 
             bool copied = ImageUtils.CopyImage(selection, _screenShot, ImageUtils.GetBitmapFromCanvas(SelectCanvas));
 

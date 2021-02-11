@@ -77,9 +77,6 @@ namespace LiveShot.UI.Controls.Canvas
             set => SetValue(DrawingCanvasProperty, value);
         }
 
-        private static bool CtrlPressed => Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl);
-        private static bool ShiftPressed => Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift);
-
         public Selection? Selection { get; private set; }
 
         public void WithEvents(IEventPipeline events)
@@ -91,9 +88,9 @@ namespace LiveShot.UI.Controls.Canvas
 
         private static void OnSelectionKeyDown(Action<int> shiftPressed, Action<int> normal)
         {
-            int step = CtrlPressed ? 10 : 1;
+            int step = KeyBoardUtils.IsCtrlPressed ? 10 : 1;
 
-            if (ShiftPressed)
+            if (KeyBoardUtils.IsShiftPressed)
                 shiftPressed(step);
             else
                 normal(step);
@@ -286,8 +283,6 @@ namespace LiveShot.UI.Controls.Canvas
         private void OnKeyDown(Event e)
         {
             var args = e.GetArgs<KeyEventArgs>();
-
-            base.OnKeyDown(args);
 
             if (Selection == null) return;
 

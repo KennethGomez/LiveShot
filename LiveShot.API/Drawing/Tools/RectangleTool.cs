@@ -27,6 +27,7 @@ namespace LiveShot.API.Drawing.Tools
                 Width = 0,
                 Height = 0,
                 Fill = Brushes.Transparent,
+                StrokeThickness = canvas.DrawingStrokeThickness
             };
 
             canvas.Children.Add(rectangle);

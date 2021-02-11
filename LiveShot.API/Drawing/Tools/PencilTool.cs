@@ -30,7 +30,8 @@ namespace LiveShot.API.Drawing.Tools
                 X1 = lastPoint.X,
                 Y1 = lastPoint.Y,
                 X2 = e.GetPosition(canvas).X,
-                Y2 = e.GetPosition(canvas).Y
+                Y2 = e.GetPosition(canvas).Y,
+                StrokeThickness = canvas.DrawingStrokeThickness
             };
 
             LastPoint = e.GetPosition(canvas);

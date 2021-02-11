@@ -1,11 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using LiveShot.API;
 using LiveShot.API.Canvas;
 using LiveShot.API.Drawing;
+using LiveShot.API.Events;
+using LiveShot.API.Events.Input;
 using LiveShot.API.Utils;
 
 namespace LiveShot.UI.Controls.Canvas
@@ -17,25 +21,30 @@ namespace LiveShot.UI.Controls.Canvas
         );
 
         private readonly IDictionary<int, (int, ICollection<UIElement>)> _history;
+        private readonly Cursor[] _cursors;
+
+        private int _drawingStrokeThickness = 1;
 
         private ICollection<IDrawingTool>? _drawingTools;
+        private IEventPipeline? _events;
 
-        private Ellipse CursorEllipse => new()
-        {
-            Width = DrawingStrokeThickness * 4,
-            Height = DrawingStrokeThickness * 4,
-            Stroke = DrawingColor,
-            Opacity = 1
-        };
-
-        public override Cursor DrawingCursor => CursorUtils.GetCursorFromElement(CursorEllipse, new Point(0.5, 0.5));
+        public override Cursor DrawingCursor => _cursors[_drawingStrokeThickness - 1];
         public override CanvasTool Tool { get; set; } = CanvasTool.Default;
 
-        public double DrawingStrokeThickness = 1;
+        public override double DrawingStrokeThickness
+        {
+            get => _drawingStrokeThickness;
+            set => _drawingStrokeThickness = value >= 1
+                ? value >= 16
+                    ? 16
+                    : (int) value
+                : 1;
+        }
 
         public DrawCanvas()
         {
             _history = new Dictionary<int, (int, ICollection<UIElement>)>();
+            _cursors = GetCursors();
         }
 
         public override Brush DrawingColor
@@ -44,9 +53,32 @@ namespace LiveShot.UI.Controls.Canvas
             set => SetValue(DrawingColorProperty, value);
         }
 
-        public void WithDrawingTools(IEnumerable<IDrawingTool> tools)
+        public void With(IEnumerable<IDrawingTool> tools, IEventPipeline events)
         {
             _drawingTools = tools.ToList();
+            _events = events;
+            
+            _events.Subscribe<OnKeyDown>(OnKeyDown);
+        }
+
+        private Cursor[] GetCursors()
+        {
+            var cursors = new Cursor[16];
+
+            for (var i = 0; i < cursors.Length; i++)
+            {
+                Ellipse ellipse = new()
+                {
+                    Width = Math.Round((i + 1) * 1.3 + 2.25),
+                    Height = Math.Round((i + 1) * 1.3 + 2.25),
+                    Stroke = DrawingColor,
+                    Opacity = 1
+                };
+
+                cursors[i] = CursorUtils.GetCursorFromElement(ellipse, new Point(0.5, 0.5));
+            }
+            
+            return cursors;
         }
 
         private IDrawingTool? GetCanvasTool()
@@ -58,13 +90,13 @@ namespace LiveShot.UI.Controls.Canvas
         {
             if (_history.Count == 0) return;
 
-            (int historyIndex, (int i, var uiElements)) = _history.LastOrDefault();
+            (int historyIndex, (_, var uiElements)) = _history.LastOrDefault();
 
             foreach (var element in uiElements)
             {
                 Children.Remove(element);
             }
-            
+
             _history.Remove(historyIndex);
         }
 
@@ -88,6 +120,22 @@ namespace LiveShot.UI.Controls.Canvas
         protected override void OnMouseMove(MouseEventArgs e)
         {
             GetCanvasTool()?.OnMouseMove(e, this);
+        }
+
+        private void OnKeyDown(Event e)
+        {
+            if (KeyBoardUtils.IsCtrlPressed)
+            {
+                switch (e.GetArgs<KeyEventArgs>().Key)
+                {
+                    case Key.OemPlus:
+                        DrawingStrokeThickness++;
+                        break;
+                    case Key.OemMinus:
+                        DrawingStrokeThickness--;
+                        break;
+                }
+            }
         }
     }
 }
