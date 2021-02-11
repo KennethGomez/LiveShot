@@ -21,7 +21,7 @@ namespace LiveShot.UI.Controls.Canvas
         );
 
         private readonly IDictionary<int, (int, ICollection<UIElement>)> _history;
-        private readonly Cursor[] _cursors;
+        private Cursor[] _cursors;
 
         private int _drawingStrokeThickness = 1;
 
@@ -34,11 +34,16 @@ namespace LiveShot.UI.Controls.Canvas
         public override double DrawingStrokeThickness
         {
             get => _drawingStrokeThickness;
-            set => _drawingStrokeThickness = value >= 1
-                ? value >= 16
-                    ? 16
-                    : (int) value
-                : 1;
+            set
+            {
+                _drawingStrokeThickness = value >= 1
+                    ? value >= 16
+                        ? 16
+                        : (int) value
+                    : 1;
+                
+                GetCanvasTool()?.UpdateThickness(_drawingStrokeThickness);
+            }
         }
 
         public DrawCanvas()
@@ -50,7 +55,12 @@ namespace LiveShot.UI.Controls.Canvas
         public override Brush DrawingColor
         {
             get => (Brush) GetValue(DrawingColorProperty);
-            set => SetValue(DrawingColorProperty, value);
+            set
+            {
+                SetValue(DrawingColorProperty, value);
+
+                _cursors = GetCursors();
+            }
         }
 
         public void With(IEnumerable<IDrawingTool> tools, IEventPipeline events)
@@ -128,12 +138,29 @@ namespace LiveShot.UI.Controls.Canvas
             {
                 switch (e.GetArgs<KeyEventArgs>().Key)
                 {
+                    case Key.Add:
                     case Key.OemPlus:
                         DrawingStrokeThickness++;
                         break;
+                    case Key.Subtract:
                     case Key.OemMinus:
                         DrawingStrokeThickness--;
                         break;
+                }
+            }
+        }
+
+        protected override void OnMouseWheel(MouseWheelEventArgs e)
+        {
+            if (KeyBoardUtils.IsCtrlPressed)
+            {
+                if (e.Delta > 0)
+                {
+                    DrawingStrokeThickness++;
+                }
+                else
+                {
+                    DrawingStrokeThickness--;
                 }
             }
         }

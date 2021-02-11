@@ -45,5 +45,11 @@ namespace LiveShot.API.Drawing.Tools
             _line.X2 = point.X;
             _line.Y2 = point.Y;
         }
+
+        public override void UpdateThickness(int thickness)
+        {
+            if (_line is not null) 
+                _line.StrokeThickness = thickness;
+        }
     }
 }
