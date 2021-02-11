@@ -12,6 +12,7 @@ using LiveShot.API.Events.Input;
 using LiveShot.API.Utils;
 using LiveShot.UI.Controls.Button;
 using Microsoft.Extensions.DependencyInjection;
+using Brushes = System.Windows.Media.Brushes;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 
 namespace LiveShot.UI.Views
@@ -22,6 +23,7 @@ namespace LiveShot.UI.Views
         private readonly IServiceProvider _services;
 
         private ExportWindowView? _exportWindow;
+        private ActionButton? _activeTool;
         private Bitmap? _screenShot;
 
         public CaptureScreenView(IEventPipeline events, IServiceProvider services, IEnumerable<IDrawingTool> tools)
@@ -76,6 +78,8 @@ namespace LiveShot.UI.Views
             DrawingCanvas.DrawingColor = ColorUtils.GetBrushFromChannels(
                 dialog.Color.R, dialog.Color.G, dialog.Color.B, dialog.Color.A
             );
+
+            _activeTool?.UpdateIconFill(DrawingCanvas.DrawingColor);
         }
 
         private void ActionButtonOnClick(object sender, IEnumerable<ActionButton> all)
@@ -88,10 +92,14 @@ namespace LiveShot.UI.Views
 
                     DrawingCanvas.Tool = button.IsActive ? button.ActiveTool : CanvasTool.Default;
 
+                    _activeTool = button;
+                    _activeTool.UpdateIconFill(DrawingCanvas.DrawingColor);
+
                     continue;
                 }
 
                 button.IsActive = false;
+                button.UpdateIconFill(DrawingCanvas.DrawingColor);
             }
         }
 

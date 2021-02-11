@@ -22,24 +22,24 @@ namespace LiveShot.UI.Controls.Button
         public bool IsActive
         {
             get => (bool) GetValue(IsActiveProperty);
-            set
-            {
-                SetValue(IsActiveProperty, value);
-                
-                IconFill = value ? Brushes.MediumBlue : Brushes.Black;
-            }
+            set => SetValue(IsActiveProperty, value);
         }
 
         public Brush IconFill
         {
             get => (Brush) GetValue(IconFillProperty);
-            private set => SetValue(IconFillProperty, value);
+            set => SetValue(IconFillProperty, value);
         }
 
         public CanvasTool ActiveTool
         {
             get => (CanvasTool) GetValue(ActiveToolProperty);
             set => SetValue(ActiveToolProperty, value);
+        }
+
+        public void UpdateIconFill(Brush brush)
+        {
+            IconFill = IsActive ? brush : Brushes.Black;
         }
     }
 }
