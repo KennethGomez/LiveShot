@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
 using System.Windows.Shapes;
+using LiveShot.API.Canvas;
 
 namespace LiveShot.API.Drawing.Tools
 {
@@ -7,34 +8,34 @@ namespace LiveShot.API.Drawing.Tools
     {
         public override CanvasTool Tool => CanvasTool.Pencil;
 
-        public override void OnMouseLeftButtonDown(MouseButtonEventArgs e, System.Windows.Controls.Canvas canvas)
+        public override void OnMouseLeftButtonDown(MouseButtonEventArgs e, AbstractDrawCanvas canvas)
         {
             if (e.LeftButton != MouseButtonState.Pressed) return;
 
-            LastPoint = e.GetPosition(canvas);
+            LastPoint = e.GetPosition(canvas.DrawingCanvas);
         }
 
-        public override void OnMouseLeftButtonUp(MouseButtonEventArgs e, System.Windows.Controls.Canvas canvas)
+        public override void OnMouseLeftButtonUp(MouseButtonEventArgs e, AbstractDrawCanvas canvas)
         {
             LastPoint = null;
         }
 
-        public override void OnMouseMove(MouseEventArgs e, System.Windows.Controls.Canvas canvas)
+        public override void OnMouseMove(MouseEventArgs e, AbstractDrawCanvas canvas)
         {
             if (LastPoint is not { } lastPoint || e.LeftButton != MouseButtonState.Pressed) return;
 
             Line line = new()
             {
-                Stroke = Color,
+                Stroke = canvas.DrawingColor,
                 X1 = lastPoint.X,
                 Y1 = lastPoint.Y,
-                X2 = e.GetPosition(canvas).X,
-                Y2 = e.GetPosition(canvas).Y
+                X2 = e.GetPosition(canvas.DrawingCanvas).X,
+                Y2 = e.GetPosition(canvas.DrawingCanvas).Y
             };
 
-            LastPoint = e.GetPosition(canvas);
+            LastPoint = e.GetPosition(canvas.DrawingCanvas);
 
-            canvas.Children.Add(line);
+            canvas.DrawingCanvas.Children.Add(line);
         }
     }
 }

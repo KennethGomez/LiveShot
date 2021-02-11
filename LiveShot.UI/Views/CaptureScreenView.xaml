@@ -32,13 +32,18 @@
                              x:Name="SelectCanvas" SizeLabel="{Binding ElementName=SizeLabel}"
                              OpacityRectangle="{Binding ElementName=OpacityRectangle}"
                              RightPanel="{Binding ElementName=CanvasRightPanel}"
-                             BottomPanel="{Binding ElementName=CanvasBottomPanel}">
+                             BottomPanel="{Binding ElementName=CanvasBottomPanel}"
+                             DrawingCanvas="{Binding ElementName=DrawingCanvas}">
             <Rectangle Name="OpacityRectangle" Fill="Black" Opacity=".5"
+                       Width="{Binding ElementName=SelectCanvas, Path=Width}"
+                       Height="{Binding ElementName=SelectCanvas, Path=Height}" />
+            <Canvas Name="DrawingCanvas" Background="Transparent" ZIndex="1"
                        Width="{Binding ElementName=SelectCanvas, Path=Width}"
                        Height="{Binding ElementName=SelectCanvas, Path=Height}" />
             <panel:RightDragPanel Name="CanvasRightPanel" Visibility="Hidden" Orientation="Vertical">
                 <button:ActionButton ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Pencil}"
-                                     Style="{StaticResource FirstRightCanvasButton}" Name="PencilBtn" ActiveTool="Pencil">
+                                     Style="{StaticResource FirstRightCanvasButton}" Name="PencilBtn"
+                                     ActiveTool="Pencil">
                     <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Pencil}"
                           Fill="{Binding ElementName=PencilBtn, Path=IconFill}" />
                 </button:ActionButton>
@@ -53,7 +58,7 @@
                 </button:ActionButton>
                 <button:ActionButton ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Rectangle}"
                                      Style="{StaticResource CanvasButton}" Name="RectangleBtn" ActiveTool="Rectangle">
-                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Square}" 
+                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Square}"
                           Fill="{Binding ElementName=RectangleBtn, Path=IconFill}" />
                 </button:ActionButton>
                 <button:ActionButton ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Highlighter}"
@@ -65,41 +70,41 @@
                     <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Text}" />
                 </button:ActionButton>
                 <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_ColorPicker}"
-                                     Style="{StaticResource LastRightCanvasButton}" Name="ColorPickerBtn">
-                    <Rectangle Width="20" Height="20" Fill="{Binding ElementName=SelectCanvas, Path=Color}" />
+                        Style="{StaticResource LastRightCanvasButton}" Name="ColorPickerBtn">
+                    <Rectangle Width="20" Height="20" Fill="{Binding ElementName=SelectCanvas, Path=DrawingColor}" />
                 </Button>
                 <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Undo}"
-                                     Style="{StaticResource SplitCanvasButton}" Margin="0 5 0 0" Name="UndoBtn">
+                        Style="{StaticResource SplitCanvasButton}" Margin="0 5 0 0" Name="UndoBtn">
                     <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Undo}" />
                 </Button>
             </panel:RightDragPanel>
             <panel:BottomDragPanel Name="CanvasBottomPanel" Visibility="Hidden" Orientation="Horizontal">
                 <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Upload}"
-                                     Style="{StaticResource FirstLeftCanvasButton}" Name="UploadBtn">
+                        Style="{StaticResource FirstLeftCanvasButton}" Name="UploadBtn">
                     <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Upload}" />
                 </Button>
                 <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Share}"
-                                     Style="{StaticResource CanvasButton}">
+                        Style="{StaticResource CanvasButton}">
                     <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Share}" />
                 </Button>
                 <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Google}"
-                                     Style="{StaticResource CanvasButton}" Name="GoogleBtn">
+                        Style="{StaticResource CanvasButton}" Name="GoogleBtn">
                     <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Google}" />
                 </Button>
                 <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Print}"
-                                     Style="{StaticResource CanvasButton}">
+                        Style="{StaticResource CanvasButton}">
                     <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Print}" />
                 </Button>
                 <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Copy}"
-                                     Style="{StaticResource CanvasButton}" Name="CopyBtn">
+                        Style="{StaticResource CanvasButton}" Name="CopyBtn">
                     <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Copy}" />
                 </Button>
                 <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Save}"
-                                     Style="{StaticResource LastLeftCanvasButton}" Name="SaveBtn">
+                        Style="{StaticResource LastLeftCanvasButton}" Name="SaveBtn">
                     <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Save}" />
                 </Button>
                 <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Close}"
-                                     Style="{StaticResource SplitCanvasButton}" Margin="5 0 0 0" Name="CloseBtn">
+                        Style="{StaticResource SplitCanvasButton}" Margin="5 0 0 0" Name="CloseBtn">
                     <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Close}" />
                 </Button>
             </panel:BottomDragPanel>

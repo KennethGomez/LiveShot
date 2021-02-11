@@ -18,7 +18,7 @@ namespace LiveShot.UI.Controls.Panel
 
         protected DragPanel()
         {
-            SetValue(ZIndexProperty, 1);
+            SetValue(ZIndexProperty, 2);
 
             ForceCursor = true;
             Cursor = Cursors.Arrow;

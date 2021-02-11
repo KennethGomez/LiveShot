@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -97,7 +98,7 @@ namespace LiveShot.UI.Controls.Canvas
                 OpacityRectangle.Visibility = Visibility.Visible;
 
                 SizeLabel.Content = API.Properties.Resources.CaptureScreen_SizeLabel_Empty;
-                
+
                 SetPanelsVisibility(Visibility.Hidden);
 
                 return;
@@ -144,7 +145,7 @@ namespace LiveShot.UI.Controls.Canvas
             if (Selection is null) return;
 
             ClearOpacityRectangles();
-            
+
             OpacityRectangle.Visibility = Visibility.Hidden;
 
             foreach (var bound in RectangleBounds.GetBounds(Selection, Width, Height))
@@ -159,7 +160,7 @@ namespace LiveShot.UI.Controls.Canvas
                 SetLeft(rectangle, left);
                 SetTop(rectangle, top);
 
-                _rectangles.Add(rectangle);
+                _rectangles.Insert(0, rectangle);
             }
         }
 
@@ -179,7 +180,7 @@ namespace LiveShot.UI.Controls.Canvas
         {
             if (Tool != CanvasTool.Default)
                 return;
-            
+
             if (Selection is null)
             {
                 Selection = Selection.Empty;
@@ -251,7 +252,7 @@ namespace LiveShot.UI.Controls.Canvas
                 return Cursors.SizeAll;
 
 
-            return Tool == CanvasTool.Default ? Cursors.Arrow : DrawCursor;
+            return Tool == CanvasTool.Default ? Cursors.Arrow : DrawingCursor;
         }
 
         private void ResizeSelection(Point cursorPosition)
@@ -305,8 +306,14 @@ namespace LiveShot.UI.Controls.Canvas
                     break;
             }
 
-            UpdateSelection();
-            UpdateOpacityRectangles();
+            if (new[]
+            {
+                Key.Up, Key.Right, Key.Down, Key.Left
+            }.Contains(args.Key))
+            {
+                UpdateSelection();
+                UpdateOpacityRectangles();
+            }
         }
     }
 }

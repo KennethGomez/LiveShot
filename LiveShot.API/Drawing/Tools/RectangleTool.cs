@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using LiveShot.API.Canvas;
 using LiveShot.API.Utils;
 
 namespace LiveShot.API.Drawing.Tools
@@ -12,23 +13,23 @@ namespace LiveShot.API.Drawing.Tools
 
         public override CanvasTool Tool => CanvasTool.Rectangle;
 
-        public override void OnMouseLeftButtonDown(MouseButtonEventArgs e, System.Windows.Controls.Canvas canvas)
+        public override void OnMouseLeftButtonDown(MouseButtonEventArgs e, AbstractDrawCanvas canvas)
         {
             if (e.LeftButton != MouseButtonState.Pressed) return;
 
-            var lastPoint = e.GetPosition(canvas);
+            var lastPoint = e.GetPosition(canvas.DrawingCanvas);
 
             LastPoint = lastPoint;
 
             Rectangle rectangle = new()
             {
-                Stroke = Color,
+                Stroke = canvas.DrawingColor,
                 Width = 0,
                 Height = 0,
                 Fill = Brushes.Transparent,
             };
 
-            canvas.Children.Add(rectangle);
+            canvas.DrawingCanvas.Children.Add(rectangle);
 
             _rectangle = rectangle;
 
@@ -36,16 +37,16 @@ namespace LiveShot.API.Drawing.Tools
             System.Windows.Controls.Canvas.SetTop(rectangle, lastPoint.Y);
         }
 
-        public override void OnMouseLeftButtonUp(MouseButtonEventArgs e, System.Windows.Controls.Canvas canvas)
+        public override void OnMouseLeftButtonUp(MouseButtonEventArgs e, AbstractDrawCanvas canvas)
         {
             _rectangle = null;
         }
 
-        public override void OnMouseMove(MouseEventArgs e, System.Windows.Controls.Canvas canvas)
+        public override void OnMouseMove(MouseEventArgs e, AbstractDrawCanvas canvas)
         {
             if (LastPoint is not { } lastPoint || _rectangle is null) return;
 
-            var point = e.GetPosition(canvas);
+            var point = e.GetPosition(canvas.DrawingCanvas);
 
             (double left, double top) = PointUtils.GetCoords(lastPoint, point);
 

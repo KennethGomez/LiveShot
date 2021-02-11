@@ -1,15 +1,14 @@
 ﻿using System.Windows.Input;
-using System.Windows.Media;
+using LiveShot.API.Canvas;
 
 namespace LiveShot.API.Drawing
 {
     public interface IDrawingTool
     {
         CanvasTool Tool { get; }
-        Brush Color { get; set; }
 
-        void OnMouseLeftButtonDown(MouseButtonEventArgs e, System.Windows.Controls.Canvas canvas);
-        void OnMouseLeftButtonUp(MouseButtonEventArgs e, System.Windows.Controls.Canvas canvas);
-        void OnMouseMove(MouseEventArgs e, System.Windows.Controls.Canvas canvas);
+        void OnMouseLeftButtonDown(MouseButtonEventArgs e, AbstractDrawCanvas canvas);
+        void OnMouseLeftButtonUp(MouseButtonEventArgs e, AbstractDrawCanvas canvas);
+        void OnMouseMove(MouseEventArgs e, AbstractDrawCanvas canvas);
     }
 }

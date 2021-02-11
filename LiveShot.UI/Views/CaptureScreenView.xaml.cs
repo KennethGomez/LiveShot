@@ -74,7 +74,7 @@ namespace LiveShot.UI.Views
 
             if (dialog.ShowDialog() != System.Windows.Forms.DialogResult.OK) return;
 
-            SelectCanvas.Color = ColorUtils.GetBrushFromChannels(
+            SelectCanvas.DrawingColor = ColorUtils.GetBrushFromChannels(
                 dialog.Color.R, dialog.Color.G, dialog.Color.B, dialog.Color.A
             );
         }
