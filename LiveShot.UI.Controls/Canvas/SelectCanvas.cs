@@ -90,16 +90,17 @@ namespace LiveShot.UI.Controls.Canvas
 
         private void UpdateSelection()
         {
+            UpdateOpacityRectangles();
+
             if (Selection is null)
             {
                 OpacityRectangle.Visibility = Visibility.Visible;
 
-                return;
-            }
+                SizeLabel.Content = API.Properties.Resources.CaptureScreen_SizeLabel_Empty;
+                
+                SetPanelsVisibility(Visibility.Hidden);
 
-            if (_moving || _dragging)
-            {
-                UpdateOpacityRectangles();
+                return;
             }
 
             SetLeft(Selection.Rectangle, Selection.Left);
@@ -109,27 +110,32 @@ namespace LiveShot.UI.Controls.Canvas
 
             if (Selection.Invalid || _dragging)
             {
-                RightPanel.Visibility = Visibility.Hidden;
-                BottomPanel.Visibility = Visibility.Hidden;
+                SetPanelsVisibility(Visibility.Hidden);
             }
             else
             {
-                RightPanel.Visibility = Visibility.Visible;
-                BottomPanel.Visibility = Visibility.Visible;
+                SetPanelsVisibility(Visibility.Visible);
             }
 
             _events?.Dispatch<OnSelectionChange>(OnSelectionChangeArgs.From(Selection));
         }
 
+        private void SetPanelsVisibility(Visibility visibility)
+        {
+            RightPanel.Visibility = visibility;
+            BottomPanel.Visibility = visibility;
+        }
+
         private void UpdateOpacityRectangles()
         {
+            foreach (var rectangle in _rectangles) 
+                Children.Remove(rectangle);
+
+            _rectangles.Clear();
+
             if (Selection is null) return;
 
             OpacityRectangle.Visibility = Visibility.Hidden;
-
-            foreach (var rectangle in _rectangles) Children.Remove(rectangle);
-
-            _rectangles.Clear();
 
             foreach (var bound in RectangleBounds.GetBounds(Selection, Width, Height))
             {
@@ -173,8 +179,10 @@ namespace LiveShot.UI.Controls.Canvas
 
             if (e.ClickCount >= 2)
             {
-                // TODO: not clearing selection
                 Selection.Clear();
+                Children.Remove(Selection.Rectangle);
+
+                Selection = null;
 
                 UpdateSelection();
 
