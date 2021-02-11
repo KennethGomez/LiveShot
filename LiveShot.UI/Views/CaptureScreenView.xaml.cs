@@ -39,7 +39,8 @@ namespace LiveShot.UI.Views
             SelectCanvas.Width = Width;
             SelectCanvas.Height = Height;
             SelectCanvas.WithEvents(events);
-            SelectCanvas.WithDrawingTools(tools);
+
+            DrawingCanvas.WithDrawingTools(tools);
 
             CanvasRightPanel.With(events, Width, Height);
             CanvasBottomPanel.With(events, Width, Height);
@@ -74,7 +75,7 @@ namespace LiveShot.UI.Views
 
             if (dialog.ShowDialog() != System.Windows.Forms.DialogResult.OK) return;
 
-            SelectCanvas.DrawingColor = ColorUtils.GetBrushFromChannels(
+            DrawingCanvas.DrawingColor = ColorUtils.GetBrushFromChannels(
                 dialog.Color.R, dialog.Color.G, dialog.Color.B, dialog.Color.A
             );
         }
@@ -87,7 +88,7 @@ namespace LiveShot.UI.Views
                 {
                     button.IsActive = !button.IsActive;
 
-                    SelectCanvas.Tool = button.IsActive ? button.ActiveTool : CanvasTool.Default;
+                    DrawingCanvas.Tool = button.IsActive ? button.ActiveTool : CanvasTool.Default;
 
                     continue;
                 }
@@ -123,7 +124,7 @@ namespace LiveShot.UI.Views
 
         private void Undo()
         {
-            SelectCanvas.Undo();
+            DrawingCanvas.Undo();
         }
 
         private void CaptureScreen()

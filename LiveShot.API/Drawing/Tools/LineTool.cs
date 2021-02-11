@@ -14,7 +14,7 @@ namespace LiveShot.API.Drawing.Tools
         {
             if (e.LeftButton != MouseButtonState.Pressed) return;
 
-            var point = e.GetPosition(canvas.DrawingCanvas);
+            var point = e.GetPosition(canvas);
 
             Line line = new()
             {
@@ -25,7 +25,7 @@ namespace LiveShot.API.Drawing.Tools
                 Y2 = point.Y
             };
 
-            canvas.DrawingCanvas.Children.Add(line);
+            canvas.Children.Add(line);
 
             _line = line;
         }
@@ -39,7 +39,7 @@ namespace LiveShot.API.Drawing.Tools
         {
             if (_line is null) return;
 
-            var point = e.GetPosition(canvas.DrawingCanvas);
+            var point = e.GetPosition(canvas);
 
             _line.X2 = point.X;
             _line.Y2 = point.Y;

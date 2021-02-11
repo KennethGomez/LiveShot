@@ -37,7 +37,7 @@
             <Rectangle Name="OpacityRectangle" Fill="Black" Opacity=".5"
                        Width="{Binding ElementName=SelectCanvas, Path=Width}"
                        Height="{Binding ElementName=SelectCanvas, Path=Height}" />
-            <Canvas Name="DrawingCanvas" Background="Transparent" ZIndex="1"
+            <canvas:DrawCanvas Name="DrawingCanvas" Background="Transparent" ZIndex="1"
                        Width="{Binding ElementName=SelectCanvas, Path=Width}"
                        Height="{Binding ElementName=SelectCanvas, Path=Height}" />
             <panel:RightDragPanel Name="CanvasRightPanel" Visibility="Hidden" Orientation="Vertical">
@@ -71,7 +71,7 @@
                 </button:ActionButton>
                 <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_ColorPicker}"
                         Style="{StaticResource LastRightCanvasButton}" Name="ColorPickerBtn">
-                    <Rectangle Width="20" Height="20" Fill="{Binding ElementName=SelectCanvas, Path=DrawingColor}" />
+                    <Rectangle Width="20" Height="20" Fill="{Binding ElementName=DrawingCanvas, Path=DrawingColor}" />
                 </Button>
                 <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Undo}"
                         Style="{StaticResource SplitCanvasButton}" Margin="0 5 0 0" Name="UndoBtn">

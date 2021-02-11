@@ -15,10 +15,6 @@ namespace LiveShot.UI.Controls.Canvas
         public static readonly DependencyProperty DrawingColorProperty = DependencyProperty.Register(
             "DrawingColor", typeof(Brush), typeof(DrawCanvas), new PropertyMetadata(Brushes.Red)
         );
-        
-        public static readonly DependencyProperty DrawingCanvasProperty = DependencyProperty.Register(
-            "DrawingCanvas", typeof(System.Windows.Controls.Canvas), typeof(DrawCanvas)
-        );
 
         private readonly IDictionary<int, (int, ICollection<UIElement>)> _history;
 
@@ -29,15 +25,15 @@ namespace LiveShot.UI.Controls.Canvas
             Width = DrawingStrokeThickness * 4,
             Height = DrawingStrokeThickness * 4,
             Stroke = DrawingColor,
-            Opacity = 0.5
+            Opacity = 1
         };
 
-        protected Cursor DrawingCursor => CursorUtils.GetCursorFromElement(CursorEllipse, new Point(0.5, 0.5));
+        public override Cursor DrawingCursor => CursorUtils.GetCursorFromElement(CursorEllipse, new Point(0.5, 0.5));
+        public override CanvasTool Tool { get; set; } = CanvasTool.Default;
 
-        public CanvasTool Tool = CanvasTool.Default;
         public double DrawingStrokeThickness = 1;
 
-        protected DrawCanvas()
+        public DrawCanvas()
         {
             _history = new Dictionary<int, (int, ICollection<UIElement>)>();
         }
@@ -46,11 +42,6 @@ namespace LiveShot.UI.Controls.Canvas
         {
             get => (Brush) GetValue(DrawingColorProperty);
             set => SetValue(DrawingColorProperty, value);
-        }
-        public override System.Windows.Controls.Canvas DrawingCanvas
-        {
-            get => (System.Windows.Controls.Canvas) GetValue(DrawingCanvasProperty);
-            set => SetValue(DrawingCanvasProperty, value);
         }
 
         public void WithDrawingTools(IEnumerable<IDrawingTool> tools)
@@ -71,7 +62,7 @@ namespace LiveShot.UI.Controls.Canvas
 
             foreach (var element in uiElements)
             {
-                DrawingCanvas.Children.Remove(element);
+                Children.Remove(element);
             }
             
             _history.Remove(historyIndex);
@@ -79,7 +70,7 @@ namespace LiveShot.UI.Controls.Canvas
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
-            _history[_history.Count] = (DrawingCanvas.Children.Count, new List<UIElement>());
+            _history[_history.Count] = (Children.Count, new List<UIElement>());
 
             GetCanvasTool()?.OnMouseLeftButtonDown(e, this);
         }
@@ -90,8 +81,8 @@ namespace LiveShot.UI.Controls.Canvas
 
             (int startIndex, var uiElements) = _history.LastOrDefault().Value;
 
-            for (int i = startIndex; i < DrawingCanvas.Children.Count; i++)
-                uiElements.Add(DrawingCanvas.Children[i]);
+            for (int i = startIndex; i < Children.Count; i++)
+                uiElements.Add(Children[i]);
         }
 
         protected override void OnMouseMove(MouseEventArgs e)

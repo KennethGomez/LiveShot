@@ -16,7 +16,7 @@ using LiveShot.UI.Controls.Panel;
 
 namespace LiveShot.UI.Controls.Canvas
 {
-    public class SelectCanvas : DrawCanvas
+    public class SelectCanvas : System.Windows.Controls.Canvas
     {
         public static readonly DependencyProperty SizeLabelProperty = DependencyProperty.Register(
             "SizeLabel", typeof(Label), typeof(SelectCanvas)
@@ -32,6 +32,10 @@ namespace LiveShot.UI.Controls.Canvas
 
         public static readonly DependencyProperty BottomPanelProperty = DependencyProperty.Register(
             "BottomPanel", typeof(BottomDragPanel), typeof(SelectCanvas)
+        );
+
+        public static readonly DependencyProperty DrawingCanvasProperty = DependencyProperty.Register(
+            "DrawingCanvas", typeof(AbstractDrawCanvas), typeof(SelectCanvas)
         );
 
         private readonly Collection<Rectangle> _rectangles = new();
@@ -65,6 +69,12 @@ namespace LiveShot.UI.Controls.Canvas
         {
             get => (BottomDragPanel) GetValue(BottomPanelProperty);
             set => SetValue(BottomPanelProperty, value);
+        }
+
+        public AbstractDrawCanvas DrawingCanvas
+        {
+            get => (AbstractDrawCanvas) GetValue(DrawingCanvasProperty);
+            set => SetValue(DrawingCanvasProperty, value);
         }
 
         private static bool CtrlPressed => Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl);
@@ -104,26 +114,16 @@ namespace LiveShot.UI.Controls.Canvas
                 return;
             }
 
-            SetLeft(Selection.Rectangle, Selection.Left);
-            SetTop(Selection.Rectangle, Selection.Top);
-
-            SizeLabel.Content = Selection.Label;
-
             if (_dragging || _moving)
             {
-                UpdateOpacityRectangles();
-            }
-
-            if (Selection.Invalid || _dragging)
-            {
                 SetPanelsVisibility(Visibility.Hidden);
-            }
-            else
-            {
-                SetPanelsVisibility(Visibility.Visible);
-            }
+                UpdateOpacityRectangles();
 
-            _events?.Dispatch<OnSelectionChange>(OnSelectionChangeArgs.From(Selection));
+                SetLeft(Selection.Rectangle, Selection.Left);
+                SetTop(Selection.Rectangle, Selection.Top);
+
+                SizeLabel.Content = Selection.Label;
+            }
         }
 
         private void ClearOpacityRectangles()
@@ -166,8 +166,6 @@ namespace LiveShot.UI.Controls.Canvas
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
-            base.OnMouseLeftButtonDown(e);
-
             MouseLeftButtonPress(e);
         }
 
@@ -178,7 +176,7 @@ namespace LiveShot.UI.Controls.Canvas
 
         private void MouseLeftButtonPress(MouseButtonEventArgs e)
         {
-            if (Tool != CanvasTool.Default)
+            if (DrawingCanvas.Tool != CanvasTool.Default)
                 return;
 
             if (Selection is null)
@@ -210,8 +208,6 @@ namespace LiveShot.UI.Controls.Canvas
 
         protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
         {
-            base.OnMouseLeftButtonUp(e);
-
             MouseLeftButtonRelease();
         }
 
@@ -226,12 +222,17 @@ namespace LiveShot.UI.Controls.Canvas
             _moving = false;
             _startPosition = null;
             _tmpCursorPosition = null;
+
+            if (Selection is not null && !Selection.Invalid)
+            {
+                _events?.Dispatch<OnSelectionChange>(OnSelectionChangeArgs.From(Selection));
+
+                SetPanelsVisibility(Visibility.Visible);
+            }
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
-            base.OnMouseMove(e);
-
             var newPosition = e.GetPosition(this);
 
             Cursor = GetCursor(newPosition);
@@ -248,11 +249,11 @@ namespace LiveShot.UI.Controls.Canvas
             if (Selection is null)
                 return Cursors.Arrow;
 
-            if (Selection.Contains(point) && Tool == CanvasTool.Default)
+            if (Selection.Contains(point) && DrawingCanvas.Tool == CanvasTool.Default)
                 return Cursors.SizeAll;
 
 
-            return Tool == CanvasTool.Default ? Cursors.Arrow : DrawingCursor;
+            return DrawingCanvas.Tool == CanvasTool.Default ? Cursors.Arrow : DrawingCanvas.DrawingCursor;
         }
 
         private void ResizeSelection(Point cursorPosition)

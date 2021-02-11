@@ -17,7 +17,7 @@ namespace LiveShot.API.Drawing.Tools
         {
             if (e.LeftButton != MouseButtonState.Pressed) return;
 
-            var lastPoint = e.GetPosition(canvas.DrawingCanvas);
+            var lastPoint = e.GetPosition(canvas);
 
             LastPoint = lastPoint;
 
@@ -29,7 +29,7 @@ namespace LiveShot.API.Drawing.Tools
                 Fill = Brushes.Transparent,
             };
 
-            canvas.DrawingCanvas.Children.Add(rectangle);
+            canvas.Children.Add(rectangle);
 
             _rectangle = rectangle;
 
@@ -46,7 +46,7 @@ namespace LiveShot.API.Drawing.Tools
         {
             if (LastPoint is not { } lastPoint || _rectangle is null) return;
 
-            var point = e.GetPosition(canvas.DrawingCanvas);
+            var point = e.GetPosition(canvas);
 
             (double left, double top) = PointUtils.GetCoords(lastPoint, point);
 

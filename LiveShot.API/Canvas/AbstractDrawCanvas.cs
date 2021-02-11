@@ -1,11 +1,14 @@
-﻿using System.Windows.Media;
+﻿using System.Windows.Input;
+using System.Windows.Media;
+using LiveShot.API.Drawing;
 
 namespace LiveShot.API.Canvas
 {
     public abstract class AbstractDrawCanvas : System.Windows.Controls.Canvas
     {
         public abstract Brush DrawingColor { get; set; }
-        public abstract System.Windows.Controls.Canvas DrawingCanvas { get; set; }
+        public abstract Cursor DrawingCursor { get; }
+        public abstract CanvasTool Tool { get; set; }
 
         public abstract void Undo();
     }

@@ -12,7 +12,7 @@ namespace LiveShot.API.Drawing.Tools
         {
             if (e.LeftButton != MouseButtonState.Pressed) return;
 
-            LastPoint = e.GetPosition(canvas.DrawingCanvas);
+            LastPoint = e.GetPosition(canvas);
         }
 
         public override void OnMouseLeftButtonUp(MouseButtonEventArgs e, AbstractDrawCanvas canvas)
@@ -29,13 +29,13 @@ namespace LiveShot.API.Drawing.Tools
                 Stroke = canvas.DrawingColor,
                 X1 = lastPoint.X,
                 Y1 = lastPoint.Y,
-                X2 = e.GetPosition(canvas.DrawingCanvas).X,
-                Y2 = e.GetPosition(canvas.DrawingCanvas).Y
+                X2 = e.GetPosition(canvas).X,
+                Y2 = e.GetPosition(canvas).Y
             };
 
-            LastPoint = e.GetPosition(canvas.DrawingCanvas);
+            LastPoint = e.GetPosition(canvas);
 
-            canvas.DrawingCanvas.Children.Add(line);
+            canvas.Children.Add(line);
         }
     }
 }
