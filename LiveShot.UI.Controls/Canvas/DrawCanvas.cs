@@ -43,6 +43,8 @@ namespace LiveShot.UI.Controls.Canvas
                     : 1;
                 
                 GetCanvasTool()?.UpdateThickness(_drawingStrokeThickness);
+                
+                _events?.Dispatch<OnCursorUpdate>(null);
             }
         }
 

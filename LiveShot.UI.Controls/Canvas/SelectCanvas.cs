@@ -84,6 +84,7 @@ namespace LiveShot.UI.Controls.Canvas
             _events = events;
 
             _events.Subscribe<OnKeyDown>(OnKeyDown);
+            _events.Subscribe<OnCursorUpdate>(OnCursorUpdate);
         }
 
         private static void OnSelectionKeyDown(Action<int> shiftPressed, Action<int> normal)
@@ -310,6 +311,11 @@ namespace LiveShot.UI.Controls.Canvas
                 UpdateSelection();
                 UpdateOpacityRectangles();
             }
+        }
+
+        private void OnCursorUpdate(Event e)
+        {
+            Cursor = GetCursor(PointToScreen(Mouse.GetPosition(this)));
         }
     }
 }

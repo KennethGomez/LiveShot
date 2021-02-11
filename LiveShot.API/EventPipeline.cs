@@ -18,7 +18,7 @@ namespace LiveShot.API
             _actions[key].Add(action);
         }
 
-        public void Dispatch<T>(object e) where T : Event, new()
+        public void Dispatch<T>(object? e) where T : Event, new()
         {
             if (!_actions.TryGetValue(typeof(T), out var actions))
                 return;

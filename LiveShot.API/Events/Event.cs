@@ -6,7 +6,7 @@ namespace LiveShot.API.Events
     {
         private object? _args;
 
-        public Event With(object args)
+        public Event With(object? args)
         {
             _args = args;
 
