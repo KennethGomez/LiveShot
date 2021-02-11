@@ -12,7 +12,6 @@ using LiveShot.API.Events.Input;
 using LiveShot.API.Utils;
 using LiveShot.UI.Controls.Button;
 using Microsoft.Extensions.DependencyInjection;
-using Brushes = System.Windows.Media.Brushes;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 
 namespace LiveShot.UI.Views

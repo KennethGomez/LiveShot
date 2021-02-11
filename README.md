@@ -10,6 +10,8 @@ Tool to make enhanced screenshots. Inspired on LightShot
 ## How it works
 With this tool you can select some rectangle on your screen and then draw on it like you can do on LightShot.
 
+![](https://i.imgur.com/W50z8p4.png)
+
 ## Development
 - Cropping screenshot `100%`
 - Exporting screenshots `66%`
