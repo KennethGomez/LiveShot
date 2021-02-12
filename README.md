@@ -1,8 +1,8 @@
-![](https://img.shields.io/badge/state-development-blue?style=for-the-badge)
-![](https://img.shields.io/badge/.NET-5-blue?style=for-the-badge)
-![](https://img.shields.io/github/commit-activity/m/KennethGomez/LiveShot?style=for-the-badge)
-![](https://img.shields.io/github/v/tag/KennethGomez/LiveShot?style=for-the-badge)
-![](https://img.shields.io/github/contributors/KennethGomez/LiveShot?style=for-the-badge)
+![](https://img.shields.io/badge/state-development-blue)
+![](https://img.shields.io/badge/.NET-5-blue)
+![](https://img.shields.io/github/commit-activity/m/KennethGomez/LiveShot)
+![](https://img.shields.io/github/v/tag/KennethGomez/LiveShot)
+![](https://img.shields.io/github/contributors/KennethGomez/LiveShot)
 
 # LiveShot
 Tool to make enhanced screenshots. Inspired on LightShot
