@@ -173,6 +173,11 @@ namespace LiveShot.UI.Views
             _events.Dispatch<OnKeyDown>(e);
         }
 
+        protected override void OnKeyUp(KeyEventArgs e)
+        {
+            _events.Dispatch<OnKeyUp>(e);
+        }
+
         private void SaveImage()
         {
             var selection = SelectCanvas.Selection;

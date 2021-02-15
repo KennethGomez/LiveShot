@@ -84,6 +84,7 @@ namespace LiveShot.UI.Controls.Canvas
             _events = events;
 
             _events.Subscribe<OnKeyDown>(OnKeyDown);
+            _events.Subscribe<OnKeyUp>(OnKeyUp);
             _events.Subscribe<OnCursorUpdate>(OnCursorUpdate);
         }
 
@@ -107,14 +108,14 @@ namespace LiveShot.UI.Controls.Canvas
 
                 SizeLabel.Content = API.Properties.Resources.CaptureScreen_SizeLabel_Empty;
 
-                SetPanelsVisibility(Visibility.Hidden);
+                UpdatePanels(Visibility.Hidden);
 
                 return;
             }
 
             if (_dragging || _moving)
             {
-                SetPanelsVisibility(Visibility.Hidden);
+                UpdatePanels(Visibility.Hidden);
                 UpdateOpacityRectangles();
 
                 SetLeft(Selection.Rectangle, Selection.Left);
@@ -132,8 +133,13 @@ namespace LiveShot.UI.Controls.Canvas
             _rectangles.Clear();
         }
 
-        private void SetPanelsVisibility(Visibility visibility)
+        private void UpdatePanels(Visibility visibility, bool dispatchUpdate = false)
         {
+            if (Selection is not null && dispatchUpdate)
+            {
+                _events?.Dispatch<OnSelectionChange>(OnSelectionChangeArgs.From(Selection));
+            }
+            
             RightPanel.Visibility = visibility;
             BottomPanel.Visibility = visibility;
         }
@@ -223,9 +229,7 @@ namespace LiveShot.UI.Controls.Canvas
 
             if (Selection is not null && !Selection.Invalid)
             {
-                _events?.Dispatch<OnSelectionChange>(OnSelectionChangeArgs.From(Selection));
-
-                SetPanelsVisibility(Visibility.Visible);
+                UpdatePanels(Visibility.Visible, true);
             }
         }
 
@@ -284,6 +288,8 @@ namespace LiveShot.UI.Controls.Canvas
         private void OnKeyDown(Event e)
         {
             var args = e.GetArgs<KeyEventArgs>();
+            
+            UpdatePanels(Visibility.Hidden);
 
             if (Selection == null) return;
 
@@ -311,6 +317,11 @@ namespace LiveShot.UI.Controls.Canvas
                 UpdateSelection();
                 UpdateOpacityRectangles();
             }
+        }
+
+        private void OnKeyUp(Event e)
+        {
+            UpdatePanels(Visibility.Visible, true);
         }
 
         private void OnCursorUpdate(Event e)
