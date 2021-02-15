@@ -51,8 +51,19 @@ namespace LiveShot.API.Drawing.Tools
 
             (double left, double top) = PointUtils.GetCoords(lastPoint, point);
 
-            _rectangle.Width = Math.Abs(lastPoint.X - point.X);
-            _rectangle.Height = Math.Abs(lastPoint.Y - point.Y);
+            double w = Math.Abs(lastPoint.X - point.X);
+            double h = Math.Abs(lastPoint.Y - point.Y);
+
+            double min = Math.Min(w, h);
+
+            if (KeyBoardUtils.IsSiftPressed)
+            {
+                w = min;
+                h = min;
+            }
+                
+            _rectangle.Width = w;
+            _rectangle.Height = h;
 
             System.Windows.Controls.Canvas.SetLeft(_rectangle, left);
             System.Windows.Controls.Canvas.SetTop(_rectangle, top);
