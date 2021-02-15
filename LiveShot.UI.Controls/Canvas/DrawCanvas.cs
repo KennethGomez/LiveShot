@@ -71,6 +71,7 @@ namespace LiveShot.UI.Controls.Canvas
             _events = events;
             
             _events.Subscribe<OnKeyDown>(OnKeyDown);
+            _events.Subscribe<OnMouseWheel>(OnMouseWheel);
         }
 
         private Cursor[] GetCursors()
@@ -152,11 +153,11 @@ namespace LiveShot.UI.Controls.Canvas
             }
         }
 
-        protected override void OnMouseWheel(MouseWheelEventArgs e)
+        private void OnMouseWheel(Event e)
         {
             if (KeyBoardUtils.IsCtrlPressed)
             {
-                if (e.Delta > 0)
+                if (e.GetArgs<MouseWheelEventArgs>().Delta > 0)
                 {
                     DrawingStrokeThickness++;
                 }
