@@ -53,14 +53,6 @@ namespace LiveShot.API.Drawing.Tools
 
             double w = Math.Abs(lastPoint.X - point.X);
             double h = Math.Abs(lastPoint.Y - point.Y);
-
-            double min = Math.Min(w, h);
-
-            if (KeyBoardUtils.IsShiftPressed)
-            {
-                w = min;
-                h = min;
-            }
                 
             _rectangle.Width = w;
             _rectangle.Height = h;
