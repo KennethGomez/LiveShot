@@ -56,7 +56,7 @@ namespace LiveShot.API.Drawing.Tools
 
             double min = Math.Min(w, h);
 
-            if (KeyBoardUtils.IsSiftPressed)
+            if (KeyBoardUtils.IsShiftPressed)
             {
                 w = min;
                 h = min;
