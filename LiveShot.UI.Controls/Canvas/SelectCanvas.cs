@@ -288,8 +288,6 @@ namespace LiveShot.UI.Controls.Canvas
         private void OnKeyDown(Event e)
         {
             var args = e.GetArgs<KeyEventArgs>();
-            
-            UpdatePanels(Visibility.Hidden);
 
             if (Selection == null) return;
 
@@ -314,6 +312,7 @@ namespace LiveShot.UI.Controls.Canvas
                 Key.Up, Key.Right, Key.Down, Key.Left
             }.Contains(args.Key))
             {
+                UpdatePanels(Visibility.Hidden);
                 UpdateSelection();
                 UpdateOpacityRectangles();
             }
