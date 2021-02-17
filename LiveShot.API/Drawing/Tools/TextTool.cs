@@ -35,6 +35,8 @@ namespace LiveShot.API.Drawing.Tools
             canvas.Children.Add(_text);
 
             _text.Focus();
+            _text.KeyDown += TextOnKeyDown;
+            _text.LostFocus += TextOnLostFocus;
         }
 
         public override void OnMouseLeftButtonUp(MouseButtonEventArgs e, AbstractDrawCanvas canvas) { }
@@ -45,6 +47,27 @@ namespace LiveShot.API.Drawing.Tools
         {
             if (_text is not null)
                 _text.FontSize = GetFontSize(thickness);
+        }
+
+        private static void TextOnKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter && sender is TextBox textBox)
+            {
+                LoseTextBoxFocus(textBox);
+            }
+        }
+
+        private static void TextOnLostFocus(object sender, RoutedEventArgs e)
+        {
+            if (sender is TextBox textBox)
+            {
+                LoseTextBoxFocus(textBox);
+            }
+        }
+
+        private static void LoseTextBoxFocus(UIElement textBox)
+        {
+            textBox.IsHitTestVisible = false;
         }
 
         private static double GetFontSize(double thickness)
