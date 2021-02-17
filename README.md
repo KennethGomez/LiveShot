@@ -29,7 +29,7 @@ With this tool you can select some rectangle on your screen and then draw on it 
   - Arrow `-`
   - Rectangle `100%`
   - Highlighter `-`
-  - Text `-`
+  - Text `100%`
   - Color picker `100%`
   - Undo `100%`
 - Background app
