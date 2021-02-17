@@ -28,7 +28,7 @@ With this tool you can select some rectangle on your screen and then draw on it 
   - Line `100%`
   - Arrow `-`
   - Rectangle `100%`
-  - Highlighter `-`
+  - Highlighter `100%`
   - Text `100%`
   - Color picker `100%`
   - Undo `100%`
