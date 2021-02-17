@@ -68,6 +68,8 @@ namespace LiveShot.API.Drawing.Tools
         private void LoseTextBoxFocus(UIElement textBox)
         {
             textBox.IsHitTestVisible = false;
+            textBox.KeyDown -= TextOnKeyDown;
+            textBox.LostFocus -= TextOnLostFocus;
 
             Keyboard.ClearFocus();
 
