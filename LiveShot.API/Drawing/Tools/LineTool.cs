@@ -46,7 +46,7 @@ namespace LiveShot.API.Drawing.Tools
             _line.Y2 = point.Y;
         }
 
-        public override void UpdateThickness(int thickness)
+        public override void UpdateThickness(double thickness)
         {
             if (_line is not null) 
                 _line.StrokeThickness = thickness;

@@ -5,6 +5,7 @@
         Default,
         Pencil,
         Rectangle,
-        Line
+        Line,
+        Text
     }
 }

@@ -61,7 +61,7 @@ namespace LiveShot.API.Drawing.Tools
             System.Windows.Controls.Canvas.SetTop(_rectangle, top);
         }
 
-        public override void UpdateThickness(int thickness)
+        public override void UpdateThickness(double thickness)
         {
             if (_rectangle is not null)
                 _rectangle.StrokeThickness = thickness;

@@ -66,8 +66,9 @@
                     <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Highlighter}" />
                 </button:ActionButton>
                 <button:ActionButton ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Text}"
-                                     Style="{StaticResource CanvasButton}">
-                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Text}" />
+                                     Style="{StaticResource CanvasButton}" Name="TextBtn" ActiveTool="Text">
+                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Text}"
+                          Fill="{Binding ElementName=TextBtn, Path=IconFill}" />
                 </button:ActionButton>
                 <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_ColorPicker}"
                         Style="{StaticResource LastRightCanvasButton}" Name="ColorPickerBtn">
