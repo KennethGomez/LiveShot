@@ -49,5 +49,12 @@ namespace LiveShot.API.Drawing.Tools
 
             _polyline.Points.Add(point);
         }
+
+        public override void UpdateThickness(double thickness)
+        {
+            if (_polyline is null) return;
+
+            _polyline.StrokeThickness = thickness;
+        }
     }
 }
