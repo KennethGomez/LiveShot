@@ -1,4 +1,4 @@
-<p style="text-align: center">
+<p align="center">
   <img src="https://img.shields.io/badge/state-development-blue" alt="State"/> 
   <img src="https://img.shields.io/badge/.NET-5-blue"  alt=".NET Version"/> 
   <img src="https://img.shields.io/github/commit-activity/m/KennethGomez/LiveShot"  alt="Commit activity"/> 
