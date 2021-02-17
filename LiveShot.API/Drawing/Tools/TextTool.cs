@@ -49,7 +49,7 @@ namespace LiveShot.API.Drawing.Tools
                 _text.FontSize = GetFontSize(thickness);
         }
 
-        private static void TextOnKeyDown(object sender, KeyEventArgs e)
+        private void TextOnKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter && sender is TextBox textBox)
             {
@@ -57,7 +57,7 @@ namespace LiveShot.API.Drawing.Tools
             }
         }
 
-        private static void TextOnLostFocus(object sender, RoutedEventArgs e)
+        private void TextOnLostFocus(object sender, RoutedEventArgs e)
         {
             if (sender is TextBox textBox)
             {
@@ -65,9 +65,14 @@ namespace LiveShot.API.Drawing.Tools
             }
         }
 
-        private static void LoseTextBoxFocus(UIElement textBox)
+        private void LoseTextBoxFocus(UIElement textBox)
         {
             textBox.IsHitTestVisible = false;
+
+            Keyboard.ClearFocus();
+
+            if (_text == textBox)
+                _text = null;
         }
 
         private static double GetFontSize(double thickness)
