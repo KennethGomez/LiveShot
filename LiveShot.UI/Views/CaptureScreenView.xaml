@@ -62,8 +62,9 @@
                           Fill="{Binding ElementName=RectangleBtn, Path=IconFill}" />
                 </button:ActionButton>
                 <button:ActionButton ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Highlighter}"
-                                     Style="{StaticResource CanvasButton}">
-                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Highlighter}" />
+                                     Style="{StaticResource CanvasButton}" Name="HighlightBtn" ActiveTool="Highlight">
+                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Highlighter}"
+                          Fill="{Binding ElementName=HighlightBtn, Path=IconFill}"/>
                 </button:ActionButton>
                 <button:ActionButton ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Text}"
                                      Style="{StaticResource CanvasButton}" Name="TextBtn" ActiveTool="Text">

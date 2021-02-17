@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Media;
 using LiveShot.API.Drawing;
+using LiveShot.API.Drawing.Tools;
 using LiveShot.UI.Controls.Canvas;
 
 namespace LiveShot.UI.Controls.Button
@@ -39,6 +40,9 @@ namespace LiveShot.UI.Controls.Button
 
         public void UpdateIconFill(Brush brush)
         {
+            if (ActiveTool == CanvasTool.Highlight)
+                brush = HighlightTool.Color;
+            
             IconFill = IsActive ? brush : Brushes.Black;
         }
     }

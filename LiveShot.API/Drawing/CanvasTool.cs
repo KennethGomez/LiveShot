@@ -6,6 +6,7 @@
         Pencil,
         Rectangle,
         Line,
-        Text
+        Text,
+        Highlight
     }
 }
