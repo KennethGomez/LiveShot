@@ -6,6 +6,7 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using LiveShot.API.Canvas;
+using Point = System.Windows.Point;
 
 namespace LiveShot.API.Utils
 {
@@ -96,6 +97,41 @@ namespace LiveShot.API.Utils
             bitmap.UnlockBits(data);
 
             return bitmap;
+        }
+
+        public static System.Windows.Controls.Image GetMagnifiedImage(
+            Bitmap source, Point point, int size, int scale
+        )
+        {
+            var bitmap = GetMagnifiedBitmap(point, size, source);
+
+            var image = new System.Windows.Controls.Image
+            {
+                Width = size * scale,
+                Height = size * scale,
+                Source = bitmap,
+                SnapsToDevicePixels = true
+            };
+
+            RenderOptions.SetBitmapScalingMode(image, BitmapScalingMode.NearestNeighbor);
+
+            return image;
+        }
+
+        public static BitmapSource GetMagnifiedBitmap(Point point, int size, Bitmap source)
+        {
+            var bitmap = new Bitmap(size, size);
+
+            using var graphics = Graphics.FromImage(bitmap);
+
+            graphics.DrawImage(
+                source,
+                new Rectangle(0, 0, size, size),
+                new Rectangle((int) (point.X - size / 2), (int) (point.Y - size / 2), size, size),
+                GraphicsUnit.Pixel
+            );
+
+            return GetBitmapSource(bitmap);
         }
     }
 }

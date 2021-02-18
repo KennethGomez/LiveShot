@@ -90,15 +90,17 @@ namespace LiveShot.UI.Views
                     button.IsActive = !button.IsActive;
 
                     DrawingCanvas.Tool = button.IsActive ? button.ActiveTool : CanvasTool.Default;
+                    DrawingCanvas.ActiveActionButton = button;
 
                     _activeTool = button;
-                    _activeTool.UpdateIconFill(DrawingCanvas.DrawingColor);
 
                     continue;
                 }
 
                 button.IsActive = false;
                 button.UpdateIconFill(DrawingCanvas.DrawingColor);
+
+                DrawingCanvas.UnselectTool(button.ActiveTool);
             }
         }
 
@@ -143,6 +145,7 @@ namespace LiveShot.UI.Views
             _screenShot = bitmap;
 
             SelectCanvas.Background = new ImageBrush(bitmapSource);
+            DrawingCanvas.ScreenShot = bitmap;
         }
 
         protected override void OnKeyDown(KeyEventArgs e)

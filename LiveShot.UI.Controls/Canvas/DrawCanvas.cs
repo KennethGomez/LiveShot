@@ -7,6 +7,7 @@ using System.Windows.Media;
 using System.Windows.Shapes;
 using LiveShot.API;
 using LiveShot.API.Canvas;
+using LiveShot.API.Controls.Button;
 using LiveShot.API.Drawing;
 using LiveShot.API.Drawing.Tools;
 using LiveShot.API.Events;
@@ -22,19 +23,46 @@ namespace LiveShot.UI.Controls.Canvas
         );
 
         private readonly IDictionary<int, (int, ICollection<UIElement>)> _history;
-        private Cursor[] _cursors;
-        private Cursor[] _highlightCursors;
+        private readonly Cursor[] _highlightCursors;
+        private readonly Cursor _eyeDropperCursor = GetCursor<Rectangle>(Brushes.White, 1, false, 1, new Point(0, 0));
 
+        private Cursor[] _cursors;
         private int _drawingStrokeThickness = 1;
 
         private ICollection<IDrawingTool>? _drawingTools;
         private IEventPipeline? _events;
+        private IActionButton? _activeActionButton;
 
-        public override Cursor DrawingCursor => Tool == CanvasTool.Highlight
-            ? _highlightCursors[_drawingStrokeThickness - 1]
-            : _cursors[_drawingStrokeThickness - 1];
+        public override Cursor DrawingCursor => Tool switch
+        {
+            CanvasTool.EyeDropper => _eyeDropperCursor,
+            CanvasTool.Highlight => _highlightCursors[_drawingStrokeThickness - 1],
+            _ => _cursors[_drawingStrokeThickness - 1]
+        };
 
         public override CanvasTool Tool { get; set; } = CanvasTool.Default;
+        public override System.Drawing.Bitmap? ScreenShot { get; set; }
+
+        public override Brush DrawingColor
+        {
+            get => (Brush) GetValue(DrawingColorProperty);
+            set
+            {
+                SetValue(DrawingColorProperty, value);
+
+                _cursors = GetCursors();
+            }
+        }
+
+        public override IActionButton? ActiveActionButton
+        {
+            get => _activeActionButton;
+            set
+            {
+                _activeActionButton = value;
+                _activeActionButton?.UpdateIconFill(DrawingColor);
+            }
+        }
 
         public override double DrawingStrokeThickness
         {
@@ -60,17 +88,6 @@ namespace LiveShot.UI.Controls.Canvas
             _highlightCursors = GetHighlightCursors();
         }
 
-        public override Brush DrawingColor
-        {
-            get => (Brush) GetValue(DrawingColorProperty);
-            set
-            {
-                SetValue(DrawingColorProperty, value);
-
-                _cursors = GetCursors();
-            }
-        }
-
         public void With(IEnumerable<IDrawingTool> tools, IEventPipeline events)
         {
             _drawingTools = tools.ToList();
@@ -86,7 +103,7 @@ namespace LiveShot.UI.Controls.Canvas
 
             for (var i = 0; i < cursors.Length; i++)
             {
-                cursors[i] = GetCursor(DrawingColor, i);
+                cursors[i] = GetCursor<Ellipse>(DrawingColor, i);
             }
 
             return cursors;
@@ -98,31 +115,34 @@ namespace LiveShot.UI.Controls.Canvas
 
             for (var i = 0; i < cursors.Length; i++)
             {
-                cursors[i] = GetCursor(HighlightTool.Color, i, true, HighlightTool.Opacity);
+                cursors[i] = GetCursor<Ellipse>(HighlightTool.Color, i, true, HighlightTool.Opacity);
             }
 
             return cursors;
         }
 
-        private static Cursor GetCursor(Brush color, int size, bool fill = false, double opacity = 1)
+        private static Cursor GetCursor<T>(
+            Brush color, int size, bool fill = false, double opacity = 1, Point? point = null
+        ) where T : Shape, new()
         {
             double ellipseSize = Math.Round((size + 1) * 1.3 + 2.25);
-            
-            Ellipse ellipse = new()
+
+            T ellipse = new()
             {
                 Width = ellipseSize,
                 Height = ellipseSize,
-                Stroke = color,
+                StrokeThickness = fill ? 0 : 1,
+                Stroke = fill ? Brushes.Transparent : color,
                 Opacity = opacity,
                 Fill = fill ? color : Brushes.Transparent
             };
 
-            return CursorUtils.GetCursorFromElement(ellipse, new Point(0.5, 0.5));
+            return CursorUtils.GetCursorFromElement(ellipse, point ?? new Point(0.5, 0.5));
         }
 
-        private IDrawingTool? GetCanvasTool()
+        private IDrawingTool? GetCanvasTool(CanvasTool? tool = null)
         {
-            return _drawingTools?.FirstOrDefault(t => t.Tool == Tool);
+            return _drawingTools?.FirstOrDefault(t => t.Tool == (tool ?? Tool));
         }
 
         public override void Undo()
@@ -137,6 +157,13 @@ namespace LiveShot.UI.Controls.Canvas
             }
 
             _history.Remove(historyIndex);
+        }
+
+        public override void UpdateDrawingColor(Brush brush)
+        {
+            DrawingColor = brush;
+
+            ActiveActionButton?.UpdateIconFill(brush);
         }
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
@@ -192,6 +219,11 @@ namespace LiveShot.UI.Controls.Canvas
                     DrawingStrokeThickness--;
                 }
             }
+        }
+
+        public void UnselectTool(CanvasTool tool)
+        {
+            GetCanvasTool(tool)?.Unselect();
         }
     }
 }

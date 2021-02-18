@@ -7,6 +7,7 @@
         Rectangle,
         Line,
         Text,
-        Highlight
+        Highlight,
+        EyeDropper
     }
 }

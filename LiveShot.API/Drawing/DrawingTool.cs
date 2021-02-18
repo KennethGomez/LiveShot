@@ -14,9 +14,8 @@ namespace LiveShot.API.Drawing
         public abstract void OnMouseLeftButtonUp(MouseButtonEventArgs e, AbstractDrawCanvas canvas);
         public abstract void OnMouseMove(MouseEventArgs e, AbstractDrawCanvas canvas);
 
-        public virtual void UpdateThickness(double thickness)
-        {
-            return;
-        }
+        public virtual void UpdateThickness(double thickness) { }
+
+        public virtual void Unselect() { }
     }
 }

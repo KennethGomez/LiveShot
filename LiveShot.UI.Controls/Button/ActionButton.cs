@@ -1,12 +1,12 @@
 ﻿using System.Windows;
 using System.Windows.Media;
+using LiveShot.API.Controls.Button;
 using LiveShot.API.Drawing;
 using LiveShot.API.Drawing.Tools;
-using LiveShot.UI.Controls.Canvas;
 
 namespace LiveShot.UI.Controls.Button
 {
-    public class ActionButton : System.Windows.Controls.Button
+    public class ActionButton : System.Windows.Controls.Button, IActionButton
     {
         public static readonly DependencyProperty IsActiveProperty = DependencyProperty.Register(
             "IsActive", typeof(bool), typeof(ActionButton), new PropertyMetadata(false)

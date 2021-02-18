@@ -72,8 +72,9 @@
                           Fill="{Binding ElementName=TextBtn, Path=IconFill}" />
                 </button:ActionButton>
                 <button:ActionButton ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_EyeDropper}"
-                                     Style="{StaticResource CanvasButton}">
-                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource EyeDropper}" />
+                                     Style="{StaticResource CanvasButton}" Name="EyeDropperBtn" ActiveTool="EyeDropper">
+                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource EyeDropper}"
+                          Fill="{Binding ElementName=EyeDropperBtn, Path=IconFill}" />
                 </button:ActionButton>
                 <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_ColorPicker}"
                         Style="{StaticResource LastRightCanvasButton}" Name="ColorPickerBtn">
