@@ -23,14 +23,14 @@ With this tool you can select some rectangle on your screen and then draw on it 
   - Search image on Google `100%`
   - Print image `-`
   - Share image on social networks `-`
-- Drawing tools `77%`
+- Drawing tools `88%`
   - Pencil `100%`
   - Line `100%`
   - Arrow `-`
   - Rectangle `100%`
   - Highlighter `100%`
   - Text `100%`
-  - Eye dropper `-`
+  - Eye dropper `100%`
   - Color picker `100%`
   - Undo `100%`
 - Background app
