@@ -94,4 +94,7 @@ CaptureScreen.CanvasButtons.Stroke</value>
     <data name="CaptureScreen.CanvasButtons.Close" xml:space="preserve">
         <value>CaptureScreen.CanvasButtons.Close</value>
     </data>
+    <data name="CaptureScreen.CanvasButtons.EyeDropper" xml:space="preserve">
+        <value>CaptureScreen.CanvasButtons.EyeDropper</value>
+    </data>
 </root>

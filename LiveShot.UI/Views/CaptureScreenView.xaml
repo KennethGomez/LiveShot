@@ -71,6 +71,10 @@
                     <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Text}"
                           Fill="{Binding ElementName=TextBtn, Path=IconFill}" />
                 </button:ActionButton>
+                <button:ActionButton ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_EyeDropper}"
+                                     Style="{StaticResource CanvasButton}">
+                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource EyeDropper}" />
+                </button:ActionButton>
                 <Button ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_ColorPicker}"
                         Style="{StaticResource LastRightCanvasButton}" Name="ColorPickerBtn">
                     <Rectangle Width="20" Height="20" Fill="{Binding ElementName=DrawingCanvas, Path=DrawingColor}" />

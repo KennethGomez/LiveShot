@@ -106,6 +106,15 @@ namespace LiveShot.API.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CaptureScreen.CanvasButtons.EyeDropper.
+        /// </summary>
+        public static string CaptureScreen_CanvasButtons_EyeDropper {
+            get {
+                return ResourceManager.GetString("CaptureScreen.CanvasButtons.EyeDropper", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to CaptureScreen.CanvasButtons.Google.
         /// </summary>
         public static string CaptureScreen_CanvasButtons_Google {

@@ -106,6 +106,15 @@ namespace LiveShot.API.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cuentagotas.
+        /// </summary>
+        internal static string CaptureScreen_CanvasButtons_EyeDropper {
+            get {
+                return ResourceManager.GetString("CaptureScreen.CanvasButtons.EyeDropper", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Buscar imágenes similares en Google.
         /// </summary>
         internal static string CaptureScreen_CanvasButtons_Google {

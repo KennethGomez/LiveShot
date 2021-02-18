@@ -93,4 +93,7 @@
     <data name="CaptureScreen.CanvasButtons.Upload" xml:space="preserve">
         <value>Upload</value>
     </data>
+    <data name="CaptureScreen.CanvasButtons.EyeDropper" xml:space="preserve">
+        <value>Eye dropper</value>
+    </data>
 </root>
