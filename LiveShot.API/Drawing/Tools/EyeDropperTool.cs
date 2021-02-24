@@ -9,7 +9,10 @@ namespace LiveShot.API.Drawing.Tools
     {
         public override CanvasTool Tool => CanvasTool.EyeDropper;
 
-        private readonly Rectangle?[,] _magnifier = new Rectangle[7, 7];
+        private readonly Rectangle?[,] _magnifier = new Rectangle[MagnifierSize * 2 + 1, MagnifierSize * 2 + 1];
+
+        private const int MagnifierSize = 3;
+        private const int ScreenShotStride = 4;
 
         public override void OnMouseLeftButtonDown(MouseButtonEventArgs e, AbstractDrawCanvas canvas)
         {
@@ -25,15 +28,20 @@ namespace LiveShot.API.Drawing.Tools
 
             var point = e.GetPosition(canvas);
 
-            var pixelIdx = (int) ((point.X - 3) * 4 + (point.Y - 3) * canvas.ScreenShot.Width * 4);
+            var pixelIdx = (int) (
+                (point.X - MagnifierSize) * ScreenShotStride + 
+                (point.Y - MagnifierSize) * canvas.ScreenShot.Width * ScreenShotStride
+            );
 
             for (var i = 0; i < _magnifier.GetLength(0); i++)
             {
                 for (var j = 0; j < _magnifier.GetLength(1); j++)
                 {
-                    int rectIdx = pixelIdx + i * 4 + j * 4 * canvas.ScreenShot.Width;
+                    int rectIdx = pixelIdx + 
+                                  i * ScreenShotStride + 
+                                  j * ScreenShotStride * canvas.ScreenShot.Width;
 
-                    if (rectIdx + 4 > canvas.ScreenShotBytes.Length || rectIdx < 0)
+                    if (rectIdx + ScreenShotStride > canvas.ScreenShotBytes.Length || rectIdx < 0)
                         continue;
 
                     byte b = canvas.ScreenShotBytes[rectIdx];
@@ -44,10 +52,10 @@ namespace LiveShot.API.Drawing.Tools
                     {
                         rect = new Rectangle
                         {
-                            Width = 6,
-                            Height = 6,
+                            Width = MagnifierSize * 2,
+                            Height = MagnifierSize * 2
                         };
-                        
+
                         _magnifier[i, j] = rect;
 
                         rect.MouseUp += (sender, _) => OnRectangleMouseUp(sender, canvas);
@@ -58,8 +66,11 @@ namespace LiveShot.API.Drawing.Tools
                     rect.Fill = new SolidColorBrush(Color.FromRgb(r, g, b));
 
 
-                    System.Windows.Controls.Canvas.SetLeft(rect, point.X + (i - 4) * 6);
-                    System.Windows.Controls.Canvas.SetTop(rect, point.Y + (j - 4) * 6);
+                    double left = point.X + (i - (MagnifierSize + 1)) * MagnifierSize * 2;
+                    double top = point.Y + (j - (MagnifierSize + 1)) * MagnifierSize * 2;
+
+                    System.Windows.Controls.Canvas.SetLeft(rect, left);
+                    System.Windows.Controls.Canvas.SetTop(rect, top);
                 }
             }
         }
