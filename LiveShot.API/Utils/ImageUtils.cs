@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -132,6 +133,25 @@ namespace LiveShot.API.Utils
             );
 
             return GetBitmapSource(bitmap);
+        }
+
+        public static byte[] GetBytes(Bitmap bitmap)
+        {
+            var bitmapData = bitmap.LockBits(
+                new Rectangle(System.Drawing.Point.Empty, bitmap.Size),
+                ImageLockMode.ReadOnly,
+                bitmap.PixelFormat
+            );
+
+            int length = bitmapData.Stride * bitmapData.Height;
+
+            byte[] bytes = new byte[length];
+
+            Marshal.Copy(bitmapData.Scan0, bytes, 0, length);
+
+            bitmap.UnlockBits(bitmapData);
+
+            return bytes;
         }
     }
 }

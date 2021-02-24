@@ -24,7 +24,7 @@ namespace LiveShot.UI.Controls.Canvas
 
         private readonly IDictionary<int, (int, ICollection<UIElement>)> _history;
         private readonly Cursor[] _highlightCursors;
-        private readonly Cursor _eyeDropperCursor = GetCursor<Rectangle>(Brushes.White, 1, false, 1, new Point(0, 0));
+        private readonly Cursor _eyeDropperCursor = GetCursor<Rectangle>(Brushes.White, 1, false, 1, new Point(1, 1));
 
         private Cursor[] _cursors;
         private int _drawingStrokeThickness = 1;
@@ -32,6 +32,7 @@ namespace LiveShot.UI.Controls.Canvas
         private ICollection<IDrawingTool>? _drawingTools;
         private IEventPipeline? _events;
         private IActionButton? _activeActionButton;
+        private byte[]? _screenShotBytes;
 
         public override Cursor DrawingCursor => Tool switch
         {
@@ -42,6 +43,16 @@ namespace LiveShot.UI.Controls.Canvas
 
         public override CanvasTool Tool { get; set; } = CanvasTool.Default;
         public override System.Drawing.Bitmap? ScreenShot { get; set; }
+
+        public override byte[]? ScreenShotBytes
+        {
+            get
+            {
+                if (ScreenShot is not { } screenShot) return null;
+
+                return _screenShotBytes ??= ImageUtils.GetBytes(screenShot);
+            }
+        }
 
         public override Brush DrawingColor
         {
