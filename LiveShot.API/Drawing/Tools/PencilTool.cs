@@ -7,18 +7,25 @@ namespace LiveShot.API.Drawing.Tools
 {
     public class PencilTool : DrawingTool
     {
-        public override CanvasTool Tool => CanvasTool.Pencil;
-
         private Polyline? _polyline;
 
-        public override void OnMouseLeftButtonDown(MouseButtonEventArgs e, AbstractDrawCanvas canvas)
+        private readonly ILiveShotService _liveShotService;
+
+        public PencilTool(ILiveShotService liveShotService)
         {
-            if (e.LeftButton != MouseButtonState.Pressed) return;
+            _liveShotService = liveShotService;
+        }
+
+        public override CanvasTool Tool => CanvasTool.Pencil;
+
+        public override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+            if (e.LeftButton != MouseButtonState.Pressed || _liveShotService.DrawCanvas is not { } canvas) return;
 
             var point = e.GetPosition(canvas);
-            
+
             LastPoint = point;
-            
+
             _polyline = new Polyline
             {
                 StrokeThickness = canvas.DrawingStrokeThickness,
@@ -33,18 +40,21 @@ namespace LiveShot.API.Drawing.Tools
             canvas.Children.Add(_polyline);
         }
 
-        public override void OnMouseLeftButtonUp(MouseButtonEventArgs e, AbstractDrawCanvas canvas)
+        public override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
         {
             LastPoint = null;
             _polyline = null;
         }
 
-        public override void OnMouseMove(MouseEventArgs e, AbstractDrawCanvas canvas)
+        public override void OnMouseMove(MouseEventArgs e)
         {
-            if (_polyline is null || e.LeftButton != MouseButtonState.Pressed) return;
+            if (_polyline is null ||
+                e.LeftButton != MouseButtonState.Pressed ||
+                _liveShotService.DrawCanvas is not { } canvas
+            ) return;
 
             var point = e.GetPosition(canvas);
-            
+
             LastPoint = point;
 
             _polyline.Points.Add(point);

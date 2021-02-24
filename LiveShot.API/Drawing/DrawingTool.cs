@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using System.Windows.Input;
-using LiveShot.API.Canvas;
 
 namespace LiveShot.API.Drawing
 {
@@ -10,9 +9,9 @@ namespace LiveShot.API.Drawing
 
         public abstract CanvasTool Tool { get; }
 
-        public abstract void OnMouseLeftButtonDown(MouseButtonEventArgs e, AbstractDrawCanvas canvas);
-        public abstract void OnMouseLeftButtonUp(MouseButtonEventArgs e, AbstractDrawCanvas canvas);
-        public abstract void OnMouseMove(MouseEventArgs e, AbstractDrawCanvas canvas);
+        public virtual void OnMouseLeftButtonDown(MouseButtonEventArgs e) { }
+        public virtual void OnMouseLeftButtonUp(MouseButtonEventArgs e) { }
+        public virtual void OnMouseMove(MouseEventArgs e) { }
 
         public virtual void UpdateThickness(double thickness) { }
 

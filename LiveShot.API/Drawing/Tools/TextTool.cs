@@ -8,13 +8,20 @@ namespace LiveShot.API.Drawing.Tools
 {
     public class TextTool : DrawingTool
     {
-        public override CanvasTool Tool => CanvasTool.Text;
-
         private TextBox? _text;
 
-        public override void OnMouseLeftButtonDown(MouseButtonEventArgs e, AbstractDrawCanvas canvas)
+        private readonly ILiveShotService _liveShotService;
+
+        public TextTool(ILiveShotService liveShotService)
         {
-            if (e.ButtonState != MouseButtonState.Pressed) return;
+            _liveShotService = liveShotService;
+        }
+
+        public override CanvasTool Tool => CanvasTool.Text;
+
+        public override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
+        {
+            if (e.ButtonState != MouseButtonState.Pressed || _liveShotService.DrawCanvas is not { } canvas) return;
 
             var point = e.GetPosition(canvas);
 
@@ -38,10 +45,6 @@ namespace LiveShot.API.Drawing.Tools
             _text.KeyDown += TextOnKeyDown;
             _text.LostFocus += TextOnLostFocus;
         }
-
-        public override void OnMouseLeftButtonUp(MouseButtonEventArgs e, AbstractDrawCanvas canvas) { }
-
-        public override void OnMouseMove(MouseEventArgs e, AbstractDrawCanvas canvas) { }
 
         public override void UpdateThickness(double thickness)
         {

@@ -20,17 +20,26 @@ namespace LiveShot.UI.Views
     {
         private readonly IEventPipeline _events;
         private readonly IServiceProvider _services;
+        private readonly ILiveShotService _liveShotService;
 
         private ExportWindowView? _exportWindow;
         private ActionButton? _activeTool;
         private Bitmap? _screenShot;
 
-        public CaptureScreenView(IEventPipeline events, IServiceProvider services, IEnumerable<IDrawingTool> tools)
+        public CaptureScreenView(
+            IEventPipeline events,
+            IServiceProvider services,
+            IEnumerable<IDrawingTool> tools,
+            ILiveShotService liveShotService
+        )
         {
             InitializeComponent();
 
             _events = events;
             _services = services;
+            _liveShotService = liveShotService;
+
+            _liveShotService.DrawCanvas = DrawingCanvas;
 
             Top = SystemParameters.VirtualScreenTop;
             Left = SystemParameters.VirtualScreenLeft;
@@ -90,7 +99,7 @@ namespace LiveShot.UI.Views
                     button.IsActive = !button.IsActive;
 
                     DrawingCanvas.Tool = button.IsActive ? button.ActiveTool : CanvasTool.Default;
-                    DrawingCanvas.ActiveActionButton = button;
+                    _liveShotService.ActiveActionButton = button;
 
                     _activeTool = button;
 
@@ -145,7 +154,7 @@ namespace LiveShot.UI.Views
             _screenShot = bitmap;
 
             SelectCanvas.Background = new ImageBrush(bitmapSource);
-            DrawingCanvas.ScreenShot = bitmap;
+            _liveShotService.ScreenShot = bitmap;
         }
 
         protected override void OnKeyDown(KeyEventArgs e)

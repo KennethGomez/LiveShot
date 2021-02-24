@@ -31,8 +31,6 @@ namespace LiveShot.UI.Controls.Canvas
 
         private ICollection<IDrawingTool>? _drawingTools;
         private IEventPipeline? _events;
-        private IActionButton? _activeActionButton;
-        private byte[]? _screenShotBytes;
 
         public override Cursor DrawingCursor => Tool switch
         {
@@ -42,17 +40,6 @@ namespace LiveShot.UI.Controls.Canvas
         };
 
         public override CanvasTool Tool { get; set; } = CanvasTool.Default;
-        public override System.Drawing.Bitmap? ScreenShot { get; set; }
-
-        public override byte[]? ScreenShotBytes
-        {
-            get
-            {
-                if (ScreenShot is not { } screenShot) return null;
-
-                return _screenShotBytes ??= ImageUtils.GetBytes(screenShot);
-            }
-        }
 
         public override Brush DrawingColor
         {
@@ -62,16 +49,6 @@ namespace LiveShot.UI.Controls.Canvas
                 SetValue(DrawingColorProperty, value);
 
                 _cursors = GetCursors();
-            }
-        }
-
-        public override IActionButton? ActiveActionButton
-        {
-            get => _activeActionButton;
-            set
-            {
-                _activeActionButton = value;
-                _activeActionButton?.UpdateIconFill(DrawingColor);
             }
         }
 
@@ -156,7 +133,7 @@ namespace LiveShot.UI.Controls.Canvas
             return _drawingTools?.FirstOrDefault(t => t.Tool == (tool ?? Tool));
         }
 
-        public override void Undo()
+        public void Undo()
         {
             if (_history.Count == 0) return;
 
@@ -170,23 +147,16 @@ namespace LiveShot.UI.Controls.Canvas
             _history.Remove(historyIndex);
         }
 
-        public override void UpdateDrawingColor(Brush brush)
-        {
-            DrawingColor = brush;
-
-            ActiveActionButton?.UpdateIconFill(brush);
-        }
-
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
             _history[_history.Count] = (Children.Count, new List<UIElement>());
 
-            GetCanvasTool()?.OnMouseLeftButtonDown(e, this);
+            GetCanvasTool()?.OnMouseLeftButtonDown(e);
         }
 
         protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
         {
-            GetCanvasTool()?.OnMouseLeftButtonUp(e, this);
+            GetCanvasTool()?.OnMouseLeftButtonUp(e);
 
             (int startIndex, var uiElements) = _history.LastOrDefault().Value;
 
@@ -196,7 +166,7 @@ namespace LiveShot.UI.Controls.Canvas
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
-            GetCanvasTool()?.OnMouseMove(e, this);
+            GetCanvasTool()?.OnMouseMove(e);
         }
 
         private void OnKeyDown(Event e)

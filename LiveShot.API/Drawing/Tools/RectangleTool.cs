@@ -11,11 +11,18 @@ namespace LiveShot.API.Drawing.Tools
     {
         private Rectangle? _rectangle;
 
+        private readonly ILiveShotService _liveShotService;
+
+        public RectangleTool(ILiveShotService liveShotService)
+        {
+            _liveShotService = liveShotService;
+        }
+
         public override CanvasTool Tool => CanvasTool.Rectangle;
 
-        public override void OnMouseLeftButtonDown(MouseButtonEventArgs e, AbstractDrawCanvas canvas)
+        public override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
-            if (e.LeftButton != MouseButtonState.Pressed) return;
+            if (e.LeftButton != MouseButtonState.Pressed || _liveShotService.DrawCanvas is not { } canvas) return;
 
             var lastPoint = e.GetPosition(canvas);
 
@@ -38,14 +45,17 @@ namespace LiveShot.API.Drawing.Tools
             System.Windows.Controls.Canvas.SetTop(rectangle, lastPoint.Y);
         }
 
-        public override void OnMouseLeftButtonUp(MouseButtonEventArgs e, AbstractDrawCanvas canvas)
+        public override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
         {
             _rectangle = null;
         }
 
-        public override void OnMouseMove(MouseEventArgs e, AbstractDrawCanvas canvas)
+        public override void OnMouseMove(MouseEventArgs e)
         {
-            if (LastPoint is not { } lastPoint || _rectangle is null) return;
+            if (LastPoint is not { } lastPoint ||
+                _rectangle is null ||
+                _liveShotService.DrawCanvas is not { } canvas
+            ) return;
 
             var point = e.GetPosition(canvas);
 
@@ -53,7 +63,7 @@ namespace LiveShot.API.Drawing.Tools
 
             double w = Math.Abs(lastPoint.X - point.X);
             double h = Math.Abs(lastPoint.Y - point.Y);
-                
+
             _rectangle.Width = w;
             _rectangle.Height = h;
 

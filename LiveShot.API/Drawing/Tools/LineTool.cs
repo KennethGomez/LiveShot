@@ -1,6 +1,5 @@
 ﻿using System.Windows.Input;
 using System.Windows.Shapes;
-using LiveShot.API.Canvas;
 
 namespace LiveShot.API.Drawing.Tools
 {
@@ -8,11 +7,18 @@ namespace LiveShot.API.Drawing.Tools
     {
         private Line? _line;
 
+        private readonly ILiveShotService _liveShotService;
+
+        public LineTool(ILiveShotService liveShotService)
+        {
+            _liveShotService = liveShotService;
+        }
+
         public override CanvasTool Tool => CanvasTool.Line;
 
-        public override void OnMouseLeftButtonDown(MouseButtonEventArgs e, AbstractDrawCanvas canvas)
+        public override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
-            if (e.LeftButton != MouseButtonState.Pressed) return;
+            if (e.LeftButton != MouseButtonState.Pressed || _liveShotService.DrawCanvas is not { } canvas) return;
 
             var point = e.GetPosition(canvas);
 
@@ -31,14 +37,14 @@ namespace LiveShot.API.Drawing.Tools
             _line = line;
         }
 
-        public override void OnMouseLeftButtonUp(MouseButtonEventArgs e, AbstractDrawCanvas canvas)
+        public override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
         {
             _line = null;
         }
 
-        public override void OnMouseMove(MouseEventArgs e, AbstractDrawCanvas canvas)
+        public override void OnMouseMove(MouseEventArgs e)
         {
-            if (_line is null) return;
+            if (_line is null || _liveShotService.DrawCanvas is not { } canvas) return;
 
             var point = e.GetPosition(canvas);
 

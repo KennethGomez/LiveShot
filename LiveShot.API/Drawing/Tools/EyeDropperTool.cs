@@ -7,46 +7,48 @@ namespace LiveShot.API.Drawing.Tools
 {
     public class EyeDropperTool : DrawingTool
     {
-        public override CanvasTool Tool => CanvasTool.EyeDropper;
-
         private readonly Rectangle?[,] _magnifier = new Rectangle[MagnifierSize * 2 + 1, MagnifierSize * 2 + 1];
 
         private const int MagnifierSize = 3;
         private const int ScreenShotStride = 4;
 
-        public override void OnMouseLeftButtonDown(MouseButtonEventArgs e, AbstractDrawCanvas canvas)
+        private readonly ILiveShotService _liveShotService;
+
+        public EyeDropperTool(ILiveShotService liveShotService)
         {
+            _liveShotService = liveShotService;
         }
 
-        public override void OnMouseLeftButtonUp(MouseButtonEventArgs e, AbstractDrawCanvas canvas)
-        {
-        }
+        public override CanvasTool Tool => CanvasTool.EyeDropper;
 
-        public override void OnMouseMove(MouseEventArgs e, AbstractDrawCanvas canvas)
+        public override void OnMouseMove(MouseEventArgs e)
         {
-            if (canvas.ScreenShot is null || canvas.ScreenShotBytes is null) return;
+            if (_liveShotService.ScreenShot is null ||
+                _liveShotService.ScreenShotBytes is null ||
+                _liveShotService.DrawCanvas is not { } canvas
+            ) return;
 
             var point = e.GetPosition(canvas);
 
             var pixelIdx = (int) (
-                (point.X - MagnifierSize) * ScreenShotStride + 
-                (point.Y - MagnifierSize) * canvas.ScreenShot.Width * ScreenShotStride
+                (point.X - MagnifierSize) * ScreenShotStride +
+                (point.Y - MagnifierSize) * _liveShotService.ScreenShot.Width * ScreenShotStride
             );
 
             for (var i = 0; i < _magnifier.GetLength(0); i++)
             {
                 for (var j = 0; j < _magnifier.GetLength(1); j++)
                 {
-                    int rectIdx = pixelIdx + 
-                                  i * ScreenShotStride + 
-                                  j * ScreenShotStride * canvas.ScreenShot.Width;
+                    int rectIdx = pixelIdx +
+                                  i * ScreenShotStride +
+                                  j * ScreenShotStride * _liveShotService.ScreenShot.Width;
 
-                    if (rectIdx + ScreenShotStride > canvas.ScreenShotBytes.Length || rectIdx < 0)
+                    if (rectIdx + ScreenShotStride > _liveShotService.ScreenShotBytes.Length || rectIdx < 0)
                         continue;
 
-                    byte b = canvas.ScreenShotBytes[rectIdx];
-                    byte g = canvas.ScreenShotBytes[rectIdx + 1];
-                    byte r = canvas.ScreenShotBytes[rectIdx + 2];
+                    byte b = _liveShotService.ScreenShotBytes[rectIdx];
+                    byte g = _liveShotService.ScreenShotBytes[rectIdx + 1];
+                    byte r = _liveShotService.ScreenShotBytes[rectIdx + 2];
 
                     if (_magnifier[i, j] is not { } rect)
                     {
@@ -58,7 +60,7 @@ namespace LiveShot.API.Drawing.Tools
 
                         _magnifier[i, j] = rect;
 
-                        rect.MouseUp += (sender, _) => OnRectangleMouseUp(sender, canvas);
+                        rect.MouseUp += OnRectangleMouseUp;
 
                         canvas.Children.Insert(0, rect);
                     }
@@ -91,11 +93,11 @@ namespace LiveShot.API.Drawing.Tools
             }
         }
 
-        private void OnRectangleMouseUp(object sender, AbstractDrawCanvas canvas)
+        private void OnRectangleMouseUp(object sender, MouseButtonEventArgs _)
         {
             var rect = (Rectangle) sender;
 
-            canvas.UpdateDrawingColor(rect.Fill);
+            _liveShotService.UpdateDrawingColor(rect.Fill);
         }
 
         public override void Unselect()

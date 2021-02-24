@@ -13,6 +13,7 @@ namespace LiveShot.API
         {
             services.AddSingleton<IEventPipeline, EventPipeline>();
             services.AddSingleton<IUploadService, ImgurService>();
+            services.AddSingleton<ILiveShotService, LiveShotService>();
 
             var drawingTools = Assembly
                 .GetExecutingAssembly()

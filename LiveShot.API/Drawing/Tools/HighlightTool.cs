@@ -1,22 +1,29 @@
 ﻿using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using LiveShot.API.Canvas;
 
 namespace LiveShot.API.Drawing.Tools
 {
     public class HighlightTool : DrawingTool
     {
-        public static readonly Brush Color = Brushes.Yellow;
-        public const double Opacity = 0.5;
-        
-        public override CanvasTool Tool => CanvasTool.Highlight;
-
         private Polyline? _polyline;
 
-        public override void OnMouseLeftButtonDown(MouseButtonEventArgs e, AbstractDrawCanvas canvas)
+        private readonly ILiveShotService _liveShotService;
+
+        public HighlightTool(ILiveShotService liveShotService)
         {
-            if (e.ButtonState != MouseButtonState.Pressed) return;
+            _liveShotService = liveShotService;
+        }
+
+        public static readonly Brush Color = Brushes.Yellow;
+        public const double Opacity = 0.5;
+
+        public override CanvasTool Tool => CanvasTool.Highlight;
+
+        public override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+            if (e.ButtonState != MouseButtonState.Pressed || _liveShotService.DrawCanvas is not { } canvas)
+                return;
 
             var point = e.GetPosition(canvas);
 
@@ -37,19 +44,20 @@ namespace LiveShot.API.Drawing.Tools
             canvas.Children.Add(_polyline);
         }
 
-        public override void OnMouseLeftButtonUp(MouseButtonEventArgs e, AbstractDrawCanvas canvas)
+        public override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
         {
             _polyline = null;
         }
 
-        public override void OnMouseMove(MouseEventArgs e, AbstractDrawCanvas canvas)
+        public override void OnMouseMove(MouseEventArgs e)
         {
-            if (_polyline is null) return;
+            if (_polyline is null || _liveShotService.DrawCanvas is not { } canvas) 
+                return;
 
             var point = e.GetPosition(canvas);
 
             LastPoint = point;
-            
+
             _polyline.Points.Add(point);
         }
 
