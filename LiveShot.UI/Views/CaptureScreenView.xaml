@@ -53,8 +53,9 @@
                           Fill="{Binding ElementName=LineBtn, Path=IconFill}" />
                 </button:ActionButton>
                 <button:ActionButton ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Arrow}"
-                                     Style="{StaticResource CanvasButton}">
-                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Arrow}" />
+                                     Style="{StaticResource CanvasButton}" Name="ArrowBtn" ActiveTool="Arrow">
+                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Arrow}" 
+                          Fill="{Binding ElementName=ArrowBtn, Path=IconFill}" />
                 </button:ActionButton>
                 <button:ActionButton ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Rectangle}"
                                      Style="{StaticResource CanvasButton}" Name="RectangleBtn" ActiveTool="Rectangle">

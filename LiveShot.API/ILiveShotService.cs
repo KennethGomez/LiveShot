@@ -7,7 +7,7 @@ namespace LiveShot.API
 {
     public interface ILiveShotService
     {
-        AbstractDrawCanvas DrawCanvas { get; set; }
+        AbstractDrawCanvas? DrawCanvas { get; set; }
         Bitmap? ScreenShot { get; set; }
         byte[]? ScreenShotBytes { get; }
         IActionButton? ActiveActionButton { get; set; }

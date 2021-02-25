@@ -2,7 +2,6 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using LiveShot.API.Canvas;
 
 namespace LiveShot.API.Drawing.Tools
 {

@@ -8,6 +8,7 @@
         Line,
         Text,
         Highlight,
-        EyeDropper
+        EyeDropper,
+        Arrow
     }
 }
