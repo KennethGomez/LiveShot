@@ -20,7 +20,7 @@ namespace LiveShot.API.Drawing.Tools
 
         public override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
         {
-            if (e.ButtonState != MouseButtonState.Pressed || _liveShotService.DrawCanvas is not { } canvas) return;
+            if (_liveShotService.DrawCanvas is not { } canvas) return;
 
             var point = e.GetPosition(canvas);
 
