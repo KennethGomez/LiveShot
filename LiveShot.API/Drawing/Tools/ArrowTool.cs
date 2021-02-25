@@ -19,23 +19,29 @@ namespace LiveShot.API.Drawing.Tools
 
         public override CanvasTool Tool => CanvasTool.Arrow;
 
-        public override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        public override UIElement? OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
-            if (e.ButtonState != MouseButtonState.Pressed || _liveShotService.DrawCanvas is null) return;
+            if (e.ButtonState != MouseButtonState.Pressed || _liveShotService.DrawCanvas is null) return null;
 
             LastPoint = e.GetPosition(_liveShotService.DrawCanvas);
+
+            return null;
         }
 
-        public override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
+        public override UIElement? OnMouseLeftButtonUp(MouseButtonEventArgs e)
         {
             LastPoint = null;
 
+            var tmp = _arrow;
+
             _arrow = null;
+
+            return tmp;
         }
 
-        public override void OnMouseMove(MouseEventArgs e)
+        public override UIElement? OnMouseMove(MouseEventArgs e)
         {
-            if (LastPoint is not { } lastPoint || _liveShotService.DrawCanvas is null) return;
+            if (LastPoint is not { } lastPoint || _liveShotService.DrawCanvas is null) return null;
 
             var point = e.GetPosition(_liveShotService.DrawCanvas);
 
@@ -51,6 +57,8 @@ namespace LiveShot.API.Drawing.Tools
             {
                 _arrow.Data = arrow.Data;
             }
+
+            return null;
         }
 
         private Path GetArrow(Point p1, Point p2)
@@ -70,48 +78,48 @@ namespace LiveShot.API.Drawing.Tools
 
             const double xDisplacement = 30;
             const double yDisplacement = 40;
-            
+
             double xOffset = xDisplacement * d / 500 + xDisplacement / 4;
             double yOffset = yDisplacement * d / 500 + yDisplacement / 4;
 
             xOffset = xOffset > xDisplacement * 2 ? xDisplacement * 2 : xOffset;
             yOffset = yOffset > yDisplacement * 2 ? yDisplacement * 2 : yOffset;
-            
+
             var leftPoint = new Point(p.X + xOffset, p.Y + yOffset);
             var rightPoint = new Point(p.X - xOffset, p.Y + yOffset);
-            
+
             pathFigure.Segments.Add(new LineSegment
             {
                 Point = leftPoint
             });
 
-            pathFigure.Segments.Add(new LineSegment 
+            pathFigure.Segments.Add(new LineSegment
             {
                 Point = rightPoint,
                 IsStroked = false
             });
 
-            pathFigure.Segments.Add(new LineSegment 
+            pathFigure.Segments.Add(new LineSegment
             {
                 Point = p
             });
-            
+
             pathGeometry.Figures.Add(pathFigure);
-            
+
             RotateTransform transform = new()
             {
-                Angle = theta + 90, 
-                CenterX = p.X, 
+                Angle = theta + 90,
+                CenterX = p.X,
                 CenterY = p.Y
             };
-            
+
             pathGeometry.Transform = transform;
-            
+
             lineGroup.Children.Add(pathGeometry);
 
             LineGeometry connectorGeometry = new()
             {
-                StartPoint = p1, 
+                StartPoint = p1,
                 EndPoint = p2
             };
             lineGroup.Children.Add(connectorGeometry);
@@ -121,7 +129,7 @@ namespace LiveShot.API.Drawing.Tools
 
             Path path = new()
             {
-                Data = lineGroup, 
+                Data = lineGroup,
                 StrokeThickness = strokeThickness,
                 Stroke = drawingColor,
                 StrokeEndLineCap = PenLineCap.Round,

@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
@@ -17,9 +18,9 @@ namespace LiveShot.API.Drawing.Tools
 
         public override CanvasTool Tool => CanvasTool.Pencil;
 
-        public override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        public override UIElement? OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
-            if (e.LeftButton != MouseButtonState.Pressed || _liveShotService.DrawCanvas is not { } canvas) return;
+            if (e.LeftButton != MouseButtonState.Pressed || _liveShotService.DrawCanvas is not { } canvas) return null;
 
             var point = e.GetPosition(canvas);
 
@@ -37,26 +38,35 @@ namespace LiveShot.API.Drawing.Tools
             };
 
             canvas.Children.Add(_polyline);
+
+            return null;
         }
 
-        public override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
+        public override UIElement? OnMouseLeftButtonUp(MouseButtonEventArgs e)
         {
             LastPoint = null;
+
+            var tmp = _polyline;
+
             _polyline = null;
+
+            return tmp;
         }
 
-        public override void OnMouseMove(MouseEventArgs e)
+        public override UIElement? OnMouseMove(MouseEventArgs e)
         {
             if (_polyline is null ||
                 e.LeftButton != MouseButtonState.Pressed ||
                 _liveShotService.DrawCanvas is not { } canvas
-            ) return;
+            ) return null;
 
             var point = e.GetPosition(canvas);
 
             LastPoint = point;
 
             _polyline.Points.Add(point);
+
+            return null;
         }
 
         public override void UpdateThickness(double thickness)

@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Windows;
+using System.Windows.Input;
 
 namespace LiveShot.API.Drawing
 {
@@ -6,9 +7,9 @@ namespace LiveShot.API.Drawing
     {
         CanvasTool Tool { get; }
 
-        void OnMouseLeftButtonDown(MouseButtonEventArgs e);
-        void OnMouseLeftButtonUp(MouseButtonEventArgs e);
-        void OnMouseMove(MouseEventArgs e);
+        UIElement? OnMouseLeftButtonDown(MouseButtonEventArgs e);
+        UIElement? OnMouseLeftButtonUp(MouseButtonEventArgs e);
+        UIElement? OnMouseMove(MouseEventArgs e);
         void UpdateThickness(double thickness);
         void Unselect();
     }

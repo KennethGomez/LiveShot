@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Windows;
+using System.Windows.Input;
 using System.Windows.Shapes;
 
 namespace LiveShot.API.Drawing.Tools
@@ -16,9 +17,9 @@ namespace LiveShot.API.Drawing.Tools
 
         public override CanvasTool Tool => CanvasTool.Line;
 
-        public override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        public override UIElement? OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
-            if (e.LeftButton != MouseButtonState.Pressed || _liveShotService.DrawCanvas is not { } canvas) return;
+            if (e.LeftButton != MouseButtonState.Pressed || _liveShotService.DrawCanvas is not { } canvas) return null;
 
             var point = e.GetPosition(canvas);
 
@@ -35,26 +36,34 @@ namespace LiveShot.API.Drawing.Tools
             canvas.Children.Add(line);
 
             _line = line;
+
+            return null;
         }
 
-        public override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
+        public override UIElement? OnMouseLeftButtonUp(MouseButtonEventArgs e)
         {
+            var tmp = _line;
+
             _line = null;
+
+            return tmp;
         }
 
-        public override void OnMouseMove(MouseEventArgs e)
+        public override UIElement? OnMouseMove(MouseEventArgs e)
         {
-            if (_line is null || _liveShotService.DrawCanvas is not { } canvas) return;
+            if (_line is null || _liveShotService.DrawCanvas is not { } canvas) return null;
 
             var point = e.GetPosition(canvas);
 
             _line.X2 = point.X;
             _line.Y2 = point.Y;
+
+            return null;
         }
 
         public override void UpdateThickness(double thickness)
         {
-            if (_line is not null) 
+            if (_line is not null)
                 _line.StrokeThickness = thickness;
         }
     }

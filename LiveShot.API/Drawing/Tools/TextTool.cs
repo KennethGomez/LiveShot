@@ -18,14 +18,14 @@ namespace LiveShot.API.Drawing.Tools
 
         public override CanvasTool Tool => CanvasTool.Text;
 
-        public override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
+        public override UIElement? OnMouseLeftButtonUp(MouseButtonEventArgs e)
         {
-            if (_liveShotService.DrawCanvas is not { } canvas) return;
+            if (_liveShotService.DrawCanvas is not { } canvas) return null;
 
             var point = e.GetPosition(canvas);
 
             LastPoint = point;
-            
+
             _text = new TextBox
             {
                 FontSize = GetFontSize(canvas.DrawingStrokeThickness),
@@ -34,7 +34,7 @@ namespace LiveShot.API.Drawing.Tools
                 Background = Brushes.Transparent,
                 BorderThickness = new Thickness(0)
             };
-            
+
             System.Windows.Controls.Canvas.SetLeft(_text, point.X);
             System.Windows.Controls.Canvas.SetTop(_text, point.Y);
 
@@ -43,6 +43,8 @@ namespace LiveShot.API.Drawing.Tools
             _text.Focus();
             _text.KeyDown += TextOnKeyDown;
             _text.LostFocus += TextOnLostFocus;
+
+            return _text;
         }
 
         public override void UpdateThickness(double thickness)

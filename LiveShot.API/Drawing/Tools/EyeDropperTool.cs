@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using LiveShot.API.Canvas;
@@ -21,12 +22,12 @@ namespace LiveShot.API.Drawing.Tools
 
         public override CanvasTool Tool => CanvasTool.EyeDropper;
 
-        public override void OnMouseMove(MouseEventArgs e)
+        public override UIElement? OnMouseMove(MouseEventArgs e)
         {
             if (_liveShotService.ScreenShot is null ||
                 _liveShotService.ScreenShotBytes is null ||
                 _liveShotService.DrawCanvas is not { } canvas
-            ) return;
+            ) return null;
 
             var point = e.GetPosition(canvas);
 
@@ -62,7 +63,7 @@ namespace LiveShot.API.Drawing.Tools
 
                         rect.MouseUp += OnRectangleMouseUp;
 
-                        canvas.Children.Insert(0, rect);
+                        canvas.Children.Add(rect);
                     }
 
                     rect.Fill = new SolidColorBrush(Color.FromRgb(r, g, b));
@@ -75,6 +76,8 @@ namespace LiveShot.API.Drawing.Tools
                     System.Windows.Controls.Canvas.SetTop(rect, top);
                 }
             }
+
+            return null;
         }
 
         private void RemoveMagnifier()

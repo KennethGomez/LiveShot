@@ -22,7 +22,7 @@ namespace LiveShot.UI.Controls.Canvas
             "DrawingColor", typeof(Brush), typeof(DrawCanvas), new PropertyMetadata(Brushes.Red)
         );
 
-        private readonly IDictionary<int, (int, ICollection<UIElement>)> _history;
+        private readonly IList<UIElement> _history;
         private readonly Cursor[] _highlightCursors;
         private readonly Cursor _eyeDropperCursor = GetCursor<Rectangle>(Brushes.White, 1, false, 1, new Point(1, 1));
 
@@ -71,7 +71,7 @@ namespace LiveShot.UI.Controls.Canvas
 
         public DrawCanvas()
         {
-            _history = new Dictionary<int, (int, ICollection<UIElement>)>();
+            _history = new List<UIElement>();
             _cursors = GetCursors();
             _highlightCursors = GetHighlightCursors();
         }
@@ -135,38 +135,28 @@ namespace LiveShot.UI.Controls.Canvas
 
         public void Undo()
         {
-            if (_history.Count == 0) return;
+            if (_history.LastOrDefault() is not { } last) return;
 
-            (int historyIndex, (_, var uiElements)) = _history.LastOrDefault();
-
-            foreach (var element in uiElements)
-            {
-                Children.Remove(element);
-            }
-
-            _history.Remove(historyIndex);
+            Children.Remove(last);
+            _history.Remove(last);
         }
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
-            _history[_history.Count] = (Children.Count, new List<UIElement>());
-
-            GetCanvasTool()?.OnMouseLeftButtonDown(e);
+            if (GetCanvasTool()?.OnMouseLeftButtonDown(e) is { } element)
+                _history.Add(element);
         }
 
         protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
         {
-            GetCanvasTool()?.OnMouseLeftButtonUp(e);
-
-            (int startIndex, var uiElements) = _history.LastOrDefault().Value;
-
-            for (int i = startIndex; i < Children.Count; i++)
-                uiElements.Add(Children[i]);
+            if (GetCanvasTool()?.OnMouseLeftButtonUp(e) is { } element)
+                _history.Add(element);
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
-            GetCanvasTool()?.OnMouseMove(e);
+            if (GetCanvasTool()?.OnMouseMove(e) is { } element)
+                _history.Add(element);
         }
 
         private void OnKeyDown(Event e)

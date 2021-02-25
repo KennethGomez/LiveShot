@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
@@ -20,9 +21,9 @@ namespace LiveShot.API.Drawing.Tools
 
         public override CanvasTool Tool => CanvasTool.Rectangle;
 
-        public override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        public override UIElement? OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
-            if (e.LeftButton != MouseButtonState.Pressed || _liveShotService.DrawCanvas is not { } canvas) return;
+            if (e.LeftButton != MouseButtonState.Pressed || _liveShotService.DrawCanvas is not { } canvas) return null;
 
             var lastPoint = e.GetPosition(canvas);
 
@@ -43,19 +44,25 @@ namespace LiveShot.API.Drawing.Tools
 
             System.Windows.Controls.Canvas.SetLeft(rectangle, lastPoint.X);
             System.Windows.Controls.Canvas.SetTop(rectangle, lastPoint.Y);
+            
+            return null;
         }
 
-        public override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
+        public override UIElement? OnMouseLeftButtonUp(MouseButtonEventArgs e)
         {
+            var tmp = _rectangle;
+
             _rectangle = null;
+
+            return tmp;
         }
 
-        public override void OnMouseMove(MouseEventArgs e)
+        public override UIElement? OnMouseMove(MouseEventArgs e)
         {
             if (LastPoint is not { } lastPoint ||
                 _rectangle is null ||
                 _liveShotService.DrawCanvas is not { } canvas
-            ) return;
+            ) return null;
 
             var point = e.GetPosition(canvas);
 
@@ -69,6 +76,8 @@ namespace LiveShot.API.Drawing.Tools
 
             System.Windows.Controls.Canvas.SetLeft(_rectangle, left);
             System.Windows.Controls.Canvas.SetTop(_rectangle, top);
+
+            return null;
         }
 
         public override void UpdateThickness(double thickness)
