@@ -63,11 +63,11 @@ namespace LiveShot.UI.Views
             ColorPickerBtn.Click += ColorPickerBtnOnClick;
             UndoBtn.Click += UndoBtnOnClick;
 
-            UploadBtn.Click += UploadBtnOnClick;
-            GoogleBtn.Click += GoogleBtnOnClick;
-            CopyBtn.Click += CopyBtnOnClick;
-            SaveBtn.Click += SaveBtnOnClick;
-            CloseBtn.Click += CloseBtnOnClick;
+            UploadBtn.Click += (_, _) => OpenExportWindow();
+            GoogleBtn.Click += (_, _) => OpenExportWindow(true);
+            CopyBtn.Click += (_, _) => CopyImage();
+            SaveBtn.Click += (_, _) => SaveImage();
+            CloseBtn.Click += (_, _) => Close();
 
             CaptureScreen();
         }
@@ -111,31 +111,6 @@ namespace LiveShot.UI.Views
 
                 DrawingCanvas.UnselectTool(button.ActiveTool);
             }
-        }
-
-        private void GoogleBtnOnClick(object sender, RoutedEventArgs e)
-        {
-            OpenExportWindow(true);
-        }
-
-        private void CloseBtnOnClick(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
-
-        private void SaveBtnOnClick(object sender, RoutedEventArgs e)
-        {
-            SaveImage();
-        }
-
-        private void CopyBtnOnClick(object sender, RoutedEventArgs e)
-        {
-            CopyImage();
-        }
-
-        private void UploadBtnOnClick(object sender, RoutedEventArgs e)
-        {
-            OpenExportWindow();
         }
 
         private void Undo()
