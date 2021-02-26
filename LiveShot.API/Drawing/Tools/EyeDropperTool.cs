@@ -69,8 +69,8 @@ namespace LiveShot.API.Drawing.Tools
                     rect.Fill = new SolidColorBrush(Color.FromRgb(r, g, b));
 
 
-                    double left = point.X + (i - (MagnifierSize + 1)) * MagnifierSize * 2;
-                    double top = point.Y + (j - (MagnifierSize + 1)) * MagnifierSize * 2;
+                    double left = point.X + (i - MagnifierSize) * MagnifierSize * 2;
+                    double top = point.Y + (j - MagnifierSize) * MagnifierSize * 2;
 
                     System.Windows.Controls.Canvas.SetLeft(rect, left);
                     System.Windows.Controls.Canvas.SetTop(rect, top);
