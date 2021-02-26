@@ -6,6 +6,7 @@
         <UseWPF>true</UseWPF>
         <Nullable>enable</Nullable>
         <ApplicationIcon>icon.ico</ApplicationIcon>
+        <AssemblyName>LiveShot</AssemblyName>
     </PropertyGroup>
 
     <ItemGroup>
