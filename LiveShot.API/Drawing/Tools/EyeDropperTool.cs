@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
@@ -8,9 +10,12 @@ namespace LiveShot.API.Drawing.Tools
 {
     public class EyeDropperTool : DrawingTool
     {
-        private readonly Rectangle?[,] _magnifier = new Rectangle[MagnifierSize * 2 + 1, MagnifierSize * 2 + 1];
+        private readonly Rectangle[,] _magnifier;
+        private readonly Grid _magnifierGrid;
 
         private const int MagnifierSize = 3;
+        private const int MagnifierRectangleSize = MagnifierSize * 2;
+        private const int MagnifierRealSize = MagnifierSize * 2 + 1;
         private const int ScreenShotStride = 4;
 
         private readonly ILiveShotService _liveShotService;
@@ -18,6 +23,66 @@ namespace LiveShot.API.Drawing.Tools
         public EyeDropperTool(ILiveShotService liveShotService)
         {
             _liveShotService = liveShotService;
+
+            _magnifier = GetMagnifier();
+            _magnifierGrid = GetMagnifierGrid();
+
+            InitMagnifier();
+        }
+
+        private void InitMagnifier()
+        {
+            for (var i = 0; i < _magnifier.GetLength(0); i++)
+            {
+                for (var j = 0; j < _magnifier.GetLength(1); j++)
+                {
+                    _magnifier[i, j].MouseUp += OnRectangleMouseUp;
+
+                    _magnifierGrid.Children.Add(_magnifier[i, j]);
+
+                    Grid.SetRow(_magnifier[i, j], j);
+                    Grid.SetColumn(_magnifier[i, j], i);
+                }
+            }
+        }
+
+        private Rectangle[,] GetMagnifier()
+        {
+            var magnifier = new Rectangle[MagnifierRealSize, MagnifierRealSize];
+
+            for (var i = 0; i < magnifier.GetLength(0); i++)
+            {
+                for (var j = 0; j < magnifier.GetLength(1); j++)
+                {
+                    magnifier[i, j] = new Rectangle
+                    {
+                        Width = MagnifierSize * 2,
+                        Height = MagnifierSize * 2
+                    };
+                }
+            }
+
+            return magnifier;
+        }
+
+        private Grid GetMagnifierGrid()
+        {
+            Grid grid = new();
+
+            for (var i = 0; i < MagnifierRealSize; i++)
+            {
+                grid.RowDefinitions.Add(new RowDefinition
+                {
+                    Height = new GridLength(MagnifierRectangleSize)
+                });
+
+                grid.ColumnDefinitions.Add(new ColumnDefinition
+                {
+                    Width = new GridLength(MagnifierRectangleSize)
+                });
+            }
+
+            return grid;
         }
 
         public override CanvasTool Tool => CanvasTool.EyeDropper;
@@ -28,6 +93,9 @@ namespace LiveShot.API.Drawing.Tools
                 _liveShotService.ScreenShotBytes is null ||
                 _liveShotService.DrawCanvas is not { } canvas
             ) return null;
+
+            if (!canvas.Children.Contains(_magnifierGrid))
+                canvas.Children.Add(_magnifierGrid);
 
             var point = e.GetPosition(canvas);
 
@@ -51,49 +119,25 @@ namespace LiveShot.API.Drawing.Tools
                     byte g = _liveShotService.ScreenShotBytes[rectIdx + 1];
                     byte r = _liveShotService.ScreenShotBytes[rectIdx + 2];
 
-                    if (_magnifier[i, j] is not { } rect)
-                    {
-                        rect = new Rectangle
-                        {
-                            Width = MagnifierSize * 2,
-                            Height = MagnifierSize * 2
-                        };
-
-                        _magnifier[i, j] = rect;
-
-                        rect.MouseUp += OnRectangleMouseUp;
-
-                        canvas.Children.Add(rect);
-                    }
-
-                    rect.Fill = new SolidColorBrush(Color.FromRgb(r, g, b));
-
-
-                    double left = point.X + (i - MagnifierSize) * MagnifierSize * 2;
-                    double top = point.Y + (j - MagnifierSize) * MagnifierSize * 2;
-
-                    System.Windows.Controls.Canvas.SetLeft(rect, left);
-                    System.Windows.Controls.Canvas.SetTop(rect, top);
+                    _magnifier[i, j].Fill = new SolidColorBrush(Color.FromRgb(r, g, b));
                 }
             }
+
+            double left = Math.Floor(point.X - _magnifierGrid.ActualWidth / 2);
+            double top = Math.Floor(point.Y - _magnifierGrid.ActualHeight / 2);
+
+            System.Windows.Controls.Canvas.SetLeft(_magnifierGrid, left);
+            System.Windows.Controls.Canvas.SetTop(_magnifierGrid, top);
 
             return null;
         }
 
         private void RemoveMagnifier()
         {
-            for (var i = 0; i < _magnifier.GetLength(0); i++)
-            {
-                for (var j = 0; j < _magnifier.GetLength(1); j++)
-                {
-                    if (_magnifier[i, j] is not {Parent: AbstractDrawCanvas canvas})
-                        continue;
+            if (_magnifierGrid is not {Parent: AbstractDrawCanvas canvas})
+                return;
 
-                    canvas.Children.Remove(_magnifier[i, j]);
-
-                    _magnifier[i, j] = null;
-                }
-            }
+            canvas.Children.Remove(_magnifierGrid);
         }
 
         private void OnRectangleMouseUp(object sender, MouseButtonEventArgs _)

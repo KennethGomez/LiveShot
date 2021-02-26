@@ -24,7 +24,7 @@ namespace LiveShot.UI.Controls.Canvas
 
         private readonly IList<UIElement> _history;
         private readonly Cursor[] _highlightCursors;
-        private readonly Cursor _eyeDropperCursor = GetCursor<Rectangle>(Brushes.White, 1, false, 1, new Point(0, 0));
+        private readonly Cursor _eyeDropperCursor = GetCursor<Rectangle>(Brushes.White, 1, false, 1, new Point(0.5, 0.5));
 
         private Cursor[] _cursors;
         private int _drawingStrokeThickness = 1;
