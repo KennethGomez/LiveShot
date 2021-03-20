@@ -12,6 +12,7 @@ namespace LiveShot.API
         private byte[]? _screenShotBytes;
         private IActionButton? _activeActionButton;
 
+        public System.Windows.Controls.Canvas? SelectCanvas { get; set; }
         public AbstractDrawCanvas? DrawCanvas { get; set; }
 
         public Bitmap? ScreenShot { get; set; }

@@ -39,6 +39,7 @@ namespace LiveShot.UI.Views
             _services = services;
             _liveShotService = liveShotService;
 
+            _liveShotService.SelectCanvas = SelectCanvas;
             _liveShotService.DrawCanvas = DrawingCanvas;
 
             Top = SystemParameters.VirtualScreenTop;
@@ -176,7 +177,7 @@ namespace LiveShot.UI.Views
 
             if (_screenShot is null || selection is null || selection.Invalid) return;
 
-            bool saved = FileUtils.SaveImage(selection, _screenShot, ImageUtils.GetBitmapFromCanvas(SelectCanvas));
+            bool saved = FileUtils.SaveImage(selection, _screenShot, ImageUtils.GetBitmapFromCanvas(DrawingCanvas));
 
             if (saved)
                 Close();
@@ -190,7 +191,7 @@ namespace LiveShot.UI.Views
 
             if (selection is null || selection.Invalid) return;
 
-            var bitmap = ImageUtils.GetBitmap(selection, _screenShot, ImageUtils.GetBitmapFromCanvas(SelectCanvas));
+            var bitmap = ImageUtils.GetBitmap(selection, _screenShot, ImageUtils.GetBitmapFromCanvas(DrawingCanvas));
 
             _exportWindow = _services.GetService<ExportWindowView>();
 

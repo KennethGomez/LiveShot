@@ -92,13 +92,14 @@ namespace LiveShot.API.Drawing.Tools
         {
             if (_liveShotService.ScreenShot is null ||
                 _liveShotService.ScreenShotBytes is null ||
-                _liveShotService.DrawCanvas is not { } canvas
+                _liveShotService.SelectCanvas is not {} selectCanvas ||
+                _liveShotService.DrawCanvas is not { } drawCanvas
             ) return null;
 
-            if (!canvas.Children.Contains(_magnifierGrid))
-                canvas.Children.Add(_magnifierGrid);
+            if (!selectCanvas.Children.Contains(_magnifierGrid))
+                selectCanvas.Children.Add(_magnifierGrid);
 
-            var point = e.GetPosition(canvas);
+            var point = e.GetPosition(drawCanvas);
 
             var pixelIdx = (int) (
                 (point.X - MagnifierSize) * ScreenShotStride +
@@ -135,7 +136,7 @@ namespace LiveShot.API.Drawing.Tools
 
         private void RemoveMagnifier()
         {
-            if (_magnifierGrid is not {Parent: AbstractDrawCanvas canvas})
+            if (_magnifierGrid is not {Parent: System.Windows.Controls.Canvas canvas})
                 return;
 
             canvas.Children.Remove(_magnifierGrid);

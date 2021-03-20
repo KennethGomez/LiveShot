@@ -7,6 +7,7 @@ namespace LiveShot.API
 {
     public interface ILiveShotService
     {
+        System.Windows.Controls.Canvas? SelectCanvas { get; set; }
         AbstractDrawCanvas? DrawCanvas { get; set; }
         Bitmap? ScreenShot { get; set; }
         byte[]? ScreenShotBytes { get; }
