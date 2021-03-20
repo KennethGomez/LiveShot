@@ -74,19 +74,11 @@ namespace LiveShot.API.Drawing.Tools
 
             pathFigure.StartPoint = p;
 
-            double d = Math.Sqrt(Math.Pow(p2.X - p1.X, 2) + Math.Pow(p2.Y - p1.Y, 2));
+            const double xDisplacement = 8;
+            const double yDisplacement = 30;
 
-            const double xDisplacement = 30;
-            const double yDisplacement = 40;
-
-            double xOffset = xDisplacement * d / 500 + xDisplacement / 4;
-            double yOffset = yDisplacement * d / 500 + yDisplacement / 4;
-
-            xOffset = xOffset > xDisplacement * 2 ? xDisplacement * 2 : xOffset;
-            yOffset = yOffset > yDisplacement * 2 ? yDisplacement * 2 : yOffset;
-
-            var leftPoint = new Point(p.X + xOffset, p.Y + yOffset);
-            var rightPoint = new Point(p.X - xOffset, p.Y + yOffset);
+            var leftPoint = new Point(p.X + xDisplacement, p.Y + yDisplacement);
+            var rightPoint = new Point(p.X - xDisplacement, p.Y + yDisplacement);
 
             pathFigure.Segments.Add(new LineSegment
             {
@@ -95,8 +87,7 @@ namespace LiveShot.API.Drawing.Tools
 
             pathFigure.Segments.Add(new LineSegment
             {
-                Point = rightPoint,
-                IsStroked = false
+                Point = rightPoint
             });
 
             pathFigure.Segments.Add(new LineSegment
@@ -130,8 +121,9 @@ namespace LiveShot.API.Drawing.Tools
             Path path = new()
             {
                 Data = lineGroup,
-                StrokeThickness = strokeThickness,
+                StrokeThickness = GetStrokeThickness(strokeThickness),
                 Stroke = drawingColor,
+                Fill = drawingColor,
                 StrokeEndLineCap = PenLineCap.Round,
                 StrokeDashCap = PenLineCap.Round
             };
@@ -142,7 +134,9 @@ namespace LiveShot.API.Drawing.Tools
         public override void UpdateThickness(double thickness)
         {
             if (_arrow is not null && _liveShotService.DrawCanvas is not null)
-                _arrow.StrokeThickness = _liveShotService.DrawCanvas.DrawingStrokeThickness;
+                _arrow.StrokeThickness = GetStrokeThickness(_liveShotService.DrawCanvas.DrawingStrokeThickness);
         }
+
+        private static double GetStrokeThickness(double thickness) => thickness + 3;
     }
 }
