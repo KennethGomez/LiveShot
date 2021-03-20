@@ -92,12 +92,11 @@ namespace LiveShot.API.Drawing.Tools
         {
             if (_liveShotService.ScreenShot is null ||
                 _liveShotService.ScreenShotBytes is null ||
-                _liveShotService.SelectCanvas is not {} selectCanvas ||
                 _liveShotService.DrawCanvas is not { } drawCanvas
             ) return null;
 
-            if (!selectCanvas.Children.Contains(_magnifierGrid))
-                selectCanvas.Children.Add(_magnifierGrid);
+            if (!drawCanvas.Children.Contains(_magnifierGrid))
+                drawCanvas.Children.Add(_magnifierGrid);
 
             var point = e.GetPosition(drawCanvas);
 

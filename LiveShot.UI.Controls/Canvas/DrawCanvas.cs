@@ -191,9 +191,9 @@ namespace LiveShot.UI.Controls.Canvas
             }
         }
 
-        public void UnselectTool(CanvasTool tool)
+        public void UnselectTool(CanvasTool? tool = null)
         {
-            GetCanvasTool(tool)?.Unselect();
+            GetCanvasTool(tool ?? Tool)?.Unselect();
         }
     }
 }

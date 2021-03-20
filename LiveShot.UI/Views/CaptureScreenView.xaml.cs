@@ -177,6 +177,8 @@ namespace LiveShot.UI.Views
 
             if (_screenShot is null || selection is null || selection.Invalid) return;
 
+            DrawingCanvas.UnselectTool();
+
             bool saved = FileUtils.SaveImage(selection, _screenShot, ImageUtils.GetBitmapFromCanvas(DrawingCanvas));
 
             if (saved)
@@ -190,6 +192,8 @@ namespace LiveShot.UI.Views
             var selection = SelectCanvas.Selection;
 
             if (selection is null || selection.Invalid) return;
+
+            DrawingCanvas.UnselectTool();
 
             var bitmap = ImageUtils.GetBitmap(selection, _screenShot, ImageUtils.GetBitmapFromCanvas(DrawingCanvas));
 
