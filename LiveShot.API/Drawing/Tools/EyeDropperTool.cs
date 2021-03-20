@@ -5,6 +5,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using LiveShot.API.Canvas;
+using LiveShot.API.Utils;
 
 namespace LiveShot.API.Drawing.Tools
 {
@@ -145,6 +146,11 @@ namespace LiveShot.API.Drawing.Tools
             var rect = (Rectangle) sender;
 
             _liveShotService.UpdateDrawingColor(rect.Fill);
+
+            if (KeyBoardUtils.IsShiftPressed && rect.Fill is SolidColorBrush brush)
+            {
+                Clipboard.SetText(brush.Color.ToHex());
+            }
         }
 
         public override void Unselect()

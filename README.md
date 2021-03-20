@@ -14,6 +14,18 @@ With this tool you can select some rectangle on your screen and then draw on it 
 
 ![](https://i.imgur.com/W50z8p4.png)
 
+### Key binding resizing
+Whenever you crop a screenshot you can move or resize it with the arrow keys.
+- If you press these keys with `Shift` (no matter which shift) it will enter resize mode.
+- If you press these keys with `Control` (no matter wich control) it will do resizing or moving every 10 pixels.
+
+### Drawing tools
+With this application, like LightShot you can draw lines, arrows, rectangles inside the screenshot and those graphics will get merged with the screenshot whenever you're saving or uploading the image.
+
+### Eye dropper tool
+With this tool you can select a color from the screenshot you took with the help of a magnifier.
+If you press `Shift` key when clicking a pixel to pick a color it will copy the hexadecimal color value to you clipboard.
+
 ## Development
 - Cropping screenshot `100%`
 - Exporting screenshots `66%`
