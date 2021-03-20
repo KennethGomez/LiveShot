@@ -19,6 +19,8 @@ Whenever you crop a screenshot you can move or resize it with the arrow keys.
 - If you press these keys with `Shift` (no matter which shift) it will enter resize mode.
 - If you press these keys with `Control` (no matter wich control) it will do resizing or moving every 10 pixels.
 
+Whenever you're drawing with any draw tool you can update its stroke thickness pressing `Control` and moving the mouse wheel or with the keys `+` and `-`
+
 ### Drawing tools
 With this application, like LightShot you can draw lines, arrows, rectangles inside the screenshot and those graphics will get merged with the screenshot whenever you're saving or uploading the image.
 
