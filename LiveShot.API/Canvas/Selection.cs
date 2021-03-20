@@ -1,7 +1,7 @@
 ﻿using System.Windows;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using LiveShot.API.Properties;
 
 namespace LiveShot.API.Canvas
 {
@@ -71,7 +71,7 @@ namespace LiveShot.API.Canvas
         public bool Invalid => HasInvalidSize || IsClear;
 
         public string Label => IsClear
-            ? Properties.Resources.CaptureScreen_SizeLabel_Empty
+            ? Resources.CaptureScreen_SizeLabel_Empty
             : $"{Width} × {Height}";
 
         public bool Contains(Point point)

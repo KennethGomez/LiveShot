@@ -7,7 +7,6 @@ using System.Windows.Media;
 using System.Windows.Shapes;
 using LiveShot.API;
 using LiveShot.API.Canvas;
-using LiveShot.API.Controls.Button;
 using LiveShot.API.Drawing;
 using LiveShot.API.Drawing.Tools;
 using LiveShot.API.Events;

@@ -42,13 +42,13 @@ namespace LiveShot.API.Utils
             cursorStream.Write(new byte[] {0x00, 0x00}, 0, 2);
             cursorStream.Write(new byte[] {0x02, 0x00}, 0, 2);
             cursorStream.Write(new byte[] {0x01, 0x00}, 0, 2);
-            cursorStream.Write(new byte[] {(byte) targetBitmap.Width}, 0, 1);
-            cursorStream.Write(new byte[] {(byte) targetBitmap.Height}, 0, 1);
+            cursorStream.Write(new[] {(byte) targetBitmap.Width}, 0, 1);
+            cursorStream.Write(new[] {(byte) targetBitmap.Height}, 0, 1);
             cursorStream.Write(new byte[] {0x00}, 0, 1);
             cursorStream.Write(new byte[] {0x00}, 0, 1);
             cursorStream.Write(new byte[] {(byte) (point.X * targetBitmap.Width), 0x00}, 0, 2);
             cursorStream.Write(new byte[] {(byte) (point.Y * targetBitmap.Height), 0x00}, 0, 2);
-            cursorStream.Write(new byte[]
+            cursorStream.Write(new[]
             {
                 (byte) (pngStream.Length & 0x000000FF),
                 (byte) ((pngStream.Length & 0x0000FF00) >> 0x08),

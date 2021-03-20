@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using LiveShot.API.Canvas;
 using LiveShot.API.Image;
+using LiveShot.API.Properties;
 using Microsoft.Win32;
 
 namespace LiveShot.API.Utils
@@ -17,9 +18,9 @@ namespace LiveShot.API.Utils
             SaveFileDialog dialog = new()
             {
                 Filter = string.Join('|', formats.Select(f => f.Filter)),
-                FileName = string.Format(API.Properties.Resources.CaptureScreen_SaveImage_FileName, DateTime.Now),
+                FileName = string.Format(Resources.CaptureScreen_SaveImage_FileName, DateTime.Now),
                 RestoreDirectory = true,
-                Title = API.Properties.Resources.CaptureScreen_SaveImage_Title
+                Title = Resources.CaptureScreen_SaveImage_Title
             };
 
             if (dialog.ShowDialog() == false) return false;
