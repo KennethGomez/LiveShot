@@ -8,15 +8,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System.CodeDom.Compiler;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
-using System.Resources;
-using System.Runtime.CompilerServices;
-
 namespace LiveShot.API.Properties {
+    using System;
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -24,27 +19,27 @@ namespace LiveShot.API.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [GeneratedCode("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
-    [DebuggerNonUserCode()]
-    [CompilerGenerated()]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+    [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources_es_ES {
         
-        private static ResourceManager resourceMan;
+        private static global::System.Resources.ResourceManager resourceMan;
         
-        private static CultureInfo resourceCulture;
+        private static global::System.Globalization.CultureInfo resourceCulture;
         
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal Resources_es_ES() {
         }
         
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Advanced)]
-        internal static ResourceManager ResourceManager {
+        [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
+        internal static global::System.Resources.ResourceManager ResourceManager {
             get {
-                if (ReferenceEquals(resourceMan, null)) {
-                    ResourceManager temp = new ResourceManager("LiveShot.API.Properties.Resources.es-ES", typeof(Resources_es_ES).Assembly);
+                if (object.ReferenceEquals(resourceMan, null)) {
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("LiveShot.API.Properties.Resources.es-ES", typeof(Resources_es_ES).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -55,8 +50,8 @@ namespace LiveShot.API.Properties {
         ///   Overrides the current thread's CurrentUICulture property for all
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Advanced)]
-        internal static CultureInfo Culture {
+        [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
+        internal static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -296,6 +291,24 @@ namespace LiveShot.API.Properties {
         internal static string Imgur_InvalidClientIdException {
             get {
                 return ResourceManager.GetString("Imgur.InvalidClientIdException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to El UploadType de la configuración ee la aplicacion es inválido.
+        /// </summary>
+        internal static string Upload_InvalidUpload_Type {
+            get {
+                return ResourceManager.GetString("Upload.InvalidUpload.Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Imagen subida exitosamente.
+        /// </summary>
+        internal static string Upload_Success {
+            get {
+                return ResourceManager.GetString("Upload.Success", resourceCulture);
             }
         }
     }

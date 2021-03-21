@@ -97,4 +97,10 @@ CaptureScreen.CanvasButtons.Stroke</value>
     <data name="CaptureScreen.CanvasButtons.EyeDropper" xml:space="preserve">
         <value>CaptureScreen.CanvasButtons.EyeDropper</value>
     </data>
+    <data name="Upload.Success" xml:space="preserve">
+        <value>Upload.Success</value>
+    </data>
+    <data name="Upload.InvalidUpload.Type" xml:space="preserve">
+        <value>Upload.InvalidUploadType</value>
+    </data>
 </root>

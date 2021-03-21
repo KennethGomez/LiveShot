@@ -96,4 +96,10 @@
     <data name="CaptureScreen.CanvasButtons.EyeDropper" xml:space="preserve">
         <value>Eye dropper</value>
     </data>
+    <data name="Upload.Success" xml:space="preserve">
+        <value>Image uploaded successfully</value>
+    </data>
+    <data name="Upload.InvalidUpload.Type" xml:space="preserve">
+        <value>Invalid upload type in application configuration</value>
+    </data>
 </root>
