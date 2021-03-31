@@ -25,7 +25,7 @@ namespace LiveShot.UI
             SetUICulture();
 
             var serviceCollection = new ServiceCollection()
-                .ConfigureAPI()
+                .ConfigureAPI(Configuration)
                 .ConfigureUI();
 
             if (Configuration != null)

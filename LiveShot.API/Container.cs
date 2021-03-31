@@ -2,17 +2,37 @@
 using System.Reflection;
 using LiveShot.API.Drawing;
 using LiveShot.API.Upload;
+using LiveShot.API.Upload.Custom;
 using LiveShot.API.Upload.Imgur;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace LiveShot.API
 {
     public static class Container
     {
-        public static IServiceCollection ConfigureAPI(this IServiceCollection services)
+        public static IServiceCollection ConfigureAPI(this IServiceCollection services, IConfiguration? configuration)
         {
             services.AddSingleton<IEventPipeline, EventPipeline>();
-            services.AddSingleton<IUploadService, ImgurService>();
+
+            if (configuration != null)
+            {
+                string? uploadType = configuration["UploadType"];
+
+                if (uploadType != null && uploadType.ToLower().Equals("imgur"))
+                {
+                    services.AddSingleton<IUploadService, ImgurService>();
+                }
+                else
+                {
+                    services.AddSingleton<IUploadService, CustomUploadService>();
+                }
+            }
+            else
+            {
+                services.AddSingleton<IUploadService, ImgurService>();
+            }
+            
             services.AddSingleton<ILiveShotService, LiveShotService>();
 
             var drawingTools = Assembly
