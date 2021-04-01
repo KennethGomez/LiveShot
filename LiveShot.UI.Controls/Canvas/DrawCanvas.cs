@@ -180,11 +180,11 @@ namespace LiveShot.UI.Controls.Canvas
         {
             if (e.GetArgs<MouseWheelEventArgs>().Delta > 0)
             {
-                DrawingStrokeThickness++;
+                DrawingStrokeThickness--;
             }
             else
             {
-                DrawingStrokeThickness--;
+                DrawingStrokeThickness++;
             }
         }
 
