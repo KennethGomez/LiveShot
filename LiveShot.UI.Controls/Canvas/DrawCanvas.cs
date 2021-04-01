@@ -178,16 +178,13 @@ namespace LiveShot.UI.Controls.Canvas
 
         private void OnMouseWheel(Event e)
         {
-            if (KeyBoardUtils.IsCtrlPressed)
+            if (e.GetArgs<MouseWheelEventArgs>().Delta > 0)
             {
-                if (e.GetArgs<MouseWheelEventArgs>().Delta > 0)
-                {
-                    DrawingStrokeThickness++;
-                }
-                else
-                {
-                    DrawingStrokeThickness--;
-                }
+                DrawingStrokeThickness--;
+            }
+            else
+            {
+                DrawingStrokeThickness++;
             }
         }
 
