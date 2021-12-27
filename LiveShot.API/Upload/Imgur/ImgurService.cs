@@ -15,7 +15,7 @@ namespace LiveShot.API.Upload.Imgur
 
         public ImgurService(IConfiguration configuration)
         {
-            _clientId = configuration.GetSection("Imgur")?["ClientID"];
+            _clientId = configuration.GetSection("UploadTypes")?.GetSection("Imgur")?["ClientID"];
         }
 
         public async Task<string> Upload(Bitmap bitmap)
