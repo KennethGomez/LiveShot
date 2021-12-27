@@ -27,21 +27,34 @@ namespace LiveShot.API.Utils
 
         public static Bitmap GetBitmap(Selection selection, Bitmap source, Bitmap canvasBitmap)
         {
-            var bitmap = new Bitmap((int) selection.Width, (int) selection.Height);
+            double realWidth = selection.Width;
+            double realHeight = selection.Height;
+
+            if (selection.Left + realWidth > source.Width)
+            {
+                realWidth = source.Width - selection.Left;
+            }
+
+            if (selection.Top + realHeight > source.Height)
+            {
+                realHeight = source.Height - selection.Top;
+            }
+
+            var bitmap = new Bitmap((int)realWidth, (int)realHeight);
 
             using var graphics = Graphics.FromImage(bitmap);
 
             graphics.DrawImage(
                 source,
                 new Rectangle(0, 0, bitmap.Width, bitmap.Height),
-                new Rectangle((int) selection.Left, (int) selection.Top, bitmap.Width, bitmap.Height),
+                new Rectangle((int)selection.Left, (int)selection.Top, bitmap.Width, bitmap.Height),
                 GraphicsUnit.Pixel
             );
 
             graphics.DrawImage(
                 canvasBitmap,
                 new Rectangle(0, 0, bitmap.Width, bitmap.Height),
-                new Rectangle((int) selection.Left, (int) selection.Top, bitmap.Width, bitmap.Height),
+                new Rectangle((int)selection.Left, (int)selection.Top, bitmap.Width, bitmap.Height),
                 GraphicsUnit.Pixel
             );
 
@@ -51,7 +64,7 @@ namespace LiveShot.API.Utils
         public static Bitmap GetBitmapFromCanvas(System.Windows.Controls.Canvas canvas)
         {
             var bitmapSource = new RenderTargetBitmap(
-                (int) canvas.ActualWidth, (int) canvas.ActualHeight, 96, 96, PixelFormats.Pbgra32
+                (int)canvas.ActualWidth, (int)canvas.ActualHeight, 96, 96, PixelFormats.Pbgra32
             );
             bitmapSource.Render(canvas);
 
@@ -128,7 +141,7 @@ namespace LiveShot.API.Utils
             graphics.DrawImage(
                 source,
                 new Rectangle(0, 0, size, size),
-                new Rectangle((int) (point.X - size / 2), (int) (point.Y - size / 2), size, size),
+                new Rectangle((int)(point.X - size / 2), (int)(point.Y - size / 2), size, size),
                 GraphicsUnit.Pixel
             );
 
