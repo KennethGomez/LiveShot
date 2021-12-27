@@ -31,15 +31,36 @@
         <canvas:SelectCanvas ToolTip="{x:Static properties:Resources.CaptureScreen_Canvas_Tooltip}" Grid.Row="0"
                              x:Name="SelectCanvas" SizeLabel="{Binding ElementName=SizeLabel}"
                              OpacityRectangle="{Binding ElementName=OpacityRectangle}"
+
+                             ResizeMarkTopLeft="{Binding ElementName=ResizeMarkTopLeft}"
+                             ResizeMarkTop="{Binding ElementName=ResizeMarkTop}"
+                             ResizeMarkTopRight="{Binding ElementName=ResizeMarkTopRight}"
+                             ResizeMarkLeft="{Binding ElementName=ResizeMarkLeft}"
+                             ResizeMarkRight="{Binding ElementName=ResizeMarkRight}"
+                             ResizeMarkBottomLeft="{Binding ElementName=ResizeMarkBottomLeft}"
+                             ResizeMarkBottom="{Binding ElementName=ResizeMarkBottom}"
+                             ResizeMarkBottomRight="{Binding ElementName=ResizeMarkBottomRight}"
+
                              RightPanel="{Binding ElementName=CanvasRightPanel}"
                              BottomPanel="{Binding ElementName=CanvasBottomPanel}"
                              DrawingCanvas="{Binding ElementName=DrawingCanvas}">
+
             <Rectangle Name="OpacityRectangle" Fill="Black" Opacity=".5"
                        Width="{Binding ElementName=SelectCanvas, Path=Width}"
                        Height="{Binding ElementName=SelectCanvas, Path=Height}" />
+
+            <StackPanel Name="ResizeMarkTopLeft" Tag="1" />
+            <StackPanel Name="ResizeMarkTop" Tag="2" />
+            <StackPanel Name="ResizeMarkTopRight" Tag="3" />
+            <StackPanel Name="ResizeMarkLeft" Tag="4" />
+            <StackPanel Name="ResizeMarkRight" Tag="5" />
+            <StackPanel Name="ResizeMarkBottomLeft" Tag="6" />
+            <StackPanel Name="ResizeMarkBottom" Tag="7" />
+            <StackPanel Name="ResizeMarkBottomRight" Tag="8" />
+
             <canvas:DrawCanvas Name="DrawingCanvas" Background="Transparent" ZIndex="1"
-                       Width="{Binding ElementName=SelectCanvas, Path=Width}"
-                       Height="{Binding ElementName=SelectCanvas, Path=Height}" />
+                               Width="{Binding ElementName=SelectCanvas, Path=Width}"
+                               Height="{Binding ElementName=SelectCanvas, Path=Height}" />
             <panel:RightDragPanel Name="CanvasRightPanel" Visibility="Hidden" Orientation="Vertical">
                 <button:ActionButton ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Pencil}"
                                      Style="{StaticResource FirstRightCanvasButton}" Name="PencilBtn"
@@ -54,7 +75,7 @@
                 </button:ActionButton>
                 <button:ActionButton ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Arrow}"
                                      Style="{StaticResource CanvasButton}" Name="ArrowBtn" ActiveTool="Arrow">
-                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Arrow}" 
+                    <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Arrow}"
                           Fill="{Binding ElementName=ArrowBtn, Path=IconFill}" />
                 </button:ActionButton>
                 <button:ActionButton ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Rectangle}"
@@ -65,7 +86,7 @@
                 <button:ActionButton ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Highlighter}"
                                      Style="{StaticResource CanvasButton}" Name="HighlightBtn" ActiveTool="Highlight">
                     <Path Style="{StaticResource CanvasPath}" Data="{StaticResource Highlighter}"
-                          Fill="{Binding ElementName=HighlightBtn, Path=IconFill}"/>
+                          Fill="{Binding ElementName=HighlightBtn, Path=IconFill}" />
                 </button:ActionButton>
                 <button:ActionButton ToolTip="{x:Static properties:Resources.CaptureScreen_CanvasButtons_Text}"
                                      Style="{StaticResource CanvasButton}" Name="TextBtn" ActiveTool="Text">

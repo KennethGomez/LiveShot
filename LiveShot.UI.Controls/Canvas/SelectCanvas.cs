@@ -10,6 +10,7 @@ using LiveShot.API.Canvas;
 using LiveShot.API.Drawing;
 using LiveShot.API.Events;
 using LiveShot.API.Events.Input;
+using LiveShot.API.Events.Input.ResizeMarker;
 using LiveShot.API.Events.Selection;
 using LiveShot.API.Utils;
 using LiveShot.UI.Controls.Panel;
@@ -18,12 +19,46 @@ namespace LiveShot.UI.Controls.Canvas
 {
     public class SelectCanvas : System.Windows.Controls.Canvas
     {
+        #region Properties
+
         public static readonly DependencyProperty SizeLabelProperty = DependencyProperty.Register(
             "SizeLabel", typeof(Label), typeof(SelectCanvas)
         );
 
         public static readonly DependencyProperty OpacityRectangleProperty = DependencyProperty.Register(
             "OpacityRectangle", typeof(Rectangle), typeof(SelectCanvas)
+        );
+
+        public static readonly DependencyProperty ResizeMarkTopLeftProperty = DependencyProperty.Register(
+            nameof(ResizeMarkTopLeft), typeof(StackPanel), typeof(SelectCanvas)
+        );
+
+        public static readonly DependencyProperty ResizeMarkTopProperty = DependencyProperty.Register(
+            nameof(ResizeMarkTop), typeof(StackPanel), typeof(SelectCanvas)
+        );
+
+        public static readonly DependencyProperty ResizeMarkTopRightProperty = DependencyProperty.Register(
+            nameof(ResizeMarkTopRight), typeof(StackPanel), typeof(SelectCanvas)
+        );
+
+        public static readonly DependencyProperty ResizeMarkLeftProperty = DependencyProperty.Register(
+            nameof(ResizeMarkLeft), typeof(StackPanel), typeof(SelectCanvas)
+        );
+
+        public static readonly DependencyProperty ResizeMarkRightProperty = DependencyProperty.Register(
+            nameof(ResizeMarkRight), typeof(StackPanel), typeof(SelectCanvas)
+        );
+
+        public static readonly DependencyProperty ResizeMarkBottomLeftProperty = DependencyProperty.Register(
+            nameof(ResizeMarkBottomLeft), typeof(StackPanel), typeof(SelectCanvas)
+        );
+
+        public static readonly DependencyProperty ResizeMarkBottomProperty = DependencyProperty.Register(
+            nameof(ResizeMarkBottom), typeof(StackPanel), typeof(SelectCanvas)
+        );
+
+        public static readonly DependencyProperty ResizeMarkBottomRightProperty = DependencyProperty.Register(
+            nameof(ResizeMarkBottomRight), typeof(StackPanel), typeof(SelectCanvas)
         );
 
         public static readonly DependencyProperty RightPanelProperty = DependencyProperty.Register(
@@ -38,44 +73,99 @@ namespace LiveShot.UI.Controls.Canvas
             "DrawingCanvas", typeof(AbstractDrawCanvas), typeof(SelectCanvas)
         );
 
+        #endregion
+
         private readonly Collection<Rectangle> _rectangles = new();
 
         private bool _dragging = true;
+        private bool _moving;
+        private uint _hoveringResizeMark;
 
         private IEventPipeline? _events;
-        private bool _moving;
         private Point? _startPosition;
         private Point? _tmpCursorPosition;
 
+        #region Property accessors
+
         public Label SizeLabel
         {
-            get => (Label) GetValue(SizeLabelProperty);
+            get => (Label)GetValue(SizeLabelProperty);
             set => SetValue(SizeLabelProperty, value);
         }
 
         public Rectangle OpacityRectangle
         {
-            get => (Rectangle) GetValue(OpacityRectangleProperty);
+            get => (Rectangle)GetValue(OpacityRectangleProperty);
             set => SetValue(OpacityRectangleProperty, value);
+        }
+
+        public StackPanel ResizeMarkTopLeft
+        {
+            get => (StackPanel)GetValue(ResizeMarkTopLeftProperty);
+            set => SetValue(ResizeMarkTopLeftProperty, value);
+        }
+
+        public StackPanel ResizeMarkTop
+        {
+            get => (StackPanel)GetValue(ResizeMarkTopProperty);
+            set => SetValue(ResizeMarkTopProperty, value);
+        }
+
+        public StackPanel ResizeMarkTopRight
+        {
+            get => (StackPanel)GetValue(ResizeMarkTopRightProperty);
+            set => SetValue(ResizeMarkTopRightProperty, value);
+        }
+
+        public StackPanel ResizeMarkLeft
+        {
+            get => (StackPanel)GetValue(ResizeMarkLeftProperty);
+            set => SetValue(ResizeMarkLeftProperty, value);
+        }
+
+        public StackPanel ResizeMarkRight
+        {
+            get => (StackPanel)GetValue(ResizeMarkRightProperty);
+            set => SetValue(ResizeMarkRightProperty, value);
+        }
+
+        public StackPanel ResizeMarkBottomLeft
+        {
+            get => (StackPanel)GetValue(ResizeMarkBottomLeftProperty);
+            set => SetValue(ResizeMarkBottomLeftProperty, value);
+        }
+
+        public StackPanel ResizeMarkBottom
+        {
+            get => (StackPanel)GetValue(ResizeMarkBottomProperty);
+            set => SetValue(ResizeMarkBottomProperty, value);
+        }
+
+        public StackPanel ResizeMarkBottomRight
+        {
+            get => (StackPanel)GetValue(ResizeMarkBottomRightProperty);
+            set => SetValue(ResizeMarkBottomRightProperty, value);
         }
 
         public RightDragPanel RightPanel
         {
-            get => (RightDragPanel) GetValue(RightPanelProperty);
+            get => (RightDragPanel)GetValue(RightPanelProperty);
             set => SetValue(RightPanelProperty, value);
         }
 
         public BottomDragPanel BottomPanel
         {
-            get => (BottomDragPanel) GetValue(BottomPanelProperty);
+            get => (BottomDragPanel)GetValue(BottomPanelProperty);
             set => SetValue(BottomPanelProperty, value);
         }
 
         public AbstractDrawCanvas DrawingCanvas
         {
-            get => (AbstractDrawCanvas) GetValue(DrawingCanvasProperty);
+            get => (AbstractDrawCanvas)GetValue(DrawingCanvasProperty);
             set => SetValue(DrawingCanvasProperty, value);
         }
+
+        #endregion
 
         public Selection? Selection { get; private set; }
 
@@ -86,6 +176,18 @@ namespace LiveShot.UI.Controls.Canvas
             _events.Subscribe<OnKeyDown>(OnKeyDown);
             _events.Subscribe<OnKeyUp>(OnKeyUp);
             _events.Subscribe<OnCursorUpdate>(OnCursorUpdate);
+            _events.Subscribe<OnResizeMarkerMouseEnter>(OnResizeMarkerMouseEnter);
+            _events.Subscribe<OnResizeMarkerMouseLeave>(OnResizeMarkerMouseLeave);
+        }
+
+        private void OnResizeMarkerMouseEnter(Event obj)
+        {
+            _hoveringResizeMark = uint.Parse((string)obj.GetArgs<StackPanel>().Tag);
+        }
+
+        private void OnResizeMarkerMouseLeave(Event obj)
+        {
+            _hoveringResizeMark = 0;
         }
 
         private static void OnSelectionKeyDown(Action<int> shiftPressed, Action<int> normal)
@@ -117,12 +219,44 @@ namespace LiveShot.UI.Controls.Canvas
             {
                 UpdatePanels(Visibility.Hidden);
                 UpdateOpacityRectangles();
+                UpdateResizeMarks();
 
                 SetLeft(Selection.Rectangle, Selection.Left);
                 SetTop(Selection.Rectangle, Selection.Top);
 
                 SizeLabel.Content = Selection.Label;
             }
+        }
+
+        private void UpdateResizeMarks()
+        {
+            if (Selection is null) return;
+
+            double resizeMarkCenter = ResizeMarkTopLeft.Width / 2;
+
+            SetLeft(ResizeMarkTopLeft, Selection.Left - resizeMarkCenter);
+            SetTop(ResizeMarkTopLeft, Selection.Top - resizeMarkCenter);
+
+            SetLeft(ResizeMarkTop, Selection.Left + Selection.Width / 2 - resizeMarkCenter);
+            SetTop(ResizeMarkTop, Selection.Top - resizeMarkCenter);
+
+            SetLeft(ResizeMarkTopRight, Selection.Left + Selection.Width - resizeMarkCenter);
+            SetTop(ResizeMarkTopRight, Selection.Top - resizeMarkCenter);
+
+            SetLeft(ResizeMarkLeft, Selection.Left - resizeMarkCenter);
+            SetTop(ResizeMarkLeft, Selection.Top + Selection.Height / 2 - resizeMarkCenter);
+
+            SetLeft(ResizeMarkRight, Selection.Left + Selection.Width - resizeMarkCenter);
+            SetTop(ResizeMarkRight, Selection.Top + Selection.Height / 2 - resizeMarkCenter);
+
+            SetLeft(ResizeMarkBottomLeft, Selection.Left - resizeMarkCenter);
+            SetTop(ResizeMarkBottomLeft, Selection.Top + Selection.Height - resizeMarkCenter);
+
+            SetLeft(ResizeMarkBottom, Selection.Left + Selection.Width / 2 - resizeMarkCenter);
+            SetTop(ResizeMarkBottom, Selection.Top + Selection.Height - resizeMarkCenter);
+
+            SetLeft(ResizeMarkBottomRight, Selection.Left + Selection.Width - resizeMarkCenter);
+            SetTop(ResizeMarkBottomRight, Selection.Top + Selection.Height - resizeMarkCenter);
         }
 
         private void ClearOpacityRectangles()
@@ -139,7 +273,7 @@ namespace LiveShot.UI.Controls.Canvas
             {
                 _events?.Dispatch<OnSelectionChange>(OnSelectionChangeArgs.From(Selection));
             }
-            
+
             RightPanel.Visibility = visibility;
             BottomPanel.Visibility = visibility;
         }
@@ -248,6 +382,9 @@ namespace LiveShot.UI.Controls.Canvas
 
         private Cursor GetCursor(Point point)
         {
+            if (_hoveringResizeMark != 0)
+                return GetHoveringResizeMarkCursor();
+
             if (Selection is null)
                 return Cursors.Arrow;
 
@@ -258,16 +395,25 @@ namespace LiveShot.UI.Controls.Canvas
             return DrawingCanvas.Tool == CanvasTool.Default ? Cursors.Arrow : DrawingCanvas.DrawingCursor;
         }
 
+        private Cursor GetHoveringResizeMarkCursor() => _hoveringResizeMark switch
+        {
+            1 or 8 => Cursors.SizeNWSE,
+            2 or 7 => Cursors.SizeNS,
+            3 or 6 => Cursors.SizeNESW,
+            4 or 5 => Cursors.SizeWE,
+            _ => throw new ArgumentOutOfRangeException()
+        };
+
         private void ResizeSelection(Point cursorPosition)
         {
             if (_startPosition is not { } startPosition || Selection is null) return;
 
             (double left, double top) = PointUtils.GetCoords(startPosition, cursorPosition);
 
-            Selection.Left = (int) left;
-            Selection.Top = (int) top;
-            Selection.Width = (int) Math.Abs(startPosition.X - cursorPosition.X);
-            Selection.Height = (int) Math.Abs(startPosition.Y - cursorPosition.Y);
+            Selection.Left = (int)left;
+            Selection.Top = (int)top;
+            Selection.Width = (int)Math.Abs(startPosition.X - cursorPosition.X);
+            Selection.Height = (int)Math.Abs(startPosition.Y - cursorPosition.Y);
         }
 
         private void MoveSelection(Point cursorPosition)
@@ -308,9 +454,9 @@ namespace LiveShot.UI.Controls.Canvas
             }
 
             if (new[]
-            {
-                Key.Up, Key.Right, Key.Down, Key.Left
-            }.Contains(args.Key))
+                {
+                    Key.Up, Key.Right, Key.Down, Key.Left
+                }.Contains(args.Key))
             {
                 UpdatePanels(Visibility.Hidden);
                 UpdateSelection();
