@@ -644,9 +644,11 @@ namespace LiveShot.UI.Controls.Canvas
                     Key.Up, Key.Right, Key.Down, Key.Left
                 }.Contains(args.Key))
             {
-                UpdatePanels(Visibility.Hidden);
                 UpdateSelection();
+                UpdatePanels(Visibility.Hidden);
                 UpdateOpacityRectangles();
+                UpdateResizeMarks();
+                UpdateSizePanel();
             }
         }
 
