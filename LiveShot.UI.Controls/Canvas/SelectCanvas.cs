@@ -21,6 +21,10 @@ namespace LiveShot.UI.Controls.Canvas
     {
         #region Properties
 
+        public static readonly DependencyProperty SizePanelProperty = DependencyProperty.Register(
+            "SizePanel", typeof(StackPanel), typeof(SelectCanvas)
+        );
+
         public static readonly DependencyProperty SizeLabelProperty = DependencyProperty.Register(
             "SizeLabel", typeof(Label), typeof(SelectCanvas)
         );
@@ -89,6 +93,12 @@ namespace LiveShot.UI.Controls.Canvas
         private Point? _tmpCursorPosition;
 
         #region Property accessors
+
+        public StackPanel SizePanel
+        {
+            get => (StackPanel)GetValue(SizePanelProperty);
+            set => SetValue(SizePanelProperty, value);
+        }
 
         public Label SizeLabel
         {
@@ -216,6 +226,7 @@ namespace LiveShot.UI.Controls.Canvas
 
                 OpacityRectangle.Visibility = Visibility.Visible;
 
+                SizePanel.Visibility = Visibility.Hidden;
                 SizeLabel.Content = API.Properties.Resources.CaptureScreen_SizeLabel_Empty;
 
                 UpdatePanels(Visibility.Hidden);
@@ -228,12 +239,36 @@ namespace LiveShot.UI.Controls.Canvas
                 UpdatePanels(Visibility.Hidden);
                 UpdateOpacityRectangles();
                 UpdateResizeMarks();
+                UpdateSizePanel();
 
                 SetLeft(Selection.Rectangle, Selection.Left);
                 SetTop(Selection.Rectangle, Selection.Top);
 
                 SizeLabel.Content = Selection.Label;
+                SizePanel.Visibility = Visibility.Visible;
             }
+        }
+
+        private void UpdateSizePanel()
+        {
+            if (Selection is null) return;
+
+            double top = Selection.Top - SizePanel.ActualHeight - 5;
+            double left = Selection.Left + 5;
+
+            if (top <= 0)
+            {
+                top = 5;
+            }
+
+            if (left + SizePanel.ActualWidth + 5 > Width)
+            {
+                left = Selection.Left - SizePanel.ActualWidth - 5;
+                top = Selection.Top + 5;
+            }
+
+            SetTop(SizePanel, top);
+            SetLeft(SizePanel, left);
         }
 
         private void ClearResizeMarks()
@@ -439,7 +474,7 @@ namespace LiveShot.UI.Controls.Canvas
 
                     resizeX = true;
                     resizeY = true;
-                    
+
                     break;
                 case 2:
                     _resizeMarkAnchor ??= new Point(
