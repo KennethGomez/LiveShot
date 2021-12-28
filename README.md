@@ -12,7 +12,7 @@ Tool to make enhanced screenshots. Inspired on LightShot
 ## How it works
 With this tool you can select some rectangle on your screen and then draw on it like you can do on LightShot.
 
-![](https://i.imgur.com/W50z8p4.png)
+![](https://i.imgur.com/KqSmVhw.png)
 
 ### Key binding resizing
 Whenever you crop a screenshot you can move or resize it with the arrow keys.
@@ -30,6 +30,7 @@ If you press `Shift` key when clicking a pixel to pick a color it will copy the 
 
 ## Development
 - Cropping screenshot `100%`
+- Resizing screenshot `100%`
 - Exporting screenshots `66%`
   - Export to imgur `100%`
   - Save to file `100%`
