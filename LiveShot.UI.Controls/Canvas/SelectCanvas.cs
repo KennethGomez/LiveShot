@@ -79,7 +79,10 @@ namespace LiveShot.UI.Controls.Canvas
 
         private bool _dragging = true;
         private bool _moving;
+        private bool _draggingOnResizeMark;
         private uint _hoveringResizeMark;
+
+        private Point? _resizeMarkAnchor;
 
         private IEventPipeline? _events;
         private Point? _startPosition;
@@ -182,11 +185,15 @@ namespace LiveShot.UI.Controls.Canvas
 
         private void OnResizeMarkerMouseEnter(Event obj)
         {
+            if (_draggingOnResizeMark) return;
+
             _hoveringResizeMark = uint.Parse((string)obj.GetArgs<StackPanel>().Tag);
         }
 
         private void OnResizeMarkerMouseLeave(Event obj)
         {
+            if (_draggingOnResizeMark) return;
+
             _hoveringResizeMark = 0;
         }
 
@@ -205,6 +212,7 @@ namespace LiveShot.UI.Controls.Canvas
             if (Selection is null)
             {
                 ClearOpacityRectangles();
+                ClearResizeMarks();
 
                 OpacityRectangle.Visibility = Visibility.Visible;
 
@@ -215,7 +223,7 @@ namespace LiveShot.UI.Controls.Canvas
                 return;
             }
 
-            if (_dragging || _moving)
+            if (_dragging || _moving || _draggingOnResizeMark)
             {
                 UpdatePanels(Visibility.Hidden);
                 UpdateOpacityRectangles();
@@ -228,33 +236,53 @@ namespace LiveShot.UI.Controls.Canvas
             }
         }
 
+        private void ClearResizeMarks()
+        {
+            ResizeMarkTopLeft.Visibility = Visibility.Hidden;
+            ResizeMarkTop.Visibility = Visibility.Hidden;
+            ResizeMarkTopRight.Visibility = Visibility.Hidden;
+            ResizeMarkLeft.Visibility = Visibility.Hidden;
+            ResizeMarkRight.Visibility = Visibility.Hidden;
+            ResizeMarkBottomLeft.Visibility = Visibility.Hidden;
+            ResizeMarkBottom.Visibility = Visibility.Hidden;
+            ResizeMarkBottomRight.Visibility = Visibility.Hidden;
+        }
+
         private void UpdateResizeMarks()
         {
             if (Selection is null) return;
 
             double resizeMarkCenter = ResizeMarkTopLeft.Width / 2;
 
+            ResizeMarkTopLeft.Visibility = Visibility.Visible;
             SetLeft(ResizeMarkTopLeft, Selection.Left - resizeMarkCenter);
             SetTop(ResizeMarkTopLeft, Selection.Top - resizeMarkCenter);
 
+            ResizeMarkTop.Visibility = Visibility.Visible;
             SetLeft(ResizeMarkTop, Selection.Left + Selection.Width / 2 - resizeMarkCenter);
             SetTop(ResizeMarkTop, Selection.Top - resizeMarkCenter);
 
+            ResizeMarkTopRight.Visibility = Visibility.Visible;
             SetLeft(ResizeMarkTopRight, Selection.Left + Selection.Width - resizeMarkCenter);
             SetTop(ResizeMarkTopRight, Selection.Top - resizeMarkCenter);
 
+            ResizeMarkLeft.Visibility = Visibility.Visible;
             SetLeft(ResizeMarkLeft, Selection.Left - resizeMarkCenter);
             SetTop(ResizeMarkLeft, Selection.Top + Selection.Height / 2 - resizeMarkCenter);
 
+            ResizeMarkRight.Visibility = Visibility.Visible;
             SetLeft(ResizeMarkRight, Selection.Left + Selection.Width - resizeMarkCenter);
             SetTop(ResizeMarkRight, Selection.Top + Selection.Height / 2 - resizeMarkCenter);
 
+            ResizeMarkBottomLeft.Visibility = Visibility.Visible;
             SetLeft(ResizeMarkBottomLeft, Selection.Left - resizeMarkCenter);
             SetTop(ResizeMarkBottomLeft, Selection.Top + Selection.Height - resizeMarkCenter);
 
+            ResizeMarkBottom.Visibility = Visibility.Visible;
             SetLeft(ResizeMarkBottom, Selection.Left + Selection.Width / 2 - resizeMarkCenter);
             SetTop(ResizeMarkBottom, Selection.Top + Selection.Height - resizeMarkCenter);
 
+            ResizeMarkBottomRight.Visibility = Visibility.Visible;
             SetLeft(ResizeMarkBottomRight, Selection.Left + Selection.Width - resizeMarkCenter);
             SetTop(ResizeMarkBottomRight, Selection.Top + Selection.Height - resizeMarkCenter);
         }
@@ -338,8 +366,16 @@ namespace LiveShot.UI.Controls.Canvas
 
             var position = e.GetPosition(this);
 
-            _moving = Selection.Contains(position);
-            _dragging = !_moving;
+            if (_hoveringResizeMark != 0)
+            {
+                _draggingOnResizeMark = true;
+            }
+            else
+            {
+                _moving = Selection.Contains(position);
+                _dragging = !_moving;
+            }
+
             _startPosition = position;
             _tmpCursorPosition = _startPosition;
         }
@@ -358,6 +394,9 @@ namespace LiveShot.UI.Controls.Canvas
         {
             _dragging = false;
             _moving = false;
+            _hoveringResizeMark = 0;
+            _draggingOnResizeMark = false;
+            _resizeMarkAnchor = null;
             _startPosition = null;
             _tmpCursorPosition = null;
 
@@ -373,11 +412,123 @@ namespace LiveShot.UI.Controls.Canvas
 
             Cursor = GetCursor(newPosition);
 
-            if (_moving)
+            if (_draggingOnResizeMark)
+                ResizeSelectionByMarks(newPosition);
+            else if (_moving)
                 MoveSelection(newPosition);
-            else if (_dragging) ResizeSelection(newPosition);
+            else if (_dragging)
+                ResizeSelection(newPosition);
 
             UpdateSelection();
+        }
+
+        private void ResizeSelectionByMarks(Point cursorPosition)
+        {
+            if (Selection is null) return;
+
+            var resizeX = false;
+            var resizeY = false;
+
+            switch (_hoveringResizeMark)
+            {
+                case 1:
+                    _resizeMarkAnchor ??= new Point(
+                        Selection.Left + Selection.Width,
+                        Selection.Top + Selection.Height
+                    );
+
+                    resizeX = true;
+                    resizeY = true;
+                    
+                    break;
+                case 2:
+                    _resizeMarkAnchor ??= new Point(
+                        Selection.Left + Selection.Width / 2,
+                        Selection.Top + Selection.Height
+                    );
+
+                    resizeY = true;
+
+                    break;
+                case 3:
+                    _resizeMarkAnchor ??= new Point(
+                        Selection.Left,
+                        Selection.Top + Selection.Height
+                    );
+
+                    resizeX = true;
+                    resizeY = true;
+
+                    break;
+                case 4:
+                    _resizeMarkAnchor ??= new Point(
+                        Selection.Left + Selection.Width,
+                        Selection.Top + Selection.Height / 2
+                    );
+
+                    resizeX = true;
+
+                    break;
+                case 5:
+                    _resizeMarkAnchor ??= new Point(
+                        Selection.Left,
+                        Selection.Top + Selection.Height / 2
+                    );
+
+                    resizeX = true;
+
+                    break;
+                case 6:
+                    _resizeMarkAnchor ??= new Point(
+                        Selection.Left + Selection.Width,
+                        Selection.Top
+                    );
+
+                    resizeX = true;
+                    resizeY = true;
+
+                    break;
+                case 7:
+                    _resizeMarkAnchor ??= new Point(
+                        Selection.Left + Selection.Width / 2,
+                        Selection.Top
+                    );
+
+                    resizeY = true;
+
+                    break;
+                case 8:
+                    _resizeMarkAnchor ??= new Point(
+                        Selection.Left,
+                        Selection.Top
+                    );
+
+                    resizeX = true;
+                    resizeY = true;
+
+                    break;
+            }
+
+            if (_resizeMarkAnchor is not { } anchor) return;
+
+            bool growingX = cursorPosition.X > anchor.X;
+            bool growingY = cursorPosition.Y > anchor.Y;
+
+            if (resizeX)
+            {
+                Selection.Left = growingX ? anchor.X : cursorPosition.X;
+                Selection.Width = growingX
+                    ? cursorPosition.X - Selection.Left
+                    : anchor.X - Selection.Left;
+            }
+
+            if (resizeY)
+            {
+                Selection.Top = growingY ? anchor.Y : cursorPosition.Y;
+                Selection.Height = growingY
+                    ? cursorPosition.Y - Selection.Top
+                    : anchor.Y - Selection.Top;
+            }
         }
 
         private Cursor GetCursor(Point point)
