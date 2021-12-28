@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using LiveShot.API.Canvas;
 using Point = System.Windows.Point;
+using Size = System.Drawing.Size;
 
 namespace LiveShot.API.Utils
 {
@@ -73,7 +74,9 @@ namespace LiveShot.API.Utils
 
         public static Bitmap CaptureScreen(int width, int height, int left, int top)
         {
-            var bmp = new Bitmap(width, height);
+            (float fX, float fY) = ScreenUtils.GetScalingFactor();
+
+            var bmp = new Bitmap((int)(width * fX), (int)(height * fY));
 
             using var graphics = Graphics.FromImage(bmp);
 
