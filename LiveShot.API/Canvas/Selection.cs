@@ -72,7 +72,7 @@ namespace LiveShot.API.Canvas
 
         public string Label => IsClear
             ? Resources.CaptureScreen_SizeLabel_Empty
-            : $"{Width} × {Height}";
+            : $"{(int)Width} × {(int)Height}";
 
         public bool Contains(Point point)
         {
