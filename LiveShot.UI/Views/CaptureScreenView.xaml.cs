@@ -3,16 +3,22 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using LiveShot.API;
+using LiveShot.API.Controls.ResizeMarker;
 using LiveShot.API.Drawing;
 using LiveShot.API.Events.Input;
+using LiveShot.API.Events.Input.ResizeMarker;
 using LiveShot.API.Utils;
 using LiveShot.UI.Controls.Button;
 using Microsoft.Extensions.DependencyInjection;
+using Brushes = System.Windows.Media.Brushes;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
+using MouseEventArgs = System.Windows.Input.MouseEventArgs;
+using Panel = System.Windows.Controls.Panel;
 
 namespace LiveShot.UI.Views
 {
@@ -70,7 +76,28 @@ namespace LiveShot.UI.Views
             SaveBtn.Click += (_, _) => SaveImage();
             CloseBtn.Click += (_, _) => Close();
 
+            foreach (
+                var resizeMark in new[]
+                {
+                    ResizeMarkTopLeft, ResizeMarkTop, ResizeMarkTopRight,
+                    ResizeMarkLeft, ResizeMarkRight,
+                    ResizeMarkBottomLeft, ResizeMarkBottom, ResizeMarkBottomRight
+                }
+            ) PrepareResizeMark(resizeMark);
+
             CaptureScreen();
+        }
+
+        private void PrepareResizeMark(Panel resizeMark)
+        {
+            resizeMark.MouseEnter += (sender, _) => _events.Dispatch<OnResizeMarkerMouseEnter>(sender);
+            resizeMark.MouseLeave += (sender, _) => _events.Dispatch<OnResizeMarkerMouseLeave>(sender);
+
+            resizeMark.Width = resizeMark.Height = 6;
+            resizeMark.Background = ResizeMarkerGradient.Striped;
+            resizeMark.Opacity = 1;
+
+            resizeMark.SetValue(Panel.ZIndexProperty, 2);
         }
 
         private void UndoBtnOnClick(object sender, RoutedEventArgs e)
@@ -122,7 +149,7 @@ namespace LiveShot.UI.Views
         private void CaptureScreen()
         {
             (int screenTop, int screenLeft, int screenWidth, int screenHeight) =
-                ((int, int, int, int)) (Top, Left, Width, Height);
+                ((int, int, int, int))(Top, Left, Width, Height);
 
             var bitmap = ImageUtils.CaptureScreen(screenWidth, screenHeight, screenLeft, screenTop);
             var bitmapSource = ImageUtils.GetBitmapSource(bitmap);
