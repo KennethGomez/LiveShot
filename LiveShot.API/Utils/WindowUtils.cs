@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 
@@ -25,6 +27,11 @@ namespace LiveShot.API.Utils
                     yield return childOfChild;
                 }
             }
+        }
+        
+        public static bool IsOpen(Type window)
+        {
+            return Application.Current.Windows.Cast<Window>().Any(x => x.GetType() == window);
         }
     }
 }

@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using LiveShot.API.Background.ContextOptions;
+using LiveShot.API.Events.Capture;
 using LiveShot.API.Properties;
+using Microsoft.Extensions.Configuration;
 
 namespace LiveShot.API.Background
 {
@@ -14,23 +17,35 @@ namespace LiveShot.API.Background
         private delegate int HookProc(int code, IntPtr wParam, IntPtr lParam);
 
         private static IntPtr _hHook;
-        
+        private static HookProc _handler = null!;
+
         private const int WH_KEYBOARD_LL = 13;
         private const int WM_KEYDOWN = 0x0100;
 
         [DllImport("user32.dll", EntryPoint = "SetWindowsHookEx", SetLastError = true)]
         private static extern IntPtr SetWindowsHookEx(int idHook, HookProc lpfn, IntPtr hMod, uint dwThreadId);
-        
+
         [DllImport("user32.dll")]
         private static extern int CallNextHookEx(IntPtr hhk, int nCode, IntPtr wParam, IntPtr lParam);
 
         private readonly IEnumerable<IContextOption> _contextOptions;
+        private readonly IConfiguration _configuration;
+        private readonly IEventPipeline _eventPipeline;
+
         private readonly IContextOption _captureScreenShotOption;
 
-        public BackgroundApplication(IEnumerable<IContextOption> contextOptions)
+        public BackgroundApplication(
+            IEnumerable<IContextOption> contextOptions,
+            IConfiguration configuration,
+            IEventPipeline eventPipeline
+        )
         {
             _contextOptions = contextOptions;
+            _configuration = configuration;
+            _eventPipeline = eventPipeline;
+
             _captureScreenShotOption = _contextOptions.First(o => o is CaptureScreenShot);
+            _handler = OnKeyBoardMessage;
         }
 
         public void Init()
@@ -59,8 +74,8 @@ namespace LiveShot.API.Background
         {
             _hHook = SetWindowsHookEx(
                 WH_KEYBOARD_LL,
-                OnKeyBoardMessage,
-                Marshal.GetHINSTANCE(typeof(BackgroundApplication).Module),
+                _handler,
+                Marshal.GetHINSTANCE(GetType().Module),
                 0
             );
         }
@@ -69,11 +84,18 @@ namespace LiveShot.API.Background
         {
             if (nCode >= 0)
             {
-                int keycode = Marshal.ReadInt32(lParam);
+                int keyCode = Marshal.ReadInt32(lParam);
 
                 if (wParam == (IntPtr)WM_KEYDOWN)
                 {
-                    Debug.WriteLine(keycode);
+                    int generalKeyCode = int.Parse(_configuration.GetSection("Shortcuts")?["General"] ?? "0");
+
+                    if (generalKeyCode == keyCode)
+                    {
+                        _eventPipeline.Dispatch<CaptureScreenShotEvent>(null);
+
+                        return 1;
+                    }
                 }
             }
 
