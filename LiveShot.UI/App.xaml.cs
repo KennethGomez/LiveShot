@@ -59,9 +59,8 @@ namespace LiveShot.UI
             if (captureScreenView is null) 
                 return;
 
-            captureScreenView.Topmost = true;
             captureScreenView.Show();
-            captureScreenView.Topmost = false;
+            captureScreenView.Activate();
         }
 
         private void StartBackgroundApp()
