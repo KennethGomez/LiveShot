@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -10,6 +11,7 @@ using LiveShot.API.Background.ContextOptions;
 using LiveShot.API.Events;
 using LiveShot.API.Events.Application;
 using LiveShot.API.Events.Capture;
+using LiveShot.API.Utils;
 using LiveShot.UI.Views;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -42,7 +44,7 @@ namespace LiveShot.UI
             if (e.Args.Contains("--background"))
             {
                 StartBackgroundApp();
-                
+
                 Current.ShutdownMode = ShutdownMode.OnExplicitShutdown;
             }
             else
@@ -53,7 +55,11 @@ namespace LiveShot.UI
 
         private void StartCaptureScreenShot()
         {
-            ServiceProvider?.GetRequiredService<CaptureScreenView>().Show();
+            if (WindowUtils.IsOpen(typeof(CaptureScreenView))) return;
+
+            var captureScreenView = ServiceProvider?.GetRequiredService<CaptureScreenView>();
+
+            captureScreenView?.Show();
         }
 
         private void StartBackgroundApp()
