@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -7,8 +6,6 @@ using System.Threading;
 using System.Windows;
 using LiveShot.API;
 using LiveShot.API.Background;
-using LiveShot.API.Background.ContextOptions;
-using LiveShot.API.Events;
 using LiveShot.API.Events.Application;
 using LiveShot.API.Events.Capture;
 using LiveShot.API.Utils;
@@ -59,7 +56,12 @@ namespace LiveShot.UI
 
             var captureScreenView = ServiceProvider?.GetRequiredService<CaptureScreenView>();
 
-            captureScreenView?.Show();
+            if (captureScreenView is null) 
+                return;
+
+            captureScreenView.Topmost = true;
+            captureScreenView.Show();
+            captureScreenView.Topmost = false;
         }
 
         private void StartBackgroundApp()
