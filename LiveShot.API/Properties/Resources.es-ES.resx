@@ -102,4 +102,16 @@
     <data name="Upload.InvalidUpload.Type" xml:space="preserve">
         <value>El UploadType de la configuración ee la aplicacion es inválido</value>
     </data>
+    <data name="ContextMenu.CaptureScreenShot.Title" xml:space="preserve">
+        <value>Toma una nueva captura de pantalla</value>
+    </data>
+    <data name="ContextMenu.Exit.Title" xml:space="preserve">
+        <value>Salir</value>
+    </data>
+    <data name="ContextMenu.Configuration.Title" xml:space="preserve">
+        <value>Configuración</value>
+    </data>
+    <data name="NotifyIcon.Title" xml:space="preserve">
+        <value>LiveShot</value>
+    </data>
 </root>

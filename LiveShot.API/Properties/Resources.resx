@@ -103,4 +103,16 @@ CaptureScreen.CanvasButtons.Stroke</value>
     <data name="Upload.InvalidUpload.Type" xml:space="preserve">
         <value>Upload.InvalidUploadType</value>
     </data>
+    <data name="ContextMenu.CaptureScreenShot.Title" xml:space="preserve">
+        <value>ContextMenu.CaptureScreenShot.Title</value>
+    </data>
+    <data name="ContextMenu.Exit.Title" xml:space="preserve">
+        <value>ContextMenu.Exit.Title</value>
+    </data>
+    <data name="ContextMenu.Configuration.Title" xml:space="preserve">
+        <value>ContextMenu.Configuration.Title</value>
+    </data>
+    <data name="NotifyIcon.Title" xml:space="preserve">
+        <value>NotifyIcon.Title</value>
+    </data>
 </root>

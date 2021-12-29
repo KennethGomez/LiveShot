@@ -1,5 +1,7 @@
 ﻿using System.Linq;
 using System.Reflection;
+using LiveShot.API.Background;
+using LiveShot.API.Background.ContextOptions;
 using LiveShot.API.Drawing;
 using LiveShot.API.Upload;
 using LiveShot.API.Upload.Custom;
@@ -14,6 +16,7 @@ namespace LiveShot.API
         public static IServiceCollection ConfigureAPI(this IServiceCollection services, IConfiguration? configuration)
         {
             services.AddSingleton<IEventPipeline, EventPipeline>();
+            services.AddSingleton<IBackgroundApplication, BackgroundApplication>();
 
             if (configuration != null)
             {
@@ -43,6 +46,16 @@ namespace LiveShot.API
             foreach (var tool in drawingTools)
             {
                 services.AddSingleton(typeof(IDrawingTool), tool);
+            }
+
+            var contextOptions = Assembly
+                .GetExecutingAssembly()
+                .GetTypes()
+                .Where(a => a.GetInterfaces().Contains(typeof(IContextOption)) && !a.IsAbstract);
+
+            foreach (var option in contextOptions)
+            {
+                services.AddSingleton(typeof(IContextOption), option);
             }
 
             return services;

@@ -251,6 +251,33 @@ namespace LiveShot.API.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ContextMenu.CaptureScreenShot.Title.
+        /// </summary>
+        public static string ContextMenu_CaptureScreenShot_Title {
+            get {
+                return ResourceManager.GetString("ContextMenu.CaptureScreenShot.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ContextMenu.Configuration.Title.
+        /// </summary>
+        public static string ContextMenu_Configuration_Title {
+            get {
+                return ResourceManager.GetString("ContextMenu.Configuration.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ContextMenu.Exit.Title.
+        /// </summary>
+        public static string ContextMenu_Exit_Title {
+            get {
+                return ResourceManager.GetString("ContextMenu.Exit.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Exception.Message.
         /// </summary>
         public static string Exception_Message {
@@ -292,6 +319,15 @@ namespace LiveShot.API.Properties {
         public static string Imgur_InvalidClientIdException {
             get {
                 return ResourceManager.GetString("Imgur.InvalidClientIdException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NotifyIcon.Title.
+        /// </summary>
+        public static string NotifyIcon_Title {
+            get {
+                return ResourceManager.GetString("NotifyIcon.Title", resourceCulture);
             }
         }
         

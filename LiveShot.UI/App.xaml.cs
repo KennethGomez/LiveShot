@@ -1,9 +1,15 @@
 ﻿using System;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Windows;
 using LiveShot.API;
+using LiveShot.API.Background;
+using LiveShot.API.Background.ContextOptions;
+using LiveShot.API.Events;
+using LiveShot.API.Events.Application;
+using LiveShot.API.Events.Capture;
 using LiveShot.UI.Views;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,7 +19,7 @@ namespace LiveShot.UI
     /// <summary>
     ///     Interaction logic for App.xaml
     /// </summary>
-    public partial class App : Application
+    public partial class App
     {
         private IServiceProvider? ServiceProvider { get; set; }
 
@@ -32,7 +38,32 @@ namespace LiveShot.UI
                 serviceCollection.AddSingleton(Configuration);
 
             ServiceProvider = serviceCollection.BuildServiceProvider();
-            ServiceProvider.GetRequiredService<CaptureScreenView>().Show();
+
+            if (e.Args.Contains("--background"))
+            {
+                StartBackgroundApp();
+                
+                Current.ShutdownMode = ShutdownMode.OnExplicitShutdown;
+            }
+            else
+            {
+                StartCaptureScreenShot();
+            }
+        }
+
+        private void StartCaptureScreenShot()
+        {
+            ServiceProvider?.GetRequiredService<CaptureScreenView>().Show();
+        }
+
+        private void StartBackgroundApp()
+        {
+            ServiceProvider?.GetRequiredService<IBackgroundApplication>().Init();
+
+            var eventPipeline = ServiceProvider?.GetRequiredService<IEventPipeline>();
+
+            eventPipeline?.Subscribe<CaptureScreenShotEvent>(_ => StartCaptureScreenShot());
+            eventPipeline?.Subscribe<ShutdownApplicationEvent>(_ => Shutdown());
         }
 
         private void SetUICulture()

@@ -250,6 +250,33 @@ namespace LiveShot.API.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Toma una nueva captura de pantalla.
+        /// </summary>
+        internal static string ContextMenu_CaptureScreenShot_Title {
+            get {
+                return ResourceManager.GetString("ContextMenu.CaptureScreenShot.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Configuración.
+        /// </summary>
+        internal static string ContextMenu_Configuration_Title {
+            get {
+                return ResourceManager.GetString("ContextMenu.Configuration.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Salir.
+        /// </summary>
+        internal static string ContextMenu_Exit_Title {
+            get {
+                return ResourceManager.GetString("ContextMenu.Exit.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Excepción.
         /// </summary>
         internal static string Exception_Message {
@@ -291,6 +318,15 @@ namespace LiveShot.API.Properties {
         internal static string Imgur_InvalidClientIdException {
             get {
                 return ResourceManager.GetString("Imgur.InvalidClientIdException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LiveShot.
+        /// </summary>
+        internal static string NotifyIcon_Title {
+            get {
+                return ResourceManager.GetString("NotifyIcon.Title", resourceCulture);
             }
         }
         
