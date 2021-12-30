@@ -244,7 +244,6 @@ namespace LiveShot.UI.Controls.Canvas
                 SetLeft(Selection.Rectangle, Selection.Left);
                 SetTop(Selection.Rectangle, Selection.Top);
 
-                SizeLabel.Content = Selection.Label;
                 SizePanel.Visibility = Visibility.Visible;
             }
         }
@@ -269,6 +268,8 @@ namespace LiveShot.UI.Controls.Canvas
 
             SetTop(SizePanel, top);
             SetLeft(SizePanel, left);
+
+            SizeLabel.Content = Selection.Label;
         }
 
         private void ClearResizeMarks()
