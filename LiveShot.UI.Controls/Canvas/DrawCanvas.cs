@@ -192,5 +192,16 @@ namespace LiveShot.UI.Controls.Canvas
         {
             GetCanvasTool(tool ?? Tool)?.Unselect();
         }
+
+        public void Reset()
+        {
+            UnselectTool();
+            
+            Children.Clear();
+
+            DrawingStrokeThickness = 1;
+
+            Tool = CanvasTool.Default;
+        }
     }
 }

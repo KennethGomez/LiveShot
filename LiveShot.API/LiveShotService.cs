@@ -32,6 +32,11 @@ namespace LiveShot.API
             get => _activeActionButton;
             set
             {
+                if (value is null)
+                {
+                    _activeActionButton?.UpdateIconFill(Brushes.Black);
+                }
+                
                 _activeActionButton = value;
                 _activeActionButton?.UpdateIconFill(DrawCanvas?.DrawingColor ?? Brushes.Black);
             }

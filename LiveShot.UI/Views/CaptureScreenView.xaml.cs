@@ -4,11 +4,11 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using LiveShot.API;
+using LiveShot.API.Controls.Button;
 using LiveShot.API.Controls.ResizeMarker;
 using LiveShot.API.Drawing;
 using LiveShot.API.Events.Input;
@@ -16,9 +16,7 @@ using LiveShot.API.Events.Input.ResizeMarker;
 using LiveShot.API.Utils;
 using LiveShot.UI.Controls.Button;
 using Microsoft.Extensions.DependencyInjection;
-using Brushes = System.Windows.Media.Brushes;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
-using MouseEventArgs = System.Windows.Input.MouseEventArgs;
 using Panel = System.Windows.Controls.Panel;
 
 namespace LiveShot.UI.Views
@@ -32,6 +30,8 @@ namespace LiveShot.UI.Views
         private ExportWindowView? _exportWindow;
         private ActionButton? _activeTool;
         private Bitmap? _screenShot;
+
+        private readonly List<ActionButton> _actionButtons;
 
         public CaptureScreenView(
             IEventPipeline events,
@@ -63,10 +63,8 @@ namespace LiveShot.UI.Views
             CanvasRightPanel.With(events, Width, Height);
             CanvasBottomPanel.With(events, Width, Height);
 
-            var actionButtons = WindowUtils.FindVisualChildren<ActionButton>(SelectCanvas).ToList();
-
-            foreach (var actionButton in actionButtons)
-                actionButton.Click += (actual, _) => ActionButtonOnClick(actual, actionButtons);
+            _actionButtons = WindowUtils.FindVisualChildren<ActionButton>(SelectCanvas).ToList();
+            _actionButtons.ForEach(b => b.Click += ActionButtonOnClick);
 
             ColorPickerBtn.Click += ColorPickerBtnOnClick;
             UndoBtn.Click += UndoBtnOnClick;
@@ -92,6 +90,11 @@ namespace LiveShot.UI.Views
             e.Cancel = true;
 
             SelectCanvas.Reset();
+            DrawingCanvas.Reset();
+
+            _actionButtons.ForEach(b => b.IsActive = false);
+
+            _liveShotService.ActiveActionButton = null;
 
             Visibility = Visibility.Hidden;
         }
@@ -126,9 +129,9 @@ namespace LiveShot.UI.Views
             _activeTool?.UpdateIconFill(DrawingCanvas.DrawingColor);
         }
 
-        private void ActionButtonOnClick(object sender, IEnumerable<ActionButton> all)
+        private void ActionButtonOnClick(object sender, RoutedEventArgs routedEventArgs)
         {
-            foreach (var button in all)
+            foreach (var button in _actionButtons)
             {
                 if (button == sender)
                 {

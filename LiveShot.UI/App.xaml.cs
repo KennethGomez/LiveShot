@@ -64,6 +64,7 @@ namespace LiveShot.UI
             CaptureScreenView.CaptureScreen();
             CaptureScreenView.Show();
             CaptureScreenView.Activate();
+            CaptureScreenView.Focus();
         }
 
         private void StartBackgroundApp()
