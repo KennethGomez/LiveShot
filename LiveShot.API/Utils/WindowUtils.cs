@@ -31,7 +31,7 @@ namespace LiveShot.API.Utils
         
         public static bool IsOpen(Type window)
         {
-            return Application.Current.Windows.Cast<Window>().Any(x => x.GetType() == window);
+            return Application.Current.Windows.Cast<Window>().Any(x => x.GetType() == window && x.IsActive);
         }
     }
 }

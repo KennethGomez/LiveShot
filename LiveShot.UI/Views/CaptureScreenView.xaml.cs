@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Windows;
@@ -84,8 +85,15 @@ namespace LiveShot.UI.Views
                     ResizeMarkBottomLeft, ResizeMarkBottom, ResizeMarkBottomRight
                 }
             ) PrepareResizeMark(resizeMark);
+        }
 
-            CaptureScreen();
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            e.Cancel = true;
+
+            SelectCanvas.Reset();
+
+            Visibility = Visibility.Hidden;
         }
 
         private void PrepareResizeMark(Panel resizeMark)
@@ -146,7 +154,7 @@ namespace LiveShot.UI.Views
             DrawingCanvas.Undo();
         }
 
-        private void CaptureScreen()
+        public void CaptureScreen()
         {
             (int screenTop, int screenLeft, int screenWidth, int screenHeight) =
                 ((int, int, int, int))(Top, Left, Width, Height);
@@ -157,6 +165,7 @@ namespace LiveShot.UI.Views
             _screenShot = bitmap;
 
             SelectCanvas.Background = new ImageBrush(bitmapSource);
+
             _liveShotService.ScreenShot = bitmap;
         }
 

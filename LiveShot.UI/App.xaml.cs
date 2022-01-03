@@ -24,6 +24,8 @@ namespace LiveShot.UI
 
         private IConfiguration? Configuration { get; set; }
 
+        private CaptureScreenView? CaptureScreenView { get; set; }
+
         protected override void OnStartup(StartupEventArgs e)
         {
             LoadConfiguration();
@@ -37,6 +39,8 @@ namespace LiveShot.UI
                 serviceCollection.AddSingleton(Configuration);
 
             ServiceProvider = serviceCollection.BuildServiceProvider();
+
+            CaptureScreenView = ServiceProvider.GetRequiredService<CaptureScreenView>();
 
             if (e.Args.Contains("--background"))
             {
@@ -54,13 +58,12 @@ namespace LiveShot.UI
         {
             if (WindowUtils.IsOpen(typeof(CaptureScreenView))) return;
 
-            var captureScreenView = ServiceProvider?.GetRequiredService<CaptureScreenView>();
-
-            if (captureScreenView is null) 
+            if (CaptureScreenView is null) 
                 return;
 
-            captureScreenView.Show();
-            captureScreenView.Activate();
+            CaptureScreenView.CaptureScreen();
+            CaptureScreenView.Show();
+            CaptureScreenView.Activate();
         }
 
         private void StartBackgroundApp()

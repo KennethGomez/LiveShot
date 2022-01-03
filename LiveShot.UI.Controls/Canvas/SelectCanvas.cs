@@ -655,12 +655,20 @@ namespace LiveShot.UI.Controls.Canvas
 
         private void OnKeyUp(Event e)
         {
-            UpdatePanels(Visibility.Visible, true);
+            if (Selection is not null)
+                UpdatePanels(Visibility.Visible, true);
         }
 
         private void OnCursorUpdate(Event e)
         {
             Cursor = GetCursor(PointToScreen(Mouse.GetPosition(this)));
+        }
+
+        public void Reset()
+        {
+            Selection = null;
+
+            UpdateSelection();
         }
     }
 }
