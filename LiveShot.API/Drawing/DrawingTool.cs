@@ -9,6 +9,8 @@ namespace LiveShot.API.Drawing
 
         public abstract CanvasTool Tool { get; }
 
+        public virtual void Select() { }
+
         public virtual UIElement? OnMouseLeftButtonDown(MouseButtonEventArgs e) => null;
         public virtual UIElement? OnMouseLeftButtonUp(MouseButtonEventArgs e) => null;
         public virtual UIElement? OnMouseMove(MouseEventArgs e) => null;

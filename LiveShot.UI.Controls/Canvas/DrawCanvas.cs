@@ -23,7 +23,9 @@ namespace LiveShot.UI.Controls.Canvas
 
         private readonly IList<UIElement> _history;
         private readonly Cursor[] _highlightCursors;
-        private readonly Cursor _eyeDropperCursor = GetCursor<Rectangle>(Brushes.White, 1, false, 1, new Point(0.5, 0.5));
+
+        private readonly Cursor _eyeDropperCursor =
+            GetCursor<Rectangle>(Brushes.White, 1, false, 1, new Point(0.5, 0.5));
 
         private Cursor[] _cursors;
         private int _drawingStrokeThickness = 1;
@@ -42,7 +44,7 @@ namespace LiveShot.UI.Controls.Canvas
 
         public override Brush DrawingColor
         {
-            get => (Brush) GetValue(DrawingColorProperty);
+            get => (Brush)GetValue(DrawingColorProperty);
             set
             {
                 SetValue(DrawingColorProperty, value);
@@ -59,7 +61,7 @@ namespace LiveShot.UI.Controls.Canvas
                 _drawingStrokeThickness = value >= 1
                     ? value >= 16
                         ? 16
-                        : (int) value
+                        : (int)value
                     : 1;
 
                 GetCanvasTool()?.UpdateThickness(_drawingStrokeThickness);
@@ -188,6 +190,11 @@ namespace LiveShot.UI.Controls.Canvas
             }
         }
 
+        public void SelectTool(CanvasTool tool)
+        {
+            GetCanvasTool(tool)?.Select();
+        }
+
         public void UnselectTool(CanvasTool? tool = null)
         {
             GetCanvasTool(tool ?? Tool)?.Unselect();
@@ -196,7 +203,7 @@ namespace LiveShot.UI.Controls.Canvas
         public void Reset()
         {
             UnselectTool();
-            
+
             Children.Clear();
 
             DrawingStrokeThickness = 1;

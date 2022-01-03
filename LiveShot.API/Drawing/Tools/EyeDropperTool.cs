@@ -11,8 +11,8 @@ namespace LiveShot.API.Drawing.Tools
 {
     public class EyeDropperTool : DrawingTool
     {
-        private readonly Rectangle[,] _magnifier;
-        private readonly Grid _magnifierGrid;
+        private Rectangle[,]? _magnifier;
+        private Grid? _magnifierGrid;
 
         private const int MagnifierSize = 3;
         private const int MagnifierRectangleSize = MagnifierSize * 2;
@@ -24,7 +24,10 @@ namespace LiveShot.API.Drawing.Tools
         public EyeDropperTool(ILiveShotService liveShotService)
         {
             _liveShotService = liveShotService;
+        }
 
+        public override void Select()
+        {
             _magnifier = GetMagnifier();
             _magnifierGrid = GetMagnifierGrid();
 
@@ -33,6 +36,8 @@ namespace LiveShot.API.Drawing.Tools
 
         private void InitMagnifier()
         {
+            if (_magnifier is null || _magnifierGrid is null) return;
+            
             for (var i = 0; i < _magnifier.GetLength(0); i++)
             {
                 for (var j = 0; j < _magnifier.GetLength(1); j++)
@@ -92,8 +97,10 @@ namespace LiveShot.API.Drawing.Tools
         {
             if (_liveShotService.ScreenShot is null ||
                 _liveShotService.ScreenShotBytes is null ||
-                _liveShotService.DrawCanvas is not { } drawCanvas
-            ) return null;
+                _liveShotService.DrawCanvas is not { } drawCanvas ||
+                _magnifier is null || 
+                _magnifierGrid is null
+               ) return null;
 
             if (!drawCanvas.Children.Contains(_magnifierGrid))
                 drawCanvas.Children.Add(_magnifierGrid);
@@ -139,6 +146,9 @@ namespace LiveShot.API.Drawing.Tools
                 return;
 
             canvas.Children.Remove(_magnifierGrid);
+
+            _magnifier = null;
+            _magnifierGrid = null;
         }
 
         private void OnRectangleMouseUp(object sender, MouseButtonEventArgs _)

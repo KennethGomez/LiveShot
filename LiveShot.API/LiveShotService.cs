@@ -9,23 +9,27 @@ namespace LiveShot.API
 {
     public class LiveShotService : ILiveShotService
     {
-        private byte[]? _screenShotBytes;
         private IActionButton? _activeActionButton;
+        private Bitmap? _screenShot;
 
         public System.Windows.Controls.Canvas? SelectCanvas { get; set; }
         public AbstractDrawCanvas? DrawCanvas { get; set; }
 
-        public Bitmap? ScreenShot { get; set; }
-
-        public byte[]? ScreenShotBytes
+        public Bitmap? ScreenShot
         {
-            get
+            get => _screenShot;
+            set
             {
-                if (ScreenShot is not { } screenShot) return null;
+                _screenShot = value;
 
-                return _screenShotBytes ??= ImageUtils.GetBytes(screenShot);
+                if (_screenShot is not null)
+                {
+                    ScreenShotBytes = ImageUtils.GetBytes(_screenShot);
+                }
             }
         }
+
+        public byte[]? ScreenShotBytes { get; private set; }
 
         public IActionButton? ActiveActionButton
         {

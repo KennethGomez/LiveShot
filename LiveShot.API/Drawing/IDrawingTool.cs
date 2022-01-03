@@ -7,6 +7,7 @@ namespace LiveShot.API.Drawing
     {
         CanvasTool Tool { get; }
 
+        void Select();
         UIElement? OnMouseLeftButtonDown(MouseButtonEventArgs e);
         UIElement? OnMouseLeftButtonUp(MouseButtonEventArgs e);
         UIElement? OnMouseMove(MouseEventArgs e);

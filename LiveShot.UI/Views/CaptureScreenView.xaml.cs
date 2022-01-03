@@ -137,12 +137,23 @@ namespace LiveShot.UI.Views
                 {
                     button.IsActive = !button.IsActive;
 
-                    DrawingCanvas.Tool = button.IsActive ? button.ActiveTool : CanvasTool.Default;
-                    _liveShotService.ActiveActionButton = button;
+                    if (button.IsActive)
+                    {
+                        DrawingCanvas.Tool = button.IsActive ? button.ActiveTool : CanvasTool.Default;
+                        DrawingCanvas.SelectTool(button.ActiveTool);
 
-                    _activeTool = button;
+                        _liveShotService.ActiveActionButton = button;
 
-                    continue;
+                        _activeTool = button;
+
+                        continue;
+                    }
+
+                    DrawingCanvas.Tool = CanvasTool.Default;
+
+                    _liveShotService.ActiveActionButton = null;
+
+                    _activeTool = null;
                 }
 
                 button.IsActive = false;
