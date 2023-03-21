@@ -1,7 +1,5 @@
 <p align="center">
   <img src="https://img.shields.io/badge/state-development-blue" alt="State"/> 
-  <img src="https://img.shields.io/badge/.NET-5-blue"  alt=".NET Version"/> 
-  <img src="https://img.shields.io/github/commit-activity/m/KennethGomez/LiveShot"  alt="Commit activity"/> 
   <img src="https://img.shields.io/github/v/tag/KennethGomez/LiveShot"  alt="Latest tag"/> 
   <img src="https://img.shields.io/github/contributors/KennethGomez/LiveShot"  alt="Contributor count"/>
 </p>
@@ -29,25 +27,25 @@ With this tool you can select a color from the screenshot you took with the help
 If you press `Shift` key when clicking a pixel to pick a color it will copy the hexadecimal color value to you clipboard.
 
 ## Development
-- Cropping screenshot `100%`
-- Resizing screenshot `100%`
-- Exporting screenshots `66%`
-  - Export to imgur `100%`
-  - Save to file `100%`
-  - Copy to clipboard `100%`
-  - Search image on Google `100%`
+- Cropping screenshot `-`
+- Resizing screenshot `-`
+- Exporting screenshots `-`
+  - Export to imgur `-`
+  - Save to file `-`
+  - Copy to clipboard `-`
+  - Search image on Google `-`
   - Print image `-`
   - Share image on social networks `-`
-- Drawing tools `100%`
-  - Pencil `100%`
-  - Line `100%`
-  - Arrow `100%`
-  - Rectangle `100%`
-  - Highlighter `100%`
-  - Text `100%`
-  - Eye dropper `100%`
-  - Color picker `100%`
-  - Undo `100%`
+- Drawing tools `-`
+  - Pencil `-`
+  - Line `-`
+  - Arrow `-`
+  - Rectangle `-`
+  - Highlighter `-`
+  - Text `-`
+  - Eye dropper `-`
+  - Color picker `-`
+  - Undo `-`
 - Background app
   - Configuration window `-`
   - Open app with shortcut `-`
