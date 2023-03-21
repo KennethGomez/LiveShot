@@ -1,18 +1,20 @@
-<p align="center">
-  <img src="https://img.shields.io/badge/state-development-blue" alt="State"/> 
-  <img src="https://img.shields.io/github/v/tag/KennethGomez/LiveShot"  alt="Latest tag"/> 
-  <img src="https://img.shields.io/github/contributors/KennethGomez/LiveShot"  alt="Contributor count"/>
-</p>
-
 # LiveShot
+
+![License](https://img.shields.io/github/license/KennethGomez/LiveShot)
+![State](https://img.shields.io/badge/state-development-orange)
+![Latest tag](https://img.shields.io/github/v/tag/KennethGomez/LiveShot)
+![Contributor count](https://img.shields.io/github/contributors/KennethGomez/LiveShot)
+
 Tool to make enhanced screenshots. Inspired on LightShot
 
 ## How it works
+
 With this tool you can select some rectangle on your screen and then draw on it like you can do on LightShot.
 
 ![](https://i.imgur.com/KqSmVhw.png)
 
 ### Key binding resizing
+
 Whenever you crop a screenshot you can move or resize it with the arrow keys.
 - If you press these keys with `Shift` (no matter which shift) it will enter resize mode.
 - If you press these keys with `Control` (no matter wich control) it will do resizing or moving every 10 pixels.
