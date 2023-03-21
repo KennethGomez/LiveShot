@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <link href="/src/styles.css" rel="stylesheet"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Tauri App</title>
+    <script defer src="/src/main.ts" type="module"></script>
+    <style>
+        .logo.vite:hover {
+            filter: drop-shadow(0 0 2em #747bff);
+        }
+
+        .logo.typescript:hover {
+            filter: drop-shadow(0 0 2em #2d79c7);
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <h1>Welcome to Tauri!</h1>
+
+    <div class="row">
+        <a href="https://vitejs.dev" target="_blank">
+            <img alt="Vite logo" class="logo vite" src="/src/assets/vite.svg"/>
+        </a>
+        <a href="https://tauri.app" target="_blank">
+            <img
+                    alt="Tauri logo"
+                    class="logo tauri"
+                    src="/src/assets/tauri.svg"
+            />
+        </a>
+        <a href="https://www.typescriptlang.org/docs" target="_blank">
+            <img
+                    alt="typescript logo"
+                    class="logo typescript"
+                    src="/src/assets/typescript.svg"
+            />
+        </a>
+    </div>
+
+    <p>Click on the Tauri logo to learn more about the framework</p>
+
+    <div class="row">
+        <div>
+            <input id="greet-input" placeholder="Enter a name..."/>
+            <button id="greet-button" type="button">Greet</button>
+        </div>
+    </div>
+
+    <p id="greet-msg"></p>
+</div>
+</body>
+</html>
