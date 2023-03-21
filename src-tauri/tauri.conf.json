@@ -16,6 +16,9 @@
       "shell": {
         "all": false,
         "open": true
+      },
+      "globalShortcut": {
+        "all": true
       }
     },
     "bundle": {
@@ -39,8 +42,9 @@
     "windows": [
       {
         "fullscreen": false,
-        "resizable": true,
-        "title": "liveshot",
+        "decorations": false,
+        "resizable": false,
+        "title": "LiveShot",
         "width": 800,
         "height": 600
       }
