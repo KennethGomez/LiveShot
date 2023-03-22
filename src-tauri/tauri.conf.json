@@ -45,9 +45,10 @@
         "decorations": false,
         "resizable": false,
         "title": "LiveShot",
-        "visible": false,
+        "visible": true,
         "width": 800,
-        "height": 600
+        "height": 600,
+        "transparent": true
       }
     ]
   }

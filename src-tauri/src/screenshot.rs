@@ -3,23 +3,36 @@ use std::time::{Duration, Instant};
 use base64::engine::general_purpose::STANDARD as base64_engine;
 use base64::Engine;
 use scrap::{Display, Frame};
-use tauri::Window;
+
+const MAX_BLACK_FRAME_RETRIES: u8 = 3;
 
 use crate::bitmap::BitmapEncoder;
 
 /// Returns a vector of screen capture buffers
-pub fn capture_all(window: &Window) -> Vec<Vec<u8>> {
-    let screen_count = window.available_monitors().unwrap().len();
-    let mut screens = Vec::with_capacity(screen_count);
+pub fn capture_all() -> Vec<Vec<u8>> {
+    let displays = Display::all().unwrap();
+    let mut screens = Vec::with_capacity(displays.len());
 
-    for display in Display::all().unwrap() {
+    for display in displays {
         let mut capturer = scrap::Capturer::new(display).unwrap();
         let (w, h) = (capturer.width(), capturer.height());
+
+        let mut current_try = 0;
 
         // Use loop to capture the first non-error frame
         loop {
             let buffer = match capturer.frame() {
-                Ok(buffer) => buffer,
+                Ok(buffer) => {
+                    if buffer.iter().all(|b| b.eq(&0)) && current_try <= MAX_BLACK_FRAME_RETRIES {
+                        println!("Black screenshot detected... retrying...");
+
+                        current_try += 1;
+
+                        continue;
+                    }
+
+                    buffer
+                }
                 Err(error) => {
                     if error.kind() == std::io::ErrorKind::WouldBlock {
                         // Keep spinning.

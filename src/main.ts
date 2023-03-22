@@ -1,26 +1,18 @@
-import {listen} from "@tauri-apps/api/event";
 import {invoke} from "@tauri-apps/api";
 
 interface ScreenshotCapturedPayload {
     images: string[]
 }
 
-// Listen only once for screenshot captured event
-const unlisten = await listen<ScreenshotCapturedPayload>(
-    'screenshot-captured',
-    (event) => {
-        for (const base64 of event.payload.images) {
-            const img = document.createElement("img")
+const payload = await invoke<ScreenshotCapturedPayload>('capture_screenshots')
 
-            img.src = `data:image/bmp;base64,${base64}`
+document.body.classList.remove('not-ready')
 
-            document.body.appendChild(img)
-        }
+for (const base64 of payload.images) {
+    const img = document.createElement("img")
 
-        // Stop listening event after catched
-        unlisten();
+    img.classList.add('screenshot')
+    img.src = `data:image/bmp;base64,${base64}`
 
-        // Open window
-        invoke('show_window')
-    }
-)
+    document.body.appendChild(img)
+}

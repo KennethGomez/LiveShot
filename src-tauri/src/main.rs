@@ -1,35 +1,22 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use tauri::{AppHandle, Manager, Window};
+use crate::screenshot::ScreenshotCapturedPayload;
 
-mod screenshot;
 mod bitmap;
+mod screenshot;
 
 #[tauri::command]
-fn show_window(window: Window) {
-    window.show().unwrap()
+fn capture_screenshots() -> ScreenshotCapturedPayload {
+    let screens = screenshot::capture_all();
+
+    println!("Found and captured {} monitor(s)", screens.len());
+
+    screenshot::get_payload(screens)
 }
 
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![show_window])
-        .build(tauri::generate_context!())
-        .expect("error while running tauri application")
-        .run(|app, event| match event {
-            tauri::RunEvent::Ready => bootstrap(app),
-            _ => {}
-        });
-}
-
-fn bootstrap(app: &AppHandle) {
-    let window = app.get_window("main").unwrap();
-    let handle = app.app_handle();
-
-    std::thread::spawn(move || {
-        let screens = screenshot::capture_all(&window);
-
-        println!("Found and captured {} monitor(s)", screens.len());
-
-        handle.emit_all("screenshot-captured", screenshot::get_payload(screens))
-    });
+        .invoke_handler(tauri::generate_handler![capture_screenshots])
+        .run(tauri::generate_context!())
+        .expect("error while running tauri application");
 }
