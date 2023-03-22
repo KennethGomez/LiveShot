@@ -3,6 +3,7 @@
 use tauri::{AppHandle, Manager, Window};
 
 mod screenshot;
+mod bitmap;
 
 #[tauri::command]
 fn show_window(window: Window) {
@@ -23,8 +24,6 @@ fn main() {
 fn bootstrap(app: &AppHandle) {
     let window = app.get_window("main").unwrap();
     let handle = app.app_handle();
-
-    window.open_devtools();
 
     std::thread::spawn(move || {
         let screens = screenshot::capture_all(&window);

@@ -2,10 +2,10 @@ use std::time::{Duration, Instant};
 
 use base64::engine::general_purpose::STANDARD as base64_engine;
 use base64::Engine;
-use image::codecs::bmp::BmpEncoder;
-use image::{ColorType, ImageEncoder};
 use scrap::{Display, Frame};
 use tauri::Window;
+
+use crate::bitmap::BitmapEncoder;
 
 /// Returns a vector of screen capture buffers
 pub fn capture_all(window: &Window) -> Vec<Vec<u8>> {
@@ -32,7 +32,7 @@ pub fn capture_all(window: &Window) -> Vec<Vec<u8>> {
                 }
             };
 
-            screens.push(encode_buffer(buffer, w, h));
+            screens.push(encode_buffer(buffer, w as u32, h as u32));
 
             break;
         }
@@ -42,30 +42,14 @@ pub fn capture_all(window: &Window) -> Vec<Vec<u8>> {
 }
 
 /// Encodes buffer with PNG
-fn encode_buffer(buffer: Frame, w: usize, h: usize) -> Vec<u8> {
-    let now = Instant::now();
-    // Convert from ARGB into RGB image
-    let mut flipped = Vec::with_capacity(w * h * 3);
-    let stride = buffer.len() / h;
-
-    for y in 0..h {
-        for x in 0..w {
-            let i = stride * y + 4 * x;
-
-            flipped.extend_from_slice(&[buffer[i + 2], buffer[i + 1], buffer[i]]);
-        }
-    }
-
-    println!("Flipping: {:?}", now.elapsed());
+fn encode_buffer(buffer: Frame, width: u32, height: u32) -> Vec<u8> {
     let now = Instant::now();
 
     let mut output = Vec::new();
 
-    let encoder = BmpEncoder::new(&mut output);
+    let mut encoder = BitmapEncoder::new(&mut output);
 
-    encoder
-        .write_image(&flipped, w as u32, h as u32, ColorType::Rgb8)
-        .unwrap();
+    encoder.encode_exact(&buffer, width, height).unwrap();
 
     println!("Encoding: {:?}", now.elapsed());
 
