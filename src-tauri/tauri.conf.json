@@ -17,6 +17,10 @@
         "all": false,
         "open": true
       },
+      "window": {
+        "close": true,
+        "setFocus": true
+      },
       "globalShortcut": {
         "all": true
       }
