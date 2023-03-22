@@ -1,10 +1,11 @@
 import {invoke} from "@tauri-apps/api";
+import {appWindow} from "@tauri-apps/api/window";
 
 interface ScreenshotCapturedPayload {
     images: string[]
 }
 
-const payload = await invoke<ScreenshotCapturedPayload>('capture_screenshots')
+const payload = await invoke<ScreenshotCapturedPayload>('get_screenshots')
 
 document.body.classList.remove('not-ready')
 
@@ -16,3 +17,5 @@ for (const base64 of payload.images) {
 
     document.body.appendChild(img)
 }
+
+await appWindow.setFocus()
