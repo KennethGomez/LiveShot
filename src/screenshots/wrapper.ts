@@ -1,4 +1,4 @@
-import {appWindow, Monitor, PhysicalPosition, PhysicalSize} from '@tauri-apps/api/window';
+import {appWindow, Monitor, PhysicalPosition, PhysicalSize, primaryMonitor} from '@tauri-apps/api/window';
 
 export class ScreenshotWrapper {
     public constructor(
@@ -16,6 +16,8 @@ export class ScreenshotWrapper {
 
         let currentX = 0;
 
+        const scaleFactor = (await primaryMonitor())?.scaleFactor;
+
         for (const monitor of monitors.sort((a, b) => a.position.x - b.position.x)) {
             if (monitor.name === null) continue;
 
@@ -24,10 +26,15 @@ export class ScreenshotWrapper {
             // TODO: Handle non existing screenshot for that monitor
             if (screenshot === undefined) continue;
 
+            const monitorSize = monitor.size.toLogical(scaleFactor ?? monitor.scaleFactor);
+
             screenshot.style.left = currentX + 'px';
             screenshot.style.top = monitor.position.y + 'px';
 
-            currentX += monitor.size.width;
+            screenshot.style.width = monitorSize.width + 'px';
+            screenshot.style.height = monitorSize.height + 'px';
+
+            currentX += monitorSize.width;
 
             elements.push(screenshot);
         }
