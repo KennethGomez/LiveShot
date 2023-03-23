@@ -1,0 +1,18 @@
+[package]
+name = "scrap"
+description = "Screen capture made easy."
+version = "0.5.0"
+repository = "https://github.com/quadrupleslap/scrap"
+documentation = "https://docs.rs/scrap"
+keywords = ["screen", "capture", "record"]
+license = "MIT"
+authors = ["Ram <quadrupleslap@gmail.com>"]
+
+[dependencies]
+block = "0.1"
+cfg-if = "0.1"
+libc = "0.2"
+winapi = "0.2"
+
+[dev-dependencies]
+repng = "0.2"
