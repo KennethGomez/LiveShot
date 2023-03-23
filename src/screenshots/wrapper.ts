@@ -7,17 +7,16 @@ export class ScreenshotWrapper {
     }
 
     public async displayScreenshots(screenshots: Map<string, HTMLImageElement>, monitors: Monitor[]): Promise<void> {
-        const xMin = Math.min(...monitors.map(m => m.position.x))
-        const yMin = Math.min(...monitors.map(m => m.position.y))
-        const xMax = Math.min(...monitors.map(m => m.position.x + m.size.width))
-        const yMax = Math.min(...monitors.map(m => m.position.y + m.size.height))
-
-        await appWindow.setPosition(new PhysicalPosition(xMin, yMin));
-        await appWindow.setSize(new PhysicalSize(xMax - xMin, yMax - yMin));
+        const xMin = Math.min(...monitors.map(m => m.position.x));
+        const yMin = Math.min(...monitors.map(m => m.position.y));
+        const xMax = Math.max(...monitors.map(m => m.position.x + m.size.width));
+        const yMax = Math.max(...monitors.map(m => m.position.y + m.size.height));
 
         const elements = [];
 
-        for (const monitor of monitors) {
+        let currentX = 0;
+
+        for (const monitor of monitors.sort((a, b) => a.position.x - b.position.x)) {
             if (monitor.name === null) continue;
 
             const screenshot = screenshots.get(monitor.name);
@@ -25,13 +24,18 @@ export class ScreenshotWrapper {
             // TODO: Handle non existing screenshot for that monitor
             if (screenshot === undefined) continue;
 
-            screenshot.style.left = monitor.position.x + 'px';
+            screenshot.style.left = currentX + 'px';
             screenshot.style.top = monitor.position.y + 'px';
 
-            elements.push(screenshot)
+            currentX += monitor.size.width;
+
+            elements.push(screenshot);
         }
 
-        this._element.append(...elements)
+        this._element.append(...elements);
+
+        await appWindow.setPosition(new PhysicalPosition(xMin, yMin));
+        await appWindow.setSize(new PhysicalSize(xMax - xMin, yMax - yMin));
     }
 
     public get element(): HTMLElement {

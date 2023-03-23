@@ -1,4 +1,4 @@
-import {appWindow, availableMonitors, currentMonitor, LogicalPosition, LogicalSize} from '@tauri-apps/api/window';
+import {appWindow, availableMonitors} from '@tauri-apps/api/window';
 import {ScreenshotLoader} from './screenshots/loader';
 import {KeyboardEvents} from './keyboard/events';
 import {ScreenshotWrapper} from './screenshots/wrapper';
@@ -38,9 +38,3 @@ class LiveShot {
 const app = new LiveShot();
 
 await app.init();
-
-console.log(await availableMonitors());
-console.log(await currentMonitor());
-
-await appWindow.setPosition(new LogicalPosition(0, 0));
-await appWindow.setSize(new LogicalSize(1920 * 2, 1080));
