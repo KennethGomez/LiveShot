@@ -19,7 +19,9 @@
       },
       "window": {
         "close": true,
-        "setFocus": true
+        "setFocus": true,
+        "setSize": true,
+        "setPosition": true
       },
       "globalShortcut": {
         "all": true
@@ -45,7 +47,7 @@
     },
     "windows": [
       {
-        "fullscreen": true,
+        "fullscreen": false,
         "decorations": false,
         "resizable": false,
         "title": "LiveShot",

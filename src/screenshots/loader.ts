@@ -8,20 +8,18 @@ export class ScreenshotLoader {
     ) {
     }
 
-    public async load(): Promise<HTMLImageElement[]> {
-        const images: HTMLImageElement[] = [];
+    public async load(): Promise<Map<string, HTMLImageElement>> {
+        const images: Map<string, HTMLImageElement> = new Map();
 
         const payload = await invoke<ScreenshotCapturedPayload>(this._resolveScreenshotsCommand);
 
         for (const {name, image} of payload.screenshots) {
             const imageElement = document.createElement('img');
 
-            console.log(name)
-
             imageElement.classList.add(SCREENSHOT_CLASS);
             imageElement.src = `data:image/bmp;base64,${image}`;
 
-            images.push(imageElement)
+            images.set(name, imageElement)
         }
 
         return images;
