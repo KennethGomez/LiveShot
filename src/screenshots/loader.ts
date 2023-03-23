@@ -13,11 +13,13 @@ export class ScreenshotLoader {
 
         const payload = await invoke<ScreenshotCapturedPayload>(this._resolveScreenshotsCommand);
 
-        for (const base64 of payload.images) {
+        for (const {name, image} of payload.screenshots) {
             const imageElement = document.createElement('img');
 
+            console.log(name)
+
             imageElement.classList.add(SCREENSHOT_CLASS);
-            imageElement.src = `data:image/bmp;base64,${base64}`;
+            imageElement.src = `data:image/bmp;base64,${image}`;
 
             images.push(imageElement)
         }

@@ -1,3 +1,8 @@
+interface ScreenshotPayload {
+    name: string;
+    image: string;
+}
+
 interface ScreenshotCapturedPayload {
-    images: string[];
+    screenshots: ScreenshotPayload[];
 }

@@ -4,16 +4,23 @@ use base64::engine::general_purpose::STANDARD as base64_engine;
 use base64::Engine;
 use scrap::{Display, Frame};
 
-const MAX_BLACK_FRAME_RETRIES: u8 = 3;
-
 use crate::bitmap::BitmapEncoder;
 
+const MAX_BLACK_FRAME_RETRIES: u8 = 3;
+
+pub struct Screenshot {
+    display: String,
+    data: Vec<u8>,
+}
+
 /// Returns a vector of screen capture buffers
-pub fn capture_all() -> Vec<Vec<u8>> {
+pub fn capture_all() -> Vec<Screenshot> {
     let displays = Display::all().unwrap();
     let mut screens = Vec::with_capacity(displays.len());
 
     for display in displays {
+        let display_name = &display.name();
+
         let mut capturer = scrap::Capturer::new(display).unwrap();
         let (w, h) = (capturer.width(), capturer.height());
 
@@ -45,7 +52,10 @@ pub fn capture_all() -> Vec<Vec<u8>> {
                 }
             };
 
-            screens.push(encode_buffer(buffer, w as u32, h as u32));
+            screens.push(Screenshot {
+                display: display_name.clone(),
+                data: encode_buffer(buffer, w as u32, h as u32),
+            });
 
             break;
         }
@@ -70,15 +80,24 @@ fn encode_buffer(buffer: Frame, width: u32, height: u32) -> Vec<u8> {
 }
 
 #[derive(Clone, serde::Serialize)]
-pub struct ScreenshotCapturedPayload {
-    images: Vec<String>,
+pub struct ScreenshotPayload {
+    name: String,
+    image: String,
 }
 
-pub fn get_payload(screens: Vec<Vec<u8>>) -> ScreenshotCapturedPayload {
+#[derive(Clone, serde::Serialize)]
+pub struct ScreenshotCapturedPayload {
+    screenshots: Vec<ScreenshotPayload>,
+}
+
+pub fn get_payload(screens: Vec<Screenshot>) -> ScreenshotCapturedPayload {
     ScreenshotCapturedPayload {
-        images: screens
+        screenshots: screens
             .iter()
-            .map(|screen| base64_engine.encode(screen))
+            .map(|screen| ScreenshotPayload {
+                name: screen.display.clone(),
+                image: base64_engine.encode(&screen.data),
+            })
             .collect(),
     }
 }

@@ -1,4 +1,4 @@
-import {appWindow} from '@tauri-apps/api/window';
+import {appWindow, availableMonitors} from '@tauri-apps/api/window';
 import {ScreenshotLoader} from './screenshots/loader';
 import {KeyboardEvents} from './keyboard/events';
 
@@ -31,3 +31,5 @@ class LiveShot {
 const app = new LiveShot();
 
 await app.init();
+
+console.log(await availableMonitors())
