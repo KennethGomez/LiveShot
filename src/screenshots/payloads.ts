@@ -1,0 +1,3 @@
+interface ScreenshotCapturedPayload {
+    images: string[];
+}

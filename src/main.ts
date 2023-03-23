@@ -1,29 +1,33 @@
-import {invoke} from "@tauri-apps/api";
-import {appWindow} from "@tauri-apps/api/window";
+import {appWindow} from '@tauri-apps/api/window';
+import {ScreenshotLoader} from './screenshots/loader';
+import {KeyboardEvents} from './keyboard/events';
 
-interface ScreenshotCapturedPayload {
-    images: string[]
-}
+const NOT_READY_CLASS: string = 'not-ready';
+const EXIT_KEY: string = 'Escape';
 
-const EXIT_KEY = 'Escape'
+class LiveShot {
+    private readonly _screenshots: ScreenshotLoader;
+    private readonly _keyboard: KeyboardEvents;
 
-const payload = await invoke<ScreenshotCapturedPayload>('get_screenshots')
-
-document.body.classList.remove('not-ready')
-
-for (const base64 of payload.images) {
-    const img = document.createElement("img")
-
-    img.classList.add('screenshot')
-    img.src = `data:image/bmp;base64,${base64}`
-
-    document.body.appendChild(img)
-}
-
-await appWindow.setFocus()
-
-document.addEventListener('keydown', async (event) => {
-    if (event.key == EXIT_KEY) {
-        await appWindow.close()
+    public constructor() {
+        this._screenshots = new ScreenshotLoader('get_screenshots');
+        this._keyboard = new KeyboardEvents();
     }
-})
+
+    public async init(): Promise<void> {
+        const elements = await this._screenshots.load();
+
+        document.body.classList.remove(NOT_READY_CLASS);
+        document.body.append(...elements);
+
+        this._keyboard.registerWindowEvent(EXIT_KEY, async () => {
+            await appWindow.close();
+        });
+
+        this._keyboard.initWindowEvents();
+    }
+}
+
+const app = new LiveShot();
+
+await app.init();
