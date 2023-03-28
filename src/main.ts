@@ -32,8 +32,6 @@ class LiveShot {
         });
 
         this._keyboard.initWindowEvents();
-
-        // TODO: set always on top
     }
 }
 

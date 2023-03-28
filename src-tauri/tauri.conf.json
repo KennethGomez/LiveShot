@@ -54,7 +54,8 @@
         "visible": true,
         "width": 0,
         "height": 0,
-        "transparent": true
+        "transparent": true,
+        "alwaysOnTop": true
       }
     ]
   }
