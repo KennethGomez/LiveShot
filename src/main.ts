@@ -1,40 +1,54 @@
 import {appWindow, availableMonitors} from '@tauri-apps/api/window';
-import {ScreenshotLoader} from './screenshots/loader';
+import {ScreenshotListener} from './screenshots/loader';
 import {KeyboardEvents} from './keyboard/events';
 import {ScreenshotWrapper} from './screenshots/wrapper';
 
 const NOT_READY_CLASS: string = 'not-ready';
 const EXIT_KEY: string = 'Escape';
 
-class LiveShot {
-    private readonly _screenshotLoader: ScreenshotLoader;
+export class LiveShot {
+    private readonly _screenshotListener: ScreenshotListener;
     private readonly _screenshotWrapper: ScreenshotWrapper;
     private readonly _keyboard: KeyboardEvents;
 
+    public static Instance = new LiveShot();
+
     public constructor() {
-        this._screenshotLoader = new ScreenshotLoader('get_screenshots');
+        this._screenshotListener = new ScreenshotListener('screenshots');
         this._screenshotWrapper = new ScreenshotWrapper(document.body);
         this._keyboard = new KeyboardEvents();
     }
 
     public async init(): Promise<void> {
-        const elements = await this._screenshotLoader.load();
+        await this._screenshotListener.listen();
 
-        await this._screenshotWrapper.displayScreenshots(
-            elements, await availableMonitors()
-        );
-
-        // Remove not ready class from wrapper
-        this._screenshotWrapper.element.classList.remove(NOT_READY_CLASS);
+        await this._preventClose();
 
         this._keyboard.registerWindowEvent(EXIT_KEY, async () => {
-            await appWindow.close();
+            this._screenshotWrapper.element.classList.add(NOT_READY_CLASS);
+
+            await appWindow.hide();
         });
 
         this._keyboard.initWindowEvents();
     }
+
+    private async _preventClose() {
+        await appWindow.onCloseRequested(async (e) => {
+            e.preventDefault();
+
+            await appWindow.hide();
+        });
+    }
+
+    public async displayScreenshots(screenshots: Map<string, HTMLImageElement>): Promise<void> {
+        await this._screenshotWrapper.displayScreenshots(
+            screenshots, await availableMonitors()
+        );
+
+        // Remove not ready class from wrapper
+        this._screenshotWrapper.element.classList.remove(NOT_READY_CLASS);
+    }
 }
 
-const app = new LiveShot();
-
-await app.init();
+await LiveShot.Instance.init();

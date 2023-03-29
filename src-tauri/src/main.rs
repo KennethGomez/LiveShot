@@ -6,6 +6,7 @@ use crate::tray::{get_liveshot_system_tray, handle_system_tray_event};
 mod bitmap;
 mod screenshot;
 mod tray;
+mod capture;
 
 #[tauri::command]
 fn get_screenshots() -> ScreenshotCapturedPayload {
@@ -17,8 +18,14 @@ fn main() {
         .invoke_handler(tauri::generate_handler![get_screenshots])
         .system_tray(get_liveshot_system_tray())
         .on_system_tray_event(handle_system_tray_event)
-        .run(tauri::generate_context!())
-        .expect("error while running tauri application");
+        .build(tauri::generate_context!())
+        .expect("error while running tauri application")
+        .run(|_app_handle, event| match event {
+            tauri::RunEvent::ExitRequested { api, .. } => {
+                api.prevent_exit();
+            }
+            _ => {}
+        });
 }
 
 fn capture_screenshots() -> ScreenshotCapturedPayload {
