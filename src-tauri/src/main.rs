@@ -1,12 +1,15 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
+use tauri::Manager;
+
 use crate::screenshot::ScreenshotCapturedPayload;
 use crate::tray::{get_liveshot_system_tray, handle_system_tray_event};
 
 mod bitmap;
+mod capture;
+mod os;
 mod screenshot;
 mod tray;
-mod capture;
 
 #[tauri::command]
 fn get_screenshots() -> ScreenshotCapturedPayload {
@@ -18,6 +21,15 @@ fn main() {
         .invoke_handler(tauri::generate_handler![get_screenshots])
         .system_tray(get_liveshot_system_tray())
         .on_system_tray_event(handle_system_tray_event)
+        .setup(|app| unsafe {
+            let window = app.get_window("main").unwrap();
+
+            if cfg!(target_os = "windows") {
+                os::windows::disable_window_transitions(window)
+            }
+
+            Ok(())
+        })
         .build(tauri::generate_context!())
         .expect("error while running tauri application")
         .run(|_app_handle, event| match event {
