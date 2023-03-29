@@ -69,7 +69,7 @@ impl<'a, W: Write + 'a> BitmapEncoder<'a, W> {
         self.writer
             .write_u16::<LittleEndian>((written_pixel_size * 8) as u16)?; // bits per pixel
         if dib_header_size >= BITMAPV4HEADER_SIZE {
-            // Assume BGRA32
+            // Assume ARGB32
             self.writer.write_u32::<LittleEndian>(3)?; // compression method - bitfields
         } else {
             self.writer.write_u32::<LittleEndian>(0)?; // compression method - no compression

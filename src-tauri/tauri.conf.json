@@ -51,12 +51,16 @@
         "decorations": false,
         "resizable": false,
         "title": "LiveShot",
-        "visible": true,
+        "visible": false,
         "width": 0,
         "height": 0,
         "transparent": true,
         "alwaysOnTop": true
       }
-    ]
+    ],
+    "systemTray": {
+      "iconPath": "icons/32x32.png",
+      "iconAsTemplate": true
+    }
   }
 }
